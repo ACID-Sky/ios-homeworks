@@ -28,7 +28,7 @@ class InfoViewController: UIViewController {
     }
 
     @objc private func didTapButton() {
-        let alert = UIAlertController(title: "Do you want to the Hell?", message: "If you realy want to the Hell push 'Yes' else push 'No'.", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Do you want to the Hell?", message: "If you really want to the Hell push 'Yes' else push 'No'.", preferredStyle: .actionSheet)
 
         let yesAction = UIAlertAction(title: "Yes", style: .default) { _ in
             print("User wants to the Hell!")
