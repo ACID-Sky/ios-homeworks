@@ -55,8 +55,10 @@ final class ProfileHeaderView: UIView {
         button.titleLabel?.textColor = .white
 //        button.setTitle("Show status", for: .normal)
 //    Создаём лейблы ник и статус
+
         button.setTitle("Set status", for: .normal)
 //        Новое название кнопки для задания со звёздочкой
+
         button.layer.shadowRadius = 4.0
         button.layer.shadowOpacity = 0.7
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -64,6 +66,7 @@ final class ProfileHeaderView: UIView {
 
         button.addTarget(self, action:  #selector(buttonPresed), for: .touchUpInside)
 //        Нажатие
+
         return button
     }()
 
@@ -101,7 +104,7 @@ final class ProfileHeaderView: UIView {
         self.textField.layer.borderWidth = 1
 
     }
-// Обрезали аватарку
+// Обрезали аватарку, кнопку и тукст фиелд
 
     private func setupView() {
         self.addSubview(self.labelStack)
