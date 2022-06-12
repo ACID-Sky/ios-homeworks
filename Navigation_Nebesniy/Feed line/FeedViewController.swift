@@ -24,7 +24,6 @@ class FeedViewController: UIViewController {
 
             self.view.backgroundColor = .systemBrown
             self.navigationItem.title = "Feed"
-            self.navigationController?.navigationBar.prefersLargeTitles = true
             self.view.addSubview(self.button)
         }
 

@@ -9,30 +9,32 @@ import UIKit
 
 final class ProfileHeaderView: UIView {
 
+    private var statusText: String?
+
     private lazy var avatarImageView: UIImageView = {
-        let avatarImage = UIImageView(frame: CGRect(x: 16, y: 16, width: 110, height: 110))
+        let avatarImage = UIImageView()
+        avatarImage.translatesAutoresizingMaskIntoConstraints = false
         avatarImage.image = UIImage(named: "Avatar")
         avatarImage.clipsToBounds = true
+
         return avatarImage
     }()
 
-//    создаём аватарку
-
     private lazy var labelStack: UIStackView = {
         let screenWidth = UIScreen.main.bounds.width
-        let labelStack = UIStackView(frame: CGRect(x: 71, y: 27, width: screenWidth - 87, height: 81))
+        let labelStack = UIStackView()
+        labelStack.translatesAutoresizingMaskIntoConstraints = false
         labelStack.axis = .vertical
         labelStack.spacing = 10
         labelStack.distribution = .fillEqually
+
         return labelStack
     }()
-//    Создаём сток для леблов
 
-    private lazy var nickLabel: UILabel = {
+    private lazy var fullNameLabel: UILabel = {
         let nick = UILabel()
         nick.font = UIFont.boldSystemFont(ofSize: 18)
         nick.textColor = UIColor.black
-        nick.textAlignment = .center
         nick.text = "ACID Sky"
 
         return nick
@@ -42,37 +44,32 @@ final class ProfileHeaderView: UIView {
         let status = UILabel()
         status.font = status.font.withSize(14)
         status.textColor = UIColor.gray
-        status.textAlignment = .center
-        status.text = "I’m quite aware of my own inadequacies."
+        status.text = "I’m here."
 
         return status
     }()
 
-    private lazy var showStatusButton: UIButton = {
+    private lazy var setStatusButton: UIButton = {
         let screenWidth = UIScreen.main.bounds.width
-        let button = UIButton(frame: CGRect(x: 16, y: 142, width: screenWidth - 32, height: 50))
-        button.backgroundColor = .blue
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .systemBlue
         button.titleLabel?.textColor = .white
-//        button.setTitle("Show status", for: .normal)
-//    Создаём лейблы ник и статус
-
         button.setTitle("Set status", for: .normal)
-//        Новое название кнопки для задания со звёздочкой
 
         button.layer.shadowRadius = 4.0
         button.layer.shadowOpacity = 0.7
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
-//        Тень
 
         button.addTarget(self, action:  #selector(buttonPresed), for: .touchUpInside)
-//        Нажатие
 
         return button
     }()
 
-    private lazy var textField: UITextField = {
+    private lazy var statusTextField: UITextField = {
         let screenWidth = UIScreen.main.bounds.width
-        let textField = UITextField(frame: CGRect(x: 140, y: 100, width: screenWidth - 156, height: 40))
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
         textField.font = textField.font?.withSize(15)
 
@@ -80,9 +77,6 @@ final class ProfileHeaderView: UIView {
 
         return textField
     }()
-//    Создали текст фиелд для указания статуса
-
-    private var statusText: String?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -93,42 +87,48 @@ final class ProfileHeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.height / 2
-        self.avatarImageView.layer.borderWidth = 3
-
-        self.showStatusButton.layer.cornerRadius = 4
-
-        self.textField.layer.cornerRadius = 12
-        self.textField.layer.borderWidth = 1
-
-    }
-// Обрезали аватарку, кнопку и тукст фиелд
-
     private func setupView() {
         self.addSubview(self.labelStack)
-        self.labelStack.addArrangedSubview(self.nickLabel)
+        self.labelStack.addArrangedSubview(self.fullNameLabel)
         self.labelStack.addArrangedSubview(self.statusLabel)
         self.addSubview(self.avatarImageView)
-        self.addSubview(self.showStatusButton)
-        self.addSubview(self.textField)
+        self.addSubview(self.setStatusButton)
+        self.addSubview(self.statusTextField)
 
+        self.avatarImageView.layer.cornerRadius = 55
+        self.avatarImageView.layer.borderWidth = 3
+        self.setStatusButton.layer.cornerRadius = 4
+        self.statusTextField.layer.cornerRadius = 12
+        self.statusTextField.layer.borderWidth = 1
+
+        NSLayoutConstraint.activate([
+            self.avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            self.avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            self.avatarImageView.widthAnchor.constraint(equalToConstant: 110),
+            self.avatarImageView.heightAnchor.constraint(equalToConstant: 110),
+
+            self.labelStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
+            self.labelStack.leadingAnchor.constraint(equalTo: self.avatarImageView.trailingAnchor, constant: 17),
+            self.labelStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.labelStack.heightAnchor.constraint(equalToConstant: 81),
+
+            self.setStatusButton.topAnchor.constraint(equalTo: self.statusTextField.bottomAnchor, constant: 10),
+            self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+
+            self.statusTextField.topAnchor.constraint(equalTo: self.labelStack.bottomAnchor, constant: 10),
+            self.statusTextField.leadingAnchor.constraint(equalTo: self.labelStack.leadingAnchor),
+            self.statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.statusTextField.heightAnchor.constraint(equalToConstant: 40)
+        ])
     }
-// Добавили все элементы на вью
-
-//    @objc private func buttonPresed () {
-//        print(statusLabel.text as Any)
-//    }
-// Обрабатываем нажатие кнопки
 
     @objc private func buttonPresed () {
         statusLabel.text = statusText
     }
-//    Изменили обработку нажатия кнопки на замену статуса
 
     @objc private func statusTextChanged (_ textField: UITextField) {
         statusText = textField.text
     }
-//    обработка ввода статуса
 }

@@ -66,7 +66,6 @@
 			children = (
 				76755629283FA95A00E1F03A /* AppDelegate.swift */,
 				7675562B283FA95A00E1F03A /* SceneDelegate.swift */,
-				76B7C7452841EB1400524F3F /* Post.swift */,
 				76B7C74C284268B900524F3F /* Profile line */,
 				76B7C7492842683200524F3F /* Feed line */,
 				76755632283FA95F00E1F03A /* Assets.xcassets */,
@@ -88,6 +87,7 @@
 		76B7C74A2842687C00524F3F /* Post */ = {
 			isa = PBXGroup;
 			children = (
+				76B7C7452841EB1400524F3F /* Post.swift */,
 				7675564D284136D300E1F03A /* PostViewControlle.swift */,
 				76B7C74B2842688C00524F3F /* Info */,
 			);

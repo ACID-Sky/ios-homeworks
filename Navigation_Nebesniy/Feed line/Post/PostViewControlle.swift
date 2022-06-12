@@ -16,12 +16,10 @@ class PostViewControlle: UIViewController {
 
         self.view.backgroundColor = .systemGreen
         self.navigationItem.title = post?.title
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-
+        
         let barButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(didTapButton))
         navigationItem.rightBarButtonItem = barButton
     }
-    
 
     @objc private func didTapButton () {
         let infoView = InfoViewController ()
