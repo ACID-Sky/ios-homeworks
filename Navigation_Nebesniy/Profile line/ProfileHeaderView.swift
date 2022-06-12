@@ -71,6 +71,8 @@ final class ProfileHeaderView: UIView {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
+        textField.placeholder = "How are you?"
+        textField.delegate = self
         textField.font = textField.font?.withSize(15)
 
         textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
@@ -130,5 +132,13 @@ final class ProfileHeaderView: UIView {
 
     @objc private func statusTextChanged (_ textField: UITextField) {
         statusText = textField.text
+    }
+}
+
+extension ProfileHeaderView: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return true
     }
 }
