@@ -71,7 +71,11 @@ final class ProfileHeaderView: UIView {
         let textField = TextFieldWithPadding()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
-        textField.placeholder = "How are you?"
+        textField.textColor = .black
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "How are you?",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
+        )
         textField.delegate = self
         textField.font = textField.font?.withSize(15)
 

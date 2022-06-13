@@ -42,7 +42,7 @@ class FeedViewController: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
 
-            self.view.backgroundColor = .systemBrown
+            self.view.backgroundColor = .gray
             self.navigationItem.title = "Feed"
             self.view.addSubview(self.buttonVerticalStack)
             self.buttonVerticalStack.addArrangedSubview(self.button)

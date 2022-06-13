@@ -14,7 +14,7 @@ class PostViewControlle: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .systemGreen
+        self.view.backgroundColor = .lightGray
         self.navigationItem.title = post?.title
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(didTapButton))

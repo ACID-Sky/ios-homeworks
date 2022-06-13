@@ -22,8 +22,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationBarAppearance.backgroundColor = .secondarySystemBackground
         UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
 
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        tabBarAppearance.backgroundColor = .secondarySystemBackground
+        if #available(iOS 15.0, *) {
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        } else {
+            // Fallback on earlier versions
+        }
+
         let tabBarController = UITabBarController()
-        tabBarController.tabBar.backgroundColor = .white
         let feedViewController = UINavigationController(rootViewController: FeedViewController())
         let profileViewController = UINavigationController(rootViewController: ProfileViewController())
         
