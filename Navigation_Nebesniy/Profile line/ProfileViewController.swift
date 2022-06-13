@@ -11,24 +11,36 @@ class ProfileViewController: UIViewController {
 
     private lazy var profileHeaderView: ProfileHeaderView = {
         let profileHeaderView = ProfileHeaderView()
-//        profileHeaderView.backgroundColor = .systemGreen
-        profileHeaderView.frame = CGRect(x: 0, y: 140, width: view.bounds.width, height: 300)
-
+        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
         return profileHeaderView
     }()
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-
-        self.view.addSubview(self.profileHeaderView)
-    }
+    private lazy var bottomButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.text = "New Button."
+        button.backgroundColor = .systemBlue
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.addSubview(self.profileHeaderView)
         self.view.backgroundColor = .lightGray
         self.navigationItem.title = "Profile"
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.view.addSubview(self.bottomButton)
+
+        NSLayoutConstraint.activate([
+            self.profileHeaderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.profileHeaderView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.profileHeaderView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
+
+            self.bottomButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.bottomButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.bottomButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        ])
 
     }
 

@@ -9,23 +9,49 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
+    private lazy var buttonVerticalStack: UIStackView = {
+        let verticalStack = UIStackView()
+        verticalStack.translatesAutoresizingMaskIntoConstraints = false
+        verticalStack.axis = .vertical
+        verticalStack.spacing = 10
+        verticalStack.distribution = .equalCentering
+
+        return verticalStack
+    }()
+
         private lazy var button: UIButton = {
             let screenWidth = UIScreen.main.bounds.width
-            let button = UIButton(frame: CGRect(x: 20, y: 220, width: screenWidth - 40, height: 50))
-            button.backgroundColor = .systemRed
-            button.setTitle("To post", for: .normal)
+            let button = UIButton()
+            button.backgroundColor = .systemGray
+            button.setTitle("To post.", for: .normal)
             button.addTarget(self, action:  #selector(didTapButton), for: .touchUpInside)
+
             return button
         }()
     
+    private lazy var button2: UIButton = {
+        let screenWidth = UIScreen.main.bounds.width
+        let button2 = UIButton()
+        button2.backgroundColor = .systemBlue
+        button2.setTitle("To post too.", for: .normal)
+        button2.addTarget(self, action:  #selector(didTapButton), for: .touchUpInside)
+
+        return button2
+    }()
 
         override func viewDidLoad() {
             super.viewDidLoad()
 
             self.view.backgroundColor = .systemBrown
             self.navigationItem.title = "Feed"
-            self.navigationController?.navigationBar.prefersLargeTitles = true
-            self.view.addSubview(self.button)
+            self.view.addSubview(self.buttonVerticalStack)
+            self.buttonVerticalStack.addArrangedSubview(self.button)
+            self.buttonVerticalStack.addArrangedSubview(self.button2)
+
+            NSLayoutConstraint.activate([
+                self.buttonVerticalStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.buttonVerticalStack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+            ])
         }
 
         @objc private func didTapButton () {
