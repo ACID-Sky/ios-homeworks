@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		762E47F428573CEF00ECAA31 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762E47F328573CEF00ECAA31 /* TextFieldWithPadding.swift */; };
 		7630D2F7284CB78600331B0E /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7630D2F6284CB78600331B0E /* ProfileHeaderView.swift */; };
 		7675562A283FA95A00E1F03A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76755629283FA95A00E1F03A /* AppDelegate.swift */; };
 		7675562C283FA95A00E1F03A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7675562B283FA95A00E1F03A /* SceneDelegate.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		762E47F328573CEF00ECAA31 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextFieldWithPadding.swift; path = Navigation_Nebesniy/TextFieldWithPadding.swift; sourceTree = SOURCE_ROOT; };
 		7630D2F6284CB78600331B0E /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		76755626283FA95A00E1F03A /* Navigation_Nebesniy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation_Nebesniy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76755629283FA95A00E1F03A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 		76755628283FA95A00E1F03A /* Navigation_Nebesniy */ = {
 			isa = PBXGroup;
 			children = (
+				762E47F328573CEF00ECAA31 /* TextFieldWithPadding.swift */,
 				76755629283FA95A00E1F03A /* AppDelegate.swift */,
 				7675562B283FA95A00E1F03A /* SceneDelegate.swift */,
 				76B7C74C284268B900524F3F /* Profile line */,
@@ -188,6 +191,7 @@
 				7675562C283FA95A00E1F03A /* SceneDelegate.swift in Sources */,
 				7675564C2841256100E1F03A /* ProfileViewController.swift in Sources */,
 				7675564A284100D300E1F03A /* FeedViewController.swift in Sources */,
+				762E47F428573CEF00ECAA31 /* TextFieldWithPadding.swift in Sources */,
 				7630D2F7284CB78600331B0E /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -66,9 +66,9 @@ final class ProfileHeaderView: UIView {
         return button
     }()
 
-    private lazy var statusTextField: UITextField = {
+    private lazy var statusTextField: TextFieldWithPadding = {
         let screenWidth = UIScreen.main.bounds.width
-        let textField = UITextField()
+        let textField = TextFieldWithPadding()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
         textField.placeholder = "How are you?"
@@ -128,6 +128,7 @@ final class ProfileHeaderView: UIView {
 
     @objc private func buttonPresed () {
         statusLabel.text = statusText
+        statusTextField.text = nil
     }
 
     @objc private func statusTextChanged (_ textField: UITextField) {

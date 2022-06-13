@@ -17,12 +17,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         self.window = UIWindow(windowScene: windowScene)
 
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithOpaqueBackground()
+        navigationBarAppearance.backgroundColor = .secondarySystemBackground
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
         let feedViewController = UINavigationController(rootViewController: FeedViewController())
-        feedViewController.navigationBar.backgroundColor = .white
         let profileViewController = UINavigationController(rootViewController: ProfileViewController())
-        profileViewController.navigationBar.backgroundColor = .white
         
         tabBarController.viewControllers = [
             feedViewController,
