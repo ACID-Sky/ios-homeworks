@@ -26,6 +26,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController?.navigationBar.isHidden = false
         self.view.addSubview(self.profileHeaderView)
         self.view.backgroundColor = .lightGray
         self.navigationItem.title = "Profile"
