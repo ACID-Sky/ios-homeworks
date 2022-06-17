@@ -16,7 +16,6 @@ final class ProfileHeaderView: UIView {
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
         avatarImage.image = UIImage(named: "Avatar")
         avatarImage.clipsToBounds = true
-
         return avatarImage
     }()
 
@@ -27,7 +26,6 @@ final class ProfileHeaderView: UIView {
         labelStack.axis = .vertical
         labelStack.spacing = 10
         labelStack.distribution = .fillEqually
-
         return labelStack
     }()
 
@@ -36,7 +34,6 @@ final class ProfileHeaderView: UIView {
         nick.font = UIFont.boldSystemFont(ofSize: 18)
         nick.textColor = UIColor.black
         nick.text = "ACID Sky"
-
         return nick
     }()
 
@@ -45,24 +42,19 @@ final class ProfileHeaderView: UIView {
         status.font = status.font.withSize(14)
         status.textColor = UIColor.gray
         status.text = "I’m here."
-
         return status
     }()
 
     private lazy var setStatusButton: UIButton = {
-        let screenWidth = UIScreen.main.bounds.width
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue
         button.titleLabel?.textColor = .white
         button.setTitle("Set status", for: .normal)
-
         button.layer.shadowRadius = 4.0
         button.layer.shadowOpacity = 0.7
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
-
         button.addTarget(self, action:  #selector(buttonPresed), for: .touchUpInside)
-
         return button
     }()
 
@@ -78,9 +70,7 @@ final class ProfileHeaderView: UIView {
         )
         textField.delegate = self
         textField.font = textField.font?.withSize(15)
-
         textField.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
-
         return textField
     }()
 
