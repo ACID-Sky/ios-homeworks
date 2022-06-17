@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileHeaderView: UIView {
+final class ProfileHeaderView: UITableViewHeaderFooterView {
 
     private var statusText: String?
 
@@ -74,8 +74,8 @@ final class ProfileHeaderView: UIView {
         return textField
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         self.setupView()
     }
     

@@ -85,6 +85,10 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.setupView()
+    }
+
+    private func setupView(){
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(logoView)
         self.scrollView.addSubview(stackView)
@@ -171,12 +175,11 @@ class LogInViewController: UIViewController {
         password = passwordTextField.text
         loginTextField.text = nil
         passwordTextField.text = nil
-        let profile = ProfileViewController ()
+        let profile = ProfileViewController()
         self.navigationController?.pushViewController(profile, animated: true)
     }
 
 }
-
 
 extension LogInViewController: UITextFieldDelegate {
 
