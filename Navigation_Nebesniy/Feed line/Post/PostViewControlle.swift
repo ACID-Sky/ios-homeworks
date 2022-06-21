@@ -15,7 +15,7 @@ class PostViewControlle: UIViewController {
         super.viewDidLoad()
 
         self.view.backgroundColor = .lightGray
-        self.navigationItem.title = post?.title
+        self.navigationItem.title = post?.author
         
         let barButton = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(didTapButton))
         navigationItem.rightBarButtonItem = barButton

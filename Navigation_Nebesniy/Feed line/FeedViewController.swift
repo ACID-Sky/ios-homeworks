@@ -56,7 +56,7 @@ class FeedViewController: UIViewController {
 
         @objc private func didTapButton () {
             let postView = PostViewControlle ()
-            postView.post = Post(title: "Hello World")
+            postView.post = Post(author: "Hello World", description: "", image: "", likes: 2, views: 3)
             self.navigationController?.pushViewController(postView, animated: true)
         }
 
