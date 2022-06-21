@@ -112,6 +112,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
 
             self.statusTextField.topAnchor.constraint(equalTo: self.labelStack.bottomAnchor, constant: 10),
             self.statusTextField.leadingAnchor.constraint(equalTo: self.labelStack.leadingAnchor),

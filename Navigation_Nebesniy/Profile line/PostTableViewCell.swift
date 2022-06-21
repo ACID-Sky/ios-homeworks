@@ -110,7 +110,8 @@ class PostTableViewCell: UITableViewCell {
 
             self.descriptionLabel.topAnchor.constraint(equalTo: self.picture.bottomAnchor, constant: 16),
 
-            self.likesStackView.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16)
+            self.likesStackView.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16),
+            self.likesStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16)
         ])
     }
 
