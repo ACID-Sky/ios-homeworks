@@ -23,6 +23,15 @@ class LogInViewController: UIViewController {
         return logoImage
     }()
 
+    private lazy var bigStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.clipsToBounds = true
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+
     private lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -86,15 +95,22 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.setupView()
+        self.setupGestures()
+    }
+
+    private func setupGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.forcedHidingKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
     }
 
     private func setupView(){
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(logoView)
-        self.scrollView.addSubview(stackView)
+        self.scrollView.addSubview(bigStackView)
+        self.bigStackView.addArrangedSubview(stackView)
+        self.bigStackView.addArrangedSubview(loginButton)
         self.stackView.addArrangedSubview(loginTextField)
         self.stackView.addArrangedSubview(passwordTextField)
-        self.scrollView.addSubview(loginButton)
 
         let borderColor = UIColor.lightGray
         self.stackView.layer.cornerRadius = 10
@@ -106,7 +122,7 @@ class LogInViewController: UIViewController {
 
 
         NSLayoutConstraint.activate([
-            self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -116,20 +132,15 @@ class LogInViewController: UIViewController {
             self.logoView.widthAnchor.constraint(equalToConstant: 100),
             self.logoView.heightAnchor.constraint(equalToConstant: 100),
 
-            self.stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            self.stackView.topAnchor.constraint(equalTo: self.logoView.bottomAnchor, constant: 120),
-            self.stackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 16),
-            self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor, constant: -16),
-            self.stackView.heightAnchor.constraint(equalToConstant: 100),
+            self.bigStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            self.bigStackView.topAnchor.constraint(equalTo: self.logoView.bottomAnchor, constant: 120),
+            self.bigStackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 16),
+            self.bigStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor, constant: -16),
 
-            self.loginButton.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor),
-            self.loginButton.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 16),
-            self.loginButton.leadingAnchor.constraint(equalTo: self.stackView.leadingAnchor),
-            self.loginButton.trailingAnchor.constraint(equalTo: self.stackView.trailingAnchor),
+            self.stackView.heightAnchor.constraint(equalToConstant: 100),
             self.loginButton.heightAnchor.constraint(equalToConstant: 50)
         ])
 
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -150,11 +161,12 @@ class LogInViewController: UIViewController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
 
-            let loginInButtonBottomPointY = self.loginButton.frame.origin.y + self.loginButton.frame.height
+            let loginInButtonBottomPointY = self.bigStackView.frame.origin.y + self.loginButton.frame.origin.y + self.loginButton.frame.height
+
             let keyboardOriginY = self.view.frame.height - keyboardHeight
 
-            let yOffset = keyboardOriginY < loginInButtonBottomPointY + 32
-            ? loginInButtonBottomPointY - keyboardOriginY + 32
+            let yOffset = keyboardOriginY < loginInButtonBottomPointY + 16
+            ? loginInButtonBottomPointY - keyboardOriginY + 16
             : 0
 
             self.scrollView.contentOffset = CGPoint(x: 0, y: yOffset)
@@ -167,7 +179,7 @@ class LogInViewController: UIViewController {
 
     @objc private func forcedHidingKeyboard() {
         self.view.endEditing(true)
-        self.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        self.scrollView.setContentOffset(.zero, animated: true)
     }
 
     @objc private func buttonPresed () {
@@ -185,11 +197,10 @@ extension LogInViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.tag == 0 {
-            self.loginTextField.endEditing(true)
-        } else if textField.tag == 1 {
-            self.passwordTextField.endEditing(true)
+            self.passwordTextField.becomeFirstResponder()
+        } else {
+            self.forcedHidingKeyboard()
         }
-        self.forcedHidingKeyboard()
         return true
     }
 

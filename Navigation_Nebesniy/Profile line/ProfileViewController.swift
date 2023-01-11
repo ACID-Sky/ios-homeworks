@@ -60,5 +60,5 @@ class ProfileViewController: UIViewController {
             return cell
         }
 
-    }
+    }       
 
