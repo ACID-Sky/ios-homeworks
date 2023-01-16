@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "most-beautiful-places-in-australia-the-great-ocean-roads-12-apostles-hero-1024x683.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
