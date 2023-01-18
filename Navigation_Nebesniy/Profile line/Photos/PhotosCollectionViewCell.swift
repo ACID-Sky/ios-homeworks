@@ -13,7 +13,7 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         let picture = UIImageView()
         picture.backgroundColor = .black
         picture.contentMode = .scaleAspectFill
-        picture.image = UIImage(named: "Avatar")
+        picture.image = UIImage(named: "")
         picture.translatesAutoresizingMaskIntoConstraints = false
         return picture
     }()

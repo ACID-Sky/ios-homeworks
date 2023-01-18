@@ -166,8 +166,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }
 
     private func animateKeyframes(completion: @escaping () -> Void) {
-//        let startPoint = self.avatarImageView.center
-        print("🍏", self.avatarImageView.center, "" )
         UIView.animateKeyframes(withDuration: 0.8,
                                 delay: 0.0,
                                 options: .calculationModeCubic) {

@@ -16,6 +16,7 @@ class ProfileViewController: UIViewController {
         static let MyHeadView = "MyHeadView"
 
         static let numberOfPhoto: CGFloat = 4
+        static let nemberOfPhotoCell: CGFloat = 10
         static let inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         static let spacing: CGFloat = 8
     }
