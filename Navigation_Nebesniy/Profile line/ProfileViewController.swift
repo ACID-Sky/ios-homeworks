@@ -16,9 +16,13 @@ class ProfileViewController: UIViewController {
         static let MyHeadView = "MyHeadView"
 
         static let numberOfPhoto: CGFloat = 4
+        static let nemberOfPhotoCell: CGFloat = 10
         static let inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         static let spacing: CGFloat = 8
     }
+
+    let ncObserver = NotificationCenter.default
+    let notification = NotificationCenter.default
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -34,17 +38,99 @@ class ProfileViewController: UIViewController {
         return tableView
     }()
 
+    lazy var fullScreenView: UIView = {
+        let fullScreenView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
+        fullScreenView.alpha = 0
+        fullScreenView.backgroundColor = .black
+        fullScreenView.translatesAutoresizingMaskIntoConstraints = false
+        return fullScreenView
+    }()
+
+    lazy var cancelButton: UIImageView = {
+        let cancelButton = UIImageView()
+        cancelButton.image = UIImage(systemName: "multiply")
+        cancelButton.isUserInteractionEnabled = false
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.alpha = 0
+        return cancelButton
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .lightGray
 
         self.view.addSubview(tableView)
+        self.view.addSubview(fullScreenView)
+        self.fullScreenView.addSubview(cancelButton)
+        self.setupGestures()
+
+        ncObserver.addObserver(self, selector: #selector(self.changeFullScreen), name: Notification.Name("FullScreenViewChageAlpha"), object: nil)
+        ncObserver.addObserver(self, selector: #selector(self.changeCancelButton), name: Notification.Name("cancelButtonChangeAlpha"), object: nil)
+
         NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+            self.tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+
+            self.fullScreenView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+            self.fullScreenView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.fullScreenView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            self.fullScreenView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+
+            self.cancelButton.topAnchor.constraint(equalTo: self.fullScreenView.safeAreaLayoutGuide.topAnchor),
+            self.cancelButton.trailingAnchor.constraint(equalTo: self.fullScreenView.trailingAnchor)
         ])
+    }
+
+    func fullScreenChangeAlpha () {
+        self.fullScreenView.alpha = 0.5
+    }
+
+    @objc func changeFullScreen() {
+        self.fullScreenChangeAlpha()
+    }
+
+    func cancelButtonChangeAlpha () {
+        self.cancelButton.alpha = 1
+        self.cancelButton.isUserInteractionEnabled = true
+    }
+
+    @objc func changeCancelButton() {
+        self.cancelButtonChangeAlpha()
+    }
+
+    private func setupGestures() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture(_:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        self.cancelButton.addGestureRecognizer(tapGestureRecognizer)
+
+    }
+
+    @objc private func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
+        self.cancelButton.isUserInteractionEnabled = false
+
+        let completion: () -> Void = { [weak self] in
+            self?.cancelButton.isUserInteractionEnabled = true
+        }
+
+        self.animateKeyframes(completion: completion)
+    }
+
+    private func animateKeyframes(completion: @escaping () -> Void) {
+        UIView.animateKeyframes(withDuration: 0.5,
+                                delay: 0.0,
+                                options: .calculationModeCubic) {
+            UIView.addKeyframe(withRelativeStartTime: 0,
+                               relativeDuration: 1) {
+                self.cancelButton.isUserInteractionEnabled = false
+                self.fullScreenView.alpha = 0
+                self.cancelButton.alpha = 0
+                self.notification.post(name: Notification.Name("AvatarChange"), object: nil)
+            }
+        } completion: { _ in
+            completion()
+        }
     }
 }
 
@@ -95,6 +181,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         let photo = PhotosViewController()
         indexPath.section == 0 ? navigationController?.pushViewController(photo, animated: true) : nil
     }
+
 }
 
 

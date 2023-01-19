@@ -43,6 +43,7 @@ class PhotosTableViewCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ProfileViewController.Constants.defaultCellID)
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: ProfileViewController.Constants.PhotoCellID)
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -86,7 +87,7 @@ class PhotosTableViewCell: UITableViewCell {
 extension PhotosTableViewCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        Int(ProfileViewController.Constants.numberOfPhoto)
+        Int(ProfileViewController.Constants.nemberOfPhotoCell)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -10,12 +10,15 @@ import UIKit
 final class ProfileHeaderView: UITableViewHeaderFooterView {
 
     private var statusText: String?
+    private var isImageViewIncreased = false
+    lazy var centerScreen = CGPoint(x: 0, y: 0)
 
     private lazy var avatarImageView: UIImageView = {
         let avatarImage = UIImageView()
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
         avatarImage.image = UIImage(named: "Avatar")
         avatarImage.clipsToBounds = true
+        avatarImage.isUserInteractionEnabled = true
         return avatarImage
     }()
 
@@ -74,9 +77,14 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         return textField
     }()
 
+    let notification = NotificationCenter.default
+    let ncObserver = NotificationCenter.default
+
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         self.setupView()
+        self.setupGestures()
+        ncObserver.addObserver(self, selector: #selector(self.changeAvatar), name: Notification.Name("AvatarChange"), object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -87,9 +95,9 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.addSubview(self.labelStack)
         self.labelStack.addArrangedSubview(self.fullNameLabel)
         self.labelStack.addArrangedSubview(self.statusLabel)
-        self.addSubview(self.avatarImageView)
-        self.addSubview(self.setStatusButton)
         self.addSubview(self.statusTextField)
+        self.addSubview(self.setStatusButton)
+        self.addSubview(self.avatarImageView)
 
         self.avatarImageView.layer.cornerRadius = 55
         self.avatarImageView.layer.borderWidth = 3
@@ -130,6 +138,54 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         statusText = textField.text
     }
 
+    func avatarTransform () {
+        self.avatarImageView.center = CGPoint(x: 68, y: 68)
+        self.avatarImageView.transform = .identity
+        self.avatarImageView.layer.cornerRadius = 55
+        self.avatarImageView.layer.borderWidth = 3
+    }
+
+    @objc func changeAvatar() {
+        avatarTransform()
+    }
+    private func setupGestures() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture(_:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        self.avatarImageView.addGestureRecognizer(tapGestureRecognizer)
+
+    }
+
+    @objc private func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
+        self.avatarImageView.isUserInteractionEnabled = false
+
+        let completion: () -> Void = { [weak self] in
+            self?.avatarImageView.isUserInteractionEnabled = true
+        }
+
+        self.animateKeyframes(completion: completion)
+    }
+
+    private func animateKeyframes(completion: @escaping () -> Void) {
+        UIView.animateKeyframes(withDuration: 0.8,
+                                delay: 0.0,
+                                options: .calculationModeCubic) {
+            UIView.addKeyframe(withRelativeStartTime: 0,
+                               relativeDuration: 0.5/0.8) {
+                //Не понимаю как отсюда достучаться до размеров и центра view на котором будет размещен tableView, создавать на фулскрин вью еще одну аваторку и её двигать, а эту прятать, мне кажется не правильным.
+                self.avatarImageView.transform = CGAffineTransform(scaleX: 4.0, y: 4.0)
+                self.avatarImageView.center = CGPoint(x: 215, y: 466)
+                self.avatarImageView.layer.cornerRadius = 0
+                self.avatarImageView.layer.borderWidth = 0
+                self.notification.post(name: Notification.Name("FullScreenViewChageAlpha"), object: nil)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.5/0.8, // 1.25 sec.
+                               relativeDuration: 0.3/0.8) {
+                self.notification.post(name: Notification.Name("cancelButtonChangeAlpha"), object: nil)
+            }
+        } completion: { _ in
+            completion()
+        }
+    }
 }
 
 extension ProfileHeaderView: UITextFieldDelegate {
