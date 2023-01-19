@@ -5,7 +5,7 @@
 //  Created by Лёха Небесный on 16.06.2022.
 //
 
-import Foundation
+import UIKit
 
 let posts: [Post] = [
     Post(author: "Mark",

@@ -129,6 +129,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     @objc private func statusTextChanged (_ textField: UITextField) {
         statusText = textField.text
     }
+
 }
 
 extension ProfileHeaderView: UITextFieldDelegate {

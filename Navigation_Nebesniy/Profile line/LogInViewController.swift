@@ -125,7 +125,7 @@ class LogInViewController: UIViewController {
             self.scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
 
             self.logoView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 120),
             self.logoView.centerXAnchor.constraint(equalTo: self.scrollView.centerXAnchor),
@@ -163,7 +163,7 @@ class LogInViewController: UIViewController {
 
             let loginInButtonBottomPointY = self.bigStackView.frame.origin.y + self.loginButton.frame.origin.y + self.loginButton.frame.height
 
-            let keyboardOriginY = self.view.frame.height - keyboardHeight
+            let keyboardOriginY = self.scrollView.frame.origin.y + self.scrollView.frame.height - keyboardHeight
 
             let yOffset = keyboardOriginY < loginInButtonBottomPointY + 16
             ? loginInButtonBottomPointY - keyboardOriginY + 16
