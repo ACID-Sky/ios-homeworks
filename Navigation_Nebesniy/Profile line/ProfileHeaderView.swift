@@ -172,8 +172,8 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             UIView.addKeyframe(withRelativeStartTime: 0,
                                relativeDuration: 0.5/0.8) {
                 //Не понимаю как отсюда достучаться до размеров и центра view на котором будет размещен tableView, создавать на фулскрин вью еще одну аваторку и её двигать, а эту прятать, мне кажется не правильным.
-                self.avatarImageView.transform = CGAffineTransform(scaleX: 4.0, y: 4.0)
-                self.avatarImageView.center = CGPoint(x: 215, y: 466)
+                self.avatarImageView.transform = CGAffineTransform(scaleX: UIScreen.main.bounds.width / self.avatarImageView.bounds.width, y: UIScreen.main.bounds.width / self.avatarImageView.bounds.width)
+                self.avatarImageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
                 self.avatarImageView.layer.cornerRadius = 0
                 self.avatarImageView.layer.borderWidth = 0
                 self.notification.post(name: Notification.Name("FullScreenViewChageAlpha"), object: nil)
