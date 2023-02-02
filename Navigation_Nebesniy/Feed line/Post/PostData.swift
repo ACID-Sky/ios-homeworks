@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import StorageService
 
-let posts: [Post] = [
+public let posts: [Post] = [
     Post(author: "Mark",
          description: "Siamang apes are the smartest, loudest, funniest, and personal animals in the jungle. \n When a siamang ape calls air comes and fills its neck making the neck expand like a bubble. You can see this in the picture above. The call is a high pitched sound in short bursts. It is so loud it can be heard over a kilometre away. Each siamang ape has a different call. They do the call to communicate and send information.",
          image: "animal",
