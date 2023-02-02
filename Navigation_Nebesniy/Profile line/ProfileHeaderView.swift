@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
 
@@ -15,7 +16,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
 
     private lazy var avatarImageView: UIImageView = {
         let avatarImage = UIImageView()
-        avatarImage.translatesAutoresizingMaskIntoConstraints = false
         avatarImage.image = UIImage(named: "Avatar")
         avatarImage.clipsToBounds = true
         avatarImage.isUserInteractionEnabled = true
@@ -25,7 +25,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var labelStack: UIStackView = {
         let screenWidth = UIScreen.main.bounds.width
         let labelStack = UIStackView()
-        labelStack.translatesAutoresizingMaskIntoConstraints = false
         labelStack.axis = .vertical
         labelStack.spacing = 10
         labelStack.distribution = .fillEqually
@@ -50,7 +49,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
 
     private lazy var setStatusButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue
         button.titleLabel?.textColor = .white
         button.setTitle("Set status", for: .normal)
@@ -64,7 +62,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var statusTextField: TextFieldWithPadding = {
         let screenWidth = UIScreen.main.bounds.width
         let textField = TextFieldWithPadding()
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
         textField.textColor = .black
         textField.attributedPlaceholder = NSAttributedString(
@@ -105,28 +102,30 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.statusTextField.layer.cornerRadius = 12
         self.statusTextField.layer.borderWidth = 1
 
-        NSLayoutConstraint.activate([
-            self.avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            self.avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.avatarImageView.widthAnchor.constraint(equalToConstant: 110),
-            self.avatarImageView.heightAnchor.constraint(equalToConstant: 110),
+        avatarImageView.snp.makeConstraints { make in
+            make.top.leading.equalTo(self).offset(16)
+            make.width.height.equalTo(110)
+        }
 
-            self.labelStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
-            self.labelStack.leadingAnchor.constraint(equalTo: self.avatarImageView.trailingAnchor, constant: 17),
-            self.labelStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.labelStack.heightAnchor.constraint(equalToConstant: 81),
-
-            self.setStatusButton.topAnchor.constraint(equalTo: self.statusTextField.bottomAnchor, constant: 10),
-            self.setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            self.setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-            self.setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-
-            self.statusTextField.topAnchor.constraint(equalTo: self.labelStack.bottomAnchor, constant: 10),
-            self.statusTextField.leadingAnchor.constraint(equalTo: self.labelStack.leadingAnchor),
-            self.statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.statusTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
+        labelStack.snp.makeConstraints { make in
+            make.top.equalTo(self).offset(27)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(17)
+            make.trailing.equalTo(self).offset(-16)
+            make.height.equalTo(81)
+        }
+        setStatusButton.snp.makeConstraints { make in
+            make.top.equalTo(statusTextField.snp.bottom).offset(10)
+            make.leading.equalTo(self).offset(16)
+            make.bottom.equalTo(self).offset(-10)
+            make.trailing.equalTo(self).offset(-16)
+            make.height.equalTo(50)
+        }
+        statusTextField.snp.makeConstraints { make in
+            make.top.equalTo(labelStack.snp.bottom).offset(10)
+            make.leading.equalTo(labelStack.snp.leading).offset(20)
+            make.trailing.equalTo(self).offset(-16)
+            make.height.equalTo(40)
+        }
     }
 
     @objc private func buttonPresed () {
@@ -171,7 +170,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
                                 options: .calculationModeCubic) {
             UIView.addKeyframe(withRelativeStartTime: 0,
                                relativeDuration: 0.5/0.8) {
-                //Не понимаю как отсюда достучаться до размеров и центра view на котором будет размещен tableView, создавать на фулскрин вью еще одну аваторку и её двигать, а эту прятать, мне кажется не правильным.
                 self.avatarImageView.transform = CGAffineTransform(scaleX: UIScreen.main.bounds.width / self.avatarImageView.bounds.width, y: UIScreen.main.bounds.width / self.avatarImageView.bounds.width)
                 self.avatarImageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
                 self.avatarImageView.layer.cornerRadius = 0
