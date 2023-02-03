@@ -24,6 +24,7 @@ class ProfileViewController: UIViewController {
 
     let ncObserver = NotificationCenter.default
     let notification = NotificationCenter.default
+    let user: User?
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -55,6 +56,16 @@ class ProfileViewController: UIViewController {
         cancelButton.alpha = 0
         return cancelButton
     }()
+
+    init(user: User?) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,6 +164,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             guard let headrView = tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.MyHeadView) as? ProfileHeaderView else {
                 return nil
             }
+            headrView.setupUser(user!)
             return headrView
         }
         return nil

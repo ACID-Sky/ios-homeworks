@@ -16,7 +16,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var avatarImageView: UIImageView = {
         let avatarImage = UIImageView()
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
-        avatarImage.image = UIImage(named: "Avatar")
+//        avatarImage.image = UIImage(named: "Avatar")
         avatarImage.clipsToBounds = true
         avatarImage.isUserInteractionEnabled = true
         return avatarImage
@@ -36,7 +36,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         let nick = UILabel()
         nick.font = UIFont.boldSystemFont(ofSize: 18)
         nick.textColor = UIColor.black
-        nick.text = "ACID Sky"
+//        nick.text = "ACID Sky"
         return nick
     }()
 
@@ -44,7 +44,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         let status = UILabel()
         status.font = status.font.withSize(14)
         status.textColor = UIColor.gray
-        status.text = "I’m here."
+//        status.text = "I’m here."
         return status
     }()
 
@@ -127,6 +127,12 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             self.statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             self.statusTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
+    }
+
+    func setupUser(_ user:User) {
+        self.avatarImageView.image = user.avatar
+        self.fullNameLabel.text = user.fullName
+        self.statusLabel.text = user.status
     }
 
     @objc private func buttonPresed () {

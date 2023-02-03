@@ -9,6 +9,8 @@ import UIKit
 
 class LogInViewController: UIViewController {
 
+    private let authorizationService: UserService
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,6 +92,16 @@ class LogInViewController: UIViewController {
         button.addTarget(self, action:  #selector(buttonPresed), for: .touchUpInside)
         return button
     }()
+
+    init(authorizationService: UserService) {
+        self.authorizationService = authorizationService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -187,8 +199,18 @@ class LogInViewController: UIViewController {
         password = passwordTextField.text
         loginTextField.text = nil
         passwordTextField.text = nil
-        let profile = ProfileViewController()
-        self.navigationController?.pushViewController(profile, animated: true)
+        if let user = authorizationService.authorization(login ?? "") {
+            let profile = ProfileViewController(user: user)
+            self.navigationController?.pushViewController(profile, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Вы ввели не верный login!", message: "Login не соответствует нашим данным. Попробуйте еще раз.", preferredStyle: .alert)
+
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+
+            alert.addAction(okAction)
+
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
 }
