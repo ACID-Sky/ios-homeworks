@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         let tabBarController = UITabBarController()
-        let loginViewController = UINavigationController(rootViewController: LogInViewController(authorizationService: CurrentUserService()))
+        let loginViewController = UINavigationController(rootViewController: LogInViewController(authorizationService: ConfigurationScheme.userService))
         let feedViewController = UINavigationController(rootViewController: FeedViewController())
 
 

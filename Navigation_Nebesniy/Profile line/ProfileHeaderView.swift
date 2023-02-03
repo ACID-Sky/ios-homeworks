@@ -16,7 +16,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var avatarImageView: UIImageView = {
         let avatarImage = UIImageView()
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
-//        avatarImage.image = UIImage(named: "Avatar")
         avatarImage.clipsToBounds = true
         avatarImage.isUserInteractionEnabled = true
         return avatarImage
@@ -36,7 +35,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         let nick = UILabel()
         nick.font = UIFont.boldSystemFont(ofSize: 18)
         nick.textColor = UIColor.black
-//        nick.text = "ACID Sky"
         return nick
     }()
 
@@ -44,7 +42,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         let status = UILabel()
         status.font = status.font.withSize(14)
         status.textColor = UIColor.gray
-//        status.text = "I’m here."
         return status
     }()
 
@@ -177,14 +174,13 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
                                 options: .calculationModeCubic) {
             UIView.addKeyframe(withRelativeStartTime: 0,
                                relativeDuration: 0.5/0.8) {
-                //Не понимаю как отсюда достучаться до размеров и центра view на котором будет размещен tableView, создавать на фулскрин вью еще одну аваторку и её двигать, а эту прятать, мне кажется не правильным.
                 self.avatarImageView.transform = CGAffineTransform(scaleX: UIScreen.main.bounds.width / self.avatarImageView.bounds.width, y: UIScreen.main.bounds.width / self.avatarImageView.bounds.width)
                 self.avatarImageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
                 self.avatarImageView.layer.cornerRadius = 0
                 self.avatarImageView.layer.borderWidth = 0
                 self.notification.post(name: Notification.Name("FullScreenViewChageAlpha"), object: nil)
             }
-            UIView.addKeyframe(withRelativeStartTime: 0.5/0.8, // 1.25 sec.
+            UIView.addKeyframe(withRelativeStartTime: 0.5/0.8, 
                                relativeDuration: 0.3/0.8) {
                 self.notification.post(name: Notification.Name("cancelButtonChangeAlpha"), object: nil)
             }

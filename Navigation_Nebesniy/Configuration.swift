@@ -16,4 +16,12 @@ enum ConfigurationScheme {
         #endif
 
     }
+
+    static var userService: UserService {
+        #if DEBUG
+        return TestUserServic()
+        #else
+        return CurrentUserService()
+        #endif
+    }
 }
