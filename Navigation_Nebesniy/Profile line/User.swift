@@ -9,8 +9,15 @@ import UIKit
 
 final class User {
 
-    var login: String = "ACID"
-    var fullName: String = "Nebesnyi Aleksei"
-    var avatar: UIImage = UIImage(named: "Avatar")!
-    var status: String = "God please give me the strength to finish my day and hide the bodies of those that annoy me."
+    let login: String
+    let fullName: String
+    let status: String
+    let avatar: UIImage
+
+    init(login: String, fullName: String, status: String, avatarImage: UIImage?) {
+        self.login = login
+        self.fullName = fullName
+        self.status = status
+        self.avatar = avatarImage ?? UIImage(systemName: "person.crop.circle")!
+    }
 }

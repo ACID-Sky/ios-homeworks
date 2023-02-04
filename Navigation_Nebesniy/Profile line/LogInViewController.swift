@@ -10,6 +10,7 @@ import UIKit
 class LogInViewController: UIViewController {
 
     private let authorizationService: UserService
+    var loginDelegate: LoginViewControllerDelegate?
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -195,15 +196,12 @@ class LogInViewController: UIViewController {
     }
 
     @objc private func buttonPresed () {
-        login = loginTextField.text
-        password = passwordTextField.text
-        loginTextField.text = nil
-        passwordTextField.text = nil
-        if let user = authorizationService.authorization(login ?? "") {
+        let aprovedUser = loginDelegate?.check(login: loginTextField.text ?? "", password: passwordTextField.text ?? "")
+        if let user = authorizationService.authorization(aprovedUser ?? "") {
             let profile = ProfileViewController(user: user)
             self.navigationController?.pushViewController(profile, animated: true)
-        } else {
-            let alert = UIAlertController(title: "Вы ввели не верный login!", message: "Login не соответствует нашим данным. Попробуйте еще раз.", preferredStyle: .alert)
+        }else {
+            let alert = UIAlertController(title: "Вы ввели не верный Login или Password!", message: "Login или Password не соответствует нашим данным. Попробуйте еще раз.", preferredStyle: .alert)
 
             let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
 
@@ -211,6 +209,7 @@ class LogInViewController: UIViewController {
 
             self.present(alert, animated: true, completion: nil)
         }
+        passwordTextField.text = nil
     }
 
 }

@@ -14,31 +14,30 @@ protocol UserService: AnyObject {
 
 final class CurrentUserService: UserService {
 
-    let user = User()
+    private lazy var user: User = {
+        let user = User(login: "ACID",
+                        fullName: "Nebesnyi Aleksei",
+                        status: "God please give me the strength to finish my day and hide the bodies of those that annoy me.",
+                        avatarImage: UIImage(named: "Avatar"))
+        return user
+    }()
     
     func authorization(_ login: String) -> User? {
-        if login == user.login {
-            return user
-        }
-        return nil
+        login == user.login ? user : nil
     }
 }
 
 final class TestUserServic: UserService {
 
     private lazy var user: User = {
-        let user = User()
-        user.login = "ACID"
-        user.fullName = "Testerov Tester"
-        user.status = "I’m quite aware of my own inadequacies."
-        user.avatar = UIImage(named: "images-6")!
+        let user = User(login: "ACID",
+                        fullName: "Testerov Tester",
+                        status: "I’m quite aware of my own inadequacies.",
+                        avatarImage: UIImage(named: "images-6"))
         return user
     }()
 
     func authorization(_ login: String) -> User? {
-        if login == user.login {
-            return user
-        }
-        return nil
+        login == user.login ? user : nil
     }
 }
