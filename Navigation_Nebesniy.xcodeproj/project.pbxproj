@@ -36,6 +36,7 @@
 		76B63AD5298D2F7000BB30CC /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B63AD4298D2F7000BB30CC /* Checker.swift */; };
 		76B63AD7298D486600BB30CC /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B63AD6298D486600BB30CC /* LoginInspector.swift */; };
 		76B7C7482841FF5800524F3F /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B7C7472841FF5800524F3F /* InfoViewController.swift */; };
+		76B869BB298E990A00CA29E3 /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869BA298E990A00CA29E3 /* LoginFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		76B63AD6298D486600BB30CC /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
 		76B7C7452841EB1400524F3F /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		76B7C7472841FF5800524F3F /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		76B869BA298E990A00CA29E3 /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +237,7 @@
 				763AE9B2298BE97200E18171 /* UserService.swift */,
 				76B63AD4298D2F7000BB30CC /* Checker.swift */,
 				76B63AD6298D486600BB30CC /* LoginInspector.swift */,
+				76B869BA298E990A00CA29E3 /* LoginFactory.swift */,
 				762E47F52858B6BE00ECAA31 /* LogInViewController.swift */,
 				7630D2F6284CB78600331B0E /* ProfileHeaderView.swift */,
 				7675564B2841256100E1F03A /* ProfileViewController.swift */,
@@ -395,6 +398,7 @@
 				7675564C2841256100E1F03A /* ProfileViewController.swift in Sources */,
 				7675564A284100D300E1F03A /* FeedViewController.swift in Sources */,
 				76B63AD7298D486600BB30CC /* LoginInspector.swift in Sources */,
+				76B869BB298E990A00CA29E3 /* LoginFactory.swift in Sources */,
 				76AE5A00297EA26200C8C31B /* Configuration.swift in Sources */,
 				763AE9B1298BE2C000E18171 /* User.swift in Sources */,
 				762E47F428573CEF00ECAA31 /* TextFieldWithPadding.swift in Sources */,
