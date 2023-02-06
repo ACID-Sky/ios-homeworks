@@ -59,6 +59,7 @@ class LogInViewController: UIViewController {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
         )
         login.delegate = self
+        login.text = "ACID"
         login.font = login.font?.withSize(15)
         return login
     }()
@@ -77,6 +78,7 @@ class LogInViewController: UIViewController {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
         )
         password.delegate = self
+        password.text = "Qwerty"
         password.font = password.font?.withSize(15)
         return password
     }()
