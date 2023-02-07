@@ -57,6 +57,7 @@ class PhotosViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.isHidden = true
+        photoNotification.removeSubscription(for: self)
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -74,10 +75,6 @@ class PhotosViewController: UIViewController {
             self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
-    }
-
-    deinit {
-        photoNotification.removeSubscription(for: self)
     }
 }
 
@@ -119,6 +116,6 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 extension PhotosViewController: ImageLibrarySubscriber {
     func receive(images: [UIImage]) {
         photoCollection = images
-        collectionView.insertItems(at: [[0, images.count - 1]])
+        collectionView.reloadData()
     }
 }
