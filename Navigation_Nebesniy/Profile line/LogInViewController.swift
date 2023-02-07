@@ -86,15 +86,13 @@ class LogInViewController: UIViewController {
     private var login: String?
     private var password: String?
 
-    private lazy var loginButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel")!)
-        button.titleLabel?.textColor = .white
-        button.setTitle("Login in", for: .normal)
-        button.addTarget(self, action:  #selector(buttonPresed), for: .touchUpInside)
-        return button
-    }()
+    private lazy var loginButton = CustomButton(title: "Login in",
+                                        titleColor: .white,
+                                        backgroundColor: UIColor(patternImage: UIImage(named: "blue_pixel")!),
+                                        shadowRadius: 0,
+                                        shadowOpacity: 0,
+                                        shadowOffset: CGSize(width: 0, height: 0))
+
 
     init(authorizationService: UserService) {
         self.authorizationService = authorizationService
@@ -111,6 +109,9 @@ class LogInViewController: UIViewController {
         self.view.backgroundColor = .white
         self.setupView()
         self.setupGestures()
+        loginButton.tapAction = { [weak self] in
+            self!.buttonPresed()
+        }
     }
 
     private func setupGestures() {

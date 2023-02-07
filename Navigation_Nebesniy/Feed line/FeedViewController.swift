@@ -20,25 +20,19 @@ class FeedViewController: UIViewController {
         return verticalStack
     }()
 
-        private lazy var button: UIButton = {
-            let screenWidth = UIScreen.main.bounds.width
-            let button = UIButton()
-            button.backgroundColor = .systemGray
-            button.setTitle("To post.", for: .normal)
-            button.addTarget(self, action:  #selector(didTapButton), for: .touchUpInside)
-
-            return button
-        }()
+    private lazy var button = CustomButton(title: "To post.",
+                                           titleColor: .white,
+                                           backgroundColor: .systemGray,
+                                           shadowRadius: 4.0,
+                                           shadowOpacity: 0.7,
+                                           shadowOffset: CGSize(width: 4, height: 4))
     
-    private lazy var button2: UIButton = {
-        let screenWidth = UIScreen.main.bounds.width
-        let button2 = UIButton()
-        button2.backgroundColor = .systemBlue
-        button2.setTitle("To post too.", for: .normal)
-        button2.addTarget(self, action:  #selector(didTapButton), for: .touchUpInside)
-
-        return button2
-    }()
+    private lazy var button2 = CustomButton(title: "To post too.",
+                                            titleColor: .white,
+                                            backgroundColor: .systemBlue,
+                                            shadowRadius: 4.0,
+                                            shadowOpacity: 0.7,
+                                            shadowOffset: CGSize(width: 4, height: 4))
 
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -48,6 +42,12 @@ class FeedViewController: UIViewController {
             self.view.addSubview(self.buttonVerticalStack)
             self.buttonVerticalStack.addArrangedSubview(self.button)
             self.buttonVerticalStack.addArrangedSubview(self.button2)
+            button.tapAction = { [weak self] in
+                self!.didTapButton()
+            }
+            button2.tapAction = { [weak self] in
+                self!.didTapButton()
+            }
 
             NSLayoutConstraint.activate([
                 self.buttonVerticalStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),

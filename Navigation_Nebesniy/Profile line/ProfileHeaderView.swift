@@ -45,18 +45,13 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         return status
     }()
 
-    private lazy var setStatusButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemBlue
-        button.titleLabel?.textColor = .white
-        button.setTitle("Set status", for: .normal)
-        button.layer.shadowRadius = 4.0
-        button.layer.shadowOpacity = 0.7
-        button.layer.shadowOffset = CGSize(width: 4, height: 4)
-        button.addTarget(self, action:  #selector(buttonPresed), for: .touchUpInside)
-        return button
-    }()
+    private lazy var setStatusButton = CustomButton(title: "Set status",
+                                                   titleColor: .white,
+                                                   backgroundColor: .systemBlue,
+                                                   shadowRadius: 4.0,
+                                                   shadowOpacity: 0.7,
+                                                   shadowOffset: CGSize(width: 4, height: 4))
+
 
     private lazy var statusTextField: TextFieldWithPadding = {
         let screenWidth = UIScreen.main.bounds.width
@@ -82,6 +77,9 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.setupView()
         self.setupGestures()
         ncObserver.addObserver(self, selector: #selector(self.changeAvatar), name: Notification.Name("AvatarChange"), object: nil)
+        setStatusButton.tapAction = { [weak self] in
+            self!.buttonPresed()
+        }
     }
     
     required init?(coder: NSCoder) {

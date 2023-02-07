@@ -38,6 +38,7 @@
 		76B7C7482841FF5800524F3F /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B7C7472841FF5800524F3F /* InfoViewController.swift */; };
 		76B869BB298E990A00CA29E3 /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869BA298E990A00CA29E3 /* LoginFactory.swift */; };
 		76B869BE29910B0500CA29E3 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 76B869BD29910B0500CA29E3 /* iOSIntPackage */; };
+		76B869C12992579200CA29E3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869C02992579200CA29E3 /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,7 @@
 		76B7C7452841EB1400524F3F /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		76B7C7472841FF5800524F3F /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		76B869BA298E990A00CA29E3 /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
+		76B869C02992579200CA29E3 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 		76755628283FA95A00E1F03A /* Navigation_Nebesniy */ = {
 			isa = PBXGroup;
 			children = (
+				76B869BF2992576C00CA29E3 /* CustomButton */,
 				76755629283FA95A00E1F03A /* AppDelegate.swift */,
 				7675562B283FA95A00E1F03A /* SceneDelegate.swift */,
 				762E47F328573CEF00ECAA31 /* TextFieldWithPadding.swift */,
@@ -247,6 +250,14 @@
 				76B4B6EC29746B2500500F00 /* Photos */,
 			);
 			path = "Profile line";
+			sourceTree = "<group>";
+		};
+		76B869BF2992576C00CA29E3 /* CustomButton */ = {
+			isa = PBXGroup;
+			children = (
+				76B869C02992579200CA29E3 /* CustomButton.swift */,
+			);
+			path = CustomButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -416,6 +427,7 @@
 				76B4B6EE29746B6700500F00 /* PhotosCollectionViewCell.swift in Sources */,
 				76AE59FE297E93E600C8C31B /* PostData.swift in Sources */,
 				76B4B6EB297417B400500F00 /* PhotosViewController.swift in Sources */,
+				76B869C12992579200CA29E3 /* CustomButton.swift in Sources */,
 				7630D2F7284CB78600331B0E /* ProfileHeaderView.swift in Sources */,
 				76B4B6F029746FBB00500F00 /* PhotoData.swift in Sources */,
 				762E47FC285B824D00ECAA31 /* PostTableViewCell.swift in Sources */,
