@@ -39,6 +39,7 @@
 		76B869BB298E990A00CA29E3 /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869BA298E990A00CA29E3 /* LoginFactory.swift */; };
 		76B869BE29910B0500CA29E3 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 76B869BD29910B0500CA29E3 /* iOSIntPackage */; };
 		76B869C12992579200CA29E3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869C02992579200CA29E3 /* CustomButton.swift */; };
+		76B869C329927D4D00CA29E3 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869C229927D4D00CA29E3 /* FeedModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		76B7C7472841FF5800524F3F /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		76B869BA298E990A00CA29E3 /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
 		76B869C02992579200CA29E3 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		76B869C229927D4D00CA29E3 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 		76B7C7492842683200524F3F /* Feed line */ = {
 			isa = PBXGroup;
 			children = (
+				76B869C229927D4D00CA29E3 /* FeedModel.swift */,
 				76755649284100D300E1F03A /* FeedViewController.swift */,
 				76B7C74A2842687C00524F3F /* Post */,
 			);
@@ -413,6 +416,7 @@
 				76B63AD5298D2F7000BB30CC /* Checker.swift in Sources */,
 				76B7C7482841FF5800524F3F /* InfoViewController.swift in Sources */,
 				7675562A283FA95A00E1F03A /* AppDelegate.swift in Sources */,
+				76B869C329927D4D00CA29E3 /* FeedModel.swift in Sources */,
 				7675562C283FA95A00E1F03A /* SceneDelegate.swift in Sources */,
 				7675564C2841256100E1F03A /* ProfileViewController.swift in Sources */,
 				7675564A284100D300E1F03A /* FeedViewController.swift in Sources */,
