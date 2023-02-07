@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class PhotosViewController: UIViewController {
 
@@ -17,6 +18,9 @@ class PhotosViewController: UIViewController {
         static let inset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         static let spacing: CGFloat = 8
     }
+
+    private let photoNotification = ImagePublisherFacade()
+    private lazy var photoCollection: [UIImage] = []
 
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -39,15 +43,21 @@ class PhotosViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        photoNotification.subscribe(self)
+
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.title = "Photo Gallery"
         self.setupView()
+        photoNotification.addImagesWithTimer(time: 0.5,
+                                   repeat: photos.count,
+                                   userImages: photos)
         
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.isHidden = true
+        photoNotification.removeSubscription(for: self)
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -75,7 +85,8 @@ extension PhotosViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        for (index, photo) in photos.enumerated() where indexPath.item == index {
+
+        for (index, photo) in photoCollection.enumerated() where indexPath.item == index {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.photoCellID, for: indexPath) as? PhotosCollectionViewCell else {
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.defaultCellID, for: indexPath)
                     return cell
@@ -99,5 +110,12 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         let width = collectionView.frame.width - (Constants.numberOfColumns - 1) * interitemSpacing - sectionInset.left - sectionInset.right
         let itemWidth = floor(width / Constants.numberOfColumns)
         return CGSize(width: itemWidth, height: itemWidth)
+    }
+}
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        photoCollection = images
+        collectionView.reloadData()
     }
 }
