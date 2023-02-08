@@ -9,15 +9,19 @@ import UIKit
 
 class CustomButton: UIButton {
 
-    var tapAction: (() -> Void)?
+    typealias Action = () -> Void
+
+    var tapAction: Action
 
     init(title: String,
          titleColor: UIColor,
          backgroundColor: UIColor,
          shadowRadius: CGFloat,
          shadowOpacity: Float,
-         shadowOffset: CGSize) {
+         shadowOffset: CGSize,
+         action: @escaping Action) {
 
+        tapAction = action
         super.init(frame: .zero)
 
         self.setTitle(title, for: .normal)
@@ -36,7 +40,7 @@ class CustomButton: UIButton {
     }
 
     @objc private func buttonTapped() {
-        tapAction?()
+        tapAction()
     }
 
 }

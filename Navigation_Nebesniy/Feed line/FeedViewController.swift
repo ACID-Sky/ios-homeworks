@@ -25,14 +25,20 @@ class FeedViewController: UIViewController {
                                            backgroundColor: .systemGray,
                                            shadowRadius: 4.0,
                                            shadowOpacity: 0.7,
-                                           shadowOffset: CGSize(width: 4, height: 4))
+                                           shadowOffset: CGSize(width: 4, height: 4),
+                                           action: { [weak self] in
+                                                self!.didTapButton()
+                                            })
     
     private lazy var button2 = CustomButton(title: "To post too.",
                                             titleColor: .white,
                                             backgroundColor: .systemBlue,
                                             shadowRadius: 4.0,
                                             shadowOpacity: 0.7,
-                                            shadowOffset: CGSize(width: 4, height: 4))
+                                            shadowOffset: CGSize(width: 4, height: 4),
+                                            action: { [weak self] in
+                                                self!.didTapButton()
+                                            })
 
     private lazy var textField: UITextField = {
         let secretWord = UITextField()
@@ -46,7 +52,7 @@ class FeedViewController: UIViewController {
             string: "Enter secretWord",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
         )
-//        secretWord.delegate = self
+        secretWord.delegate = self
         secretWord.text = "Gnusmas"
         secretWord.font = secretWord.font?.withSize(15)
         return secretWord
@@ -57,7 +63,14 @@ class FeedViewController: UIViewController {
                                                      backgroundColor: .systemMint,
                                                      shadowRadius: 4.0,
                                                      shadowOpacity: 0.7,
-                                                     shadowOffset: CGSize(width: 4, height: 4))
+                                                     shadowOffset: CGSize(width: 4, height: 4),
+                                                     action: { [weak self] in
+        if ((self?.feedModel.check(word: self?.textField.text ?? "_")) ?? false) {
+            self?.answerLabel.backgroundColor = .systemGreen
+        } else {
+            self?.answerLabel.backgroundColor = .systemRed
+        }
+    })
 
     private lazy var answerLabel: UILabel = {
         let label = UILabel()
@@ -66,11 +79,11 @@ class FeedViewController: UIViewController {
         return label
     }()
 
-    private let secretWorld: FeedModelProtocol
+    private let feedModel: FeedModelProtocol
 
    
-    init(secretWorld: FeedModelProtocol) {
-        self.secretWorld = secretWorld
+    init(feedModel: FeedModelProtocol) {
+        self.feedModel = feedModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -85,6 +98,7 @@ class FeedViewController: UIViewController {
         self.view.backgroundColor = .gray
         self.navigationItem.title = "Feed"
         setupView()
+        setupGestures()
     }
 
     private func setupView() {
@@ -102,21 +116,6 @@ class FeedViewController: UIViewController {
         self.checkGuessButton.layer.cornerRadius = 10
         self.checkGuessButton.layer.borderWidth = 0.5
         self.checkGuessButton.layer.borderColor = borderColor.cgColor
-
-        button.tapAction = { [weak self] in
-            self!.didTapButton()
-        }
-        button2.tapAction = { [weak self] in
-            self!.didTapButton()
-        }
-
-        checkGuessButton.tapAction = { [weak self] in
-            if ((self?.secretWorld.check(word: self?.textField.text ?? "_")) ?? false) {
-                self?.answerLabel.backgroundColor = .systemGreen
-            } else {
-                self?.answerLabel.backgroundColor = .systemRed
-            }
-        }
 
         NSLayoutConstraint.activate([
             self.buttonVerticalStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
@@ -139,10 +138,28 @@ class FeedViewController: UIViewController {
         ])
     }
 
-        @objc private func didTapButton () {
-            let postView = PostViewControlle ()
-            postView.post = Post(author: "Hello World", description: "", image: "", likes: 2, views: 3)
-            self.navigationController?.pushViewController(postView, animated: true)
-        }
-
+    private func setupGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.forcedHidingKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
     }
+
+    @objc private func didTapButton () {
+        let postView = PostViewControlle ()
+        postView.post = Post(author: "Hello World", description: "", image: "", likes: 2, views: 3)
+        self.navigationController?.pushViewController(postView, animated: true)
+    }
+
+    @objc private func forcedHidingKeyboard() {
+        self.view.endEditing(true)
+    }
+
+}
+
+extension FeedViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.forcedHidingKeyboard()
+        return true
+    }
+
+}

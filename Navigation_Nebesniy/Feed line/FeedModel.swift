@@ -16,10 +16,6 @@ final class FeedModel: FeedModelProtocol {
     let secretWord = "Gnusmas"
 
     func check(word: String) -> Bool {
-        if word == secretWord {
-            return true
-        } else{
-            return false
-        }
+        word == secretWord
     }
 }

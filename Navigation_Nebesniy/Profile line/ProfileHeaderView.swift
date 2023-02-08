@@ -46,11 +46,14 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
 
     private lazy var setStatusButton = CustomButton(title: "Set status",
-                                                   titleColor: .white,
-                                                   backgroundColor: .systemBlue,
-                                                   shadowRadius: 4.0,
-                                                   shadowOpacity: 0.7,
-                                                   shadowOffset: CGSize(width: 4, height: 4))
+                                                    titleColor: .white,
+                                                    backgroundColor: .systemBlue,
+                                                    shadowRadius: 4.0,
+                                                    shadowOpacity: 0.7,
+                                                    shadowOffset: CGSize(width: 4, height: 4),
+                                                    action: { [weak self] in
+                                                        self!.buttonPresed()
+                                                    })
 
 
     private lazy var statusTextField: TextFieldWithPadding = {
@@ -77,9 +80,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.setupView()
         self.setupGestures()
         ncObserver.addObserver(self, selector: #selector(self.changeAvatar), name: Notification.Name("AvatarChange"), object: nil)
-        setStatusButton.tapAction = { [weak self] in
-            self!.buttonPresed()
-        }
     }
     
     required init?(coder: NSCoder) {
