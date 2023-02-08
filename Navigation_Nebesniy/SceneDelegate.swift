@@ -34,8 +34,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
         let loginController = LogInViewController(authorizationService: ConfigurationScheme.userService)
         loginController.loginDelegate = MyLoginFactory().makeLoginInspector()
+        let feedModel = FeedModel()
         let loginViewController = UINavigationController(rootViewController: loginController)
-        let feedViewController = UINavigationController(rootViewController: FeedViewController())
+        let feedViewController = UINavigationController(rootViewController: FeedViewController(feedModel: feedModel))
 
         tabBarController.viewControllers = [
             loginViewController,
