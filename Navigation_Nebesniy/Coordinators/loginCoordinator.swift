@@ -7,15 +7,22 @@
 
 import UIKit
 
-final class LoginCoordinator: Coordinatable {
+//final class LoginCoordinator: Coordinatable {
+final class LoginCoordinator: ModuleCoordinatable {
+    var moduleType: Module.ModuleType
 
     private(set) var childCoordinators: [Coordinatable] = []
+    private(set) var module: Module?
+
+    init(moduleType: Module.ModuleType) {
+        self.moduleType = moduleType
+    }
 
     func start() -> UIViewController {
         let loginController = LogInViewController(authorizationService: ConfigurationScheme.userService)
         loginController.loginDelegate = MyLoginFactory().makeLoginInspector()
         let loginViewController = UINavigationController(rootViewController: loginController)
-        loginViewController.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle"), tag: 1)
+        loginViewController.tabBarItem = moduleType.tabBarItem 
         return loginViewController
     }
 }

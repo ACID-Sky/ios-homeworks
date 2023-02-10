@@ -6,84 +6,15 @@
 //
 
 import UIKit
-import StorageService
 
-class FeedViewController: UIViewController {
+final class FeedViewController: UIViewController {
 
-    private lazy var buttonVerticalStack: UIStackView = {
-        let verticalStack = UIStackView()
-        verticalStack.translatesAutoresizingMaskIntoConstraints = false
-        verticalStack.axis = .vertical
-        verticalStack.spacing = 10
-        verticalStack.distribution = .equalCentering
+    private let viewModel: FeedViewModelProtocol
 
-        return verticalStack
-    }()
+    private lazy var feedView = FeedView(delegate: self)
 
-    private lazy var button = CustomButton(title: "To post.",
-                                           titleColor: .white,
-                                           backgroundColor: .systemGray,
-                                           shadowRadius: 4.0,
-                                           shadowOpacity: 0.7,
-                                           shadowOffset: CGSize(width: 4, height: 4),
-                                           action: { [weak self] in
-                                                self!.didTapButton()
-                                            })
-    
-    private lazy var button2 = CustomButton(title: "To post too.",
-                                            titleColor: .white,
-                                            backgroundColor: .systemBlue,
-                                            shadowRadius: 4.0,
-                                            shadowOpacity: 0.7,
-                                            shadowOffset: CGSize(width: 4, height: 4),
-                                            action: { [weak self] in
-                                                self!.didTapButton()
-                                            })
-
-    private lazy var textField: UITextField = {
-        let secretWord = UITextField()
-        secretWord.translatesAutoresizingMaskIntoConstraints = false
-        secretWord.tag = 1
-        secretWord.backgroundColor = .systemGray6
-        secretWord.textColor = .black
-        secretWord.font = UIFont.systemFont(ofSize: 16)
-        secretWord.autocapitalizationType = .none
-        secretWord.attributedPlaceholder = NSAttributedString(
-            string: "Enter secretWord",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
-        )
-        secretWord.delegate = self
-        secretWord.text = "Gnusmas"
-        secretWord.font = secretWord.font?.withSize(15)
-        return secretWord
-    }()
-
-    private lazy var checkGuessButton = CustomButton(title: "Check text.",
-                                                     titleColor: .white,
-                                                     backgroundColor: .systemMint,
-                                                     shadowRadius: 4.0,
-                                                     shadowOpacity: 0.7,
-                                                     shadowOffset: CGSize(width: 4, height: 4),
-                                                     action: { [weak self] in
-        if ((self?.feedModel.check(word: self?.textField.text ?? "_")) ?? false) {
-            self?.answerLabel.backgroundColor = .systemGreen
-        } else {
-            self?.answerLabel.backgroundColor = .systemRed
-        }
-    })
-
-    private lazy var answerLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.backgroundColor = .systemGray2
-        return label
-    }()
-
-    private let feedModel: FeedModelProtocol
-
-   
-    init(feedModel: FeedModelProtocol) {
-        self.feedModel = feedModel
+    init(viewModel: FeedViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -92,74 +23,42 @@ class FeedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func loadView() {
+        super.loadView()
+        self.view = feedView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .gray
         self.navigationItem.title = "Feed"
-        setupView()
-        setupGestures()
+        bindViewModel()
     }
 
-    private func setupView() {
-        self.view.addSubview(self.buttonVerticalStack)
-        self.buttonVerticalStack.addArrangedSubview(self.button)
-        self.buttonVerticalStack.addArrangedSubview(self.button2)
-        self.view.addSubview(textField)
-        self.view.addSubview(checkGuessButton)
-        self.view.addSubview(answerLabel)
-
-        let borderColor = UIColor.lightGray
-        self.textField.layer.cornerRadius = 10
-        self.textField.layer.borderWidth = 0.5
-        self.textField.layer.borderColor = borderColor.cgColor
-        self.checkGuessButton.layer.cornerRadius = 10
-        self.checkGuessButton.layer.borderWidth = 0.5
-        self.checkGuessButton.layer.borderColor = borderColor.cgColor
-
-        NSLayoutConstraint.activate([
-            self.buttonVerticalStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.buttonVerticalStack.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-
-            self.textField.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            self.textField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            self.textField.trailingAnchor.constraint(equalTo:self.view.trailingAnchor, constant: -16),
-            self.textField.heightAnchor.constraint(equalToConstant: 40),
-
-            self.checkGuessButton.topAnchor.constraint(equalTo: self.textField.bottomAnchor, constant: 16),
-            self.checkGuessButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            self.checkGuessButton.trailingAnchor.constraint(equalTo:self.view.trailingAnchor, constant: -16),
-            self.checkGuessButton.heightAnchor.constraint(equalToConstant: 40),
-
-            self.answerLabel.topAnchor.constraint(equalTo: self.checkGuessButton.bottomAnchor, constant: 16),
-            self.answerLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            self.answerLabel.trailingAnchor.constraint(equalTo:self.view.trailingAnchor, constant: -16),
-            self.answerLabel.heightAnchor.constraint(equalToConstant: 40),
-        ])
+    func bindViewModel() {
+        viewModel.onStateDidChange = { [weak self] state in
+            guard let self = self else {
+                return
+            }
+            switch state {
+            case .initial:
+                self.feedView.answerLabel.backgroundColor = .systemGray2
+            case .correctly:
+                self.feedView.answerLabel.backgroundColor = .systemGreen
+            case .wrong:
+                self.feedView.answerLabel.backgroundColor =  .systemRed
+            }
+        }
     }
-
-    private func setupGestures() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.forcedHidingKeyboard))
-        self.view.addGestureRecognizer(tapGesture)
-    }
-
-    @objc private func didTapButton () {
-        let postView = PostViewControlle ()
-        postView.post = Post(author: "Hello World", description: "", image: "", likes: 2, views: 3)
-        self.navigationController?.pushViewController(postView, animated: true)
-    }
-
-    @objc private func forcedHidingKeyboard() {
-        self.view.endEditing(true)
-    }
-
 }
 
-extension FeedViewController: UITextFieldDelegate {
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.forcedHidingKeyboard()
-        return true
+extension FeedViewController: FeedViewDelegate {
+    func checkGuessButtonDidTap(word: String) {
+        viewModel.updateState(viewInput: .checkGuessButtonDidTap(word: word))
     }
 
+    func buttonDidTap() {
+        viewModel.updateState(viewInput: .buttonDidTap)
+    }
 }
