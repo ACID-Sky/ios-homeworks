@@ -8,7 +8,7 @@
 import UIKit
 import StorageService
 
-class PostViewControlle: UIViewController {
+class PostViewController: UIViewController {
 
     public var post: Post?
 
