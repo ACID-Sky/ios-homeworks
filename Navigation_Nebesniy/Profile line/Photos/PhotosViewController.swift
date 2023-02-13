@@ -19,8 +19,8 @@ class PhotosViewController: UIViewController {
         static let spacing: CGFloat = 8
     }
 
-    private let photoNotification = ImagePublisherFacade()
-    private lazy var photoCollection: [UIImage] = []
+    private let imageProcessor = ImageProcessor()
+    private lazy var photoCollection: [UIImage] = photos
 
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -43,21 +43,35 @@ class PhotosViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        photoNotification.subscribe(self)
 
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.title = "Photo Gallery"
         self.setupView()
-        photoNotification.addImagesWithTimer(time: 0.5,
-                                   repeat: photos.count,
-                                   userImages: photos)
-        
+        let startTime = Date().timeIntervalSince1970
+        imageProcessor.processImagesOnThread(sourceImages: photos, filter: .bloom(intensity: 2.0), qos: .background) {[weak self] photosArray in
+            DispatchQueue.main.async {
+                let endTime = Date().timeIntervalSince1970
+                let elapsedTime = endTime - startTime
+//                print("😂😂😂", elapsedTime)
+                for (index, photo) in photosArray.enumerated() {
+                    self?.photoCollection[index] =  UIImage(cgImage: photo!)
+                }
+                self?.collectionView.reloadData()
+            }
+        }
+
     }
+// время на выполнение:
+//        .userInteractive = 5.190279960632324 сек
+//        .default = 5.235573053359985 сек
+//        .userInitiated = 5.259421110153198 сек
+//        .utility = 6.189942121505737 сек
+//        .background = 12.087850093841553 сек
+
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar.isHidden = true
-        photoNotification.removeSubscription(for: self)
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -81,7 +95,7 @@ class PhotosViewController: UIViewController {
 extension PhotosViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return photoCollection.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -110,12 +124,5 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         let width = collectionView.frame.width - (Constants.numberOfColumns - 1) * interitemSpacing - sectionInset.left - sectionInset.right
         let itemWidth = floor(width / Constants.numberOfColumns)
         return CGSize(width: itemWidth, height: itemWidth)
-    }
-}
-
-extension PhotosViewController: ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        photoCollection = images
-        collectionView.reloadData()
     }
 }
