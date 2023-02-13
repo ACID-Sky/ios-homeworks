@@ -113,8 +113,5 @@ extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
         let itemWidth = floor(width / ProfileViewController.Constants.numberOfPhoto)
         return CGSize(width: itemWidth, height: itemWidth)
     }
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        print("Section \(indexPath)")
-//    }
 
 }
