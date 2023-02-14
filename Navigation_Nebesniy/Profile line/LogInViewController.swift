@@ -96,6 +96,21 @@ class LogInViewController: UIViewController {
                                                     self!.buttonPresed()
                                                 })
 
+    private lazy var generationPasswordButton = CustomButton(title: "Generation password.",
+                                                titleColor: .white,
+                                                             backgroundColor: .systemGreen,
+                                                shadowRadius: 0,
+                                                shadowOpacity: 0,
+                                                shadowOffset: CGSize(width: 0, height: 0),
+                                                action: { [weak self] in
+                                                    self!.generationPasswordButtonDidTap()
+                                                })
+
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
 
     init(authorizationService: UserService) {
         self.authorizationService = authorizationService
@@ -111,6 +126,8 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.setupView()
+        self.setupGenerationPasswordButton()
+        self.setupActivityIndicator()
         self.setupGestures()
     }
 
@@ -157,6 +174,31 @@ class LogInViewController: UIViewController {
             self.loginButton.heightAnchor.constraint(equalToConstant: 50)
         ])
 
+    }
+
+    private func setupGenerationPasswordButton() {
+        self.view.addSubview(generationPasswordButton)
+        self.generationPasswordButton.layer.cornerRadius = 10
+
+        NSLayoutConstraint.activate([
+            self.generationPasswordButton.topAnchor.constraint(equalTo: self.bigStackView.bottomAnchor, constant: 32),
+            self.generationPasswordButton.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 16),
+            self.generationPasswordButton.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor, constant: -16),
+            self.generationPasswordButton.heightAnchor.constraint(equalToConstant: 50),
+        ])
+    }
+
+    private func setupActivityIndicator() {
+        self.view.addSubview(activityIndicator)
+        activityIndicator.isHidden = true
+//        activityIndicator.startAnimating()
+
+        NSLayoutConstraint.activate([
+            self.activityIndicator.centerYAnchor.constraint(equalTo: self.passwordTextField.centerYAnchor),
+            self.activityIndicator.centerXAnchor.constraint(equalTo: self.passwordTextField.centerXAnchor),
+            self.activityIndicator.widthAnchor.constraint(equalToConstant: 50),
+            self.activityIndicator.heightAnchor.constraint(equalToConstant: 50),
+        ])
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -215,6 +257,32 @@ class LogInViewController: UIViewController {
         passwordTextField.text = nil
     }
 
+    @objc private func generationPasswordButtonDidTap () {
+        self.passwordTextField.isSecureTextEntry = true
+        let allowCharacters: [String] = String().printable.map { String($0) }
+        self.passwordTextField.text = ""
+        while self.passwordTextField.text!.count < 4 {
+            let indexCharacter = Int.random(in: 0..<allowCharacters.count)
+            self.passwordTextField.text! += allowCharacters[indexCharacter]
+        }
+
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+
+        let brute = BruteForсe()
+        let password: String = self.passwordTextField.text ?? "_"
+        DispatchQueue.global().async { [self] in
+            let startTime = Date().timeIntervalSince1970
+            brute.bruteForce(passwordToUnlock: password)
+            print(Date().timeIntervalSince1970 - startTime)
+
+            DispatchQueue.main.async {
+                self.passwordTextField.isSecureTextEntry = false
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
+            }
+        }
+    }
 }
 
 extension LogInViewController: UITextFieldDelegate {
