@@ -11,6 +11,7 @@ class LogInViewController: UIViewController {
 
     private let authorizationService: UserService
     var loginDelegate: LoginViewControllerDelegate?
+    private lazy var password: String = ""
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -83,8 +84,6 @@ class LogInViewController: UIViewController {
         return password
     }()
 
-    private var login: String?
-    private var password: String?
 
     private lazy var loginButton = CustomButton(title: "Login in",
                                                 titleColor: .white,
@@ -260,23 +259,23 @@ class LogInViewController: UIViewController {
     @objc private func generationPasswordButtonDidTap () {
         self.passwordTextField.isSecureTextEntry = true
         let allowCharacters: [String] = String().printable.map { String($0) }
-        self.passwordTextField.text = ""
-        while self.passwordTextField.text!.count < 4 {
+        self.password = ""
+        while self.password.count < 4 {
             let indexCharacter = Int.random(in: 0..<allowCharacters.count)
-            self.passwordTextField.text! += allowCharacters[indexCharacter]
+            self.password += allowCharacters[indexCharacter]
         }
 
         self.activityIndicator.isHidden = false
         self.activityIndicator.startAnimating()
 
         let brute = BruteForсe()
-        let password: String = self.passwordTextField.text ?? "_"
         DispatchQueue.global().async { [self] in
             let startTime = Date().timeIntervalSince1970
-            brute.bruteForce(passwordToUnlock: password)
+            brute.bruteForce(passwordToUnlock: self.password)
             print(Date().timeIntervalSince1970 - startTime)
 
             DispatchQueue.main.async {
+                self.passwordTextField.text = self.password
                 self.passwordTextField.isSecureTextEntry = false
                 self.activityIndicator.isHidden = true
                 self.activityIndicator.stopAnimating()
