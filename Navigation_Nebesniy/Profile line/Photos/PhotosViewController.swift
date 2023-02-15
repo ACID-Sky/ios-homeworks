@@ -47,12 +47,8 @@ class PhotosViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.title = "Photo Gallery"
         self.setupView()
-        let startTime = Date().timeIntervalSince1970
         imageProcessor.processImagesOnThread(sourceImages: photos, filter: .bloom(intensity: 2.0), qos: .background) {[weak self] photosArray in
             DispatchQueue.main.async {
-                let endTime = Date().timeIntervalSince1970
-                let elapsedTime = endTime - startTime
-//                print("😂😂😂", elapsedTime)
                 for (index, photo) in photosArray.enumerated() {
                     self?.photoCollection[index] =  UIImage(cgImage: photo!)
                 }

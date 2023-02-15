@@ -7,6 +7,10 @@
 
 import UIKit
 
+/*
+ При установке статуса пользователя (нажатие на кнопку Set status) можно запретить его повторно устанавливать определенное временя, чтобы пользователь не частил с его изменением. На это время кнопку сделаем неактивной и изменим её цвет, потом по таймеру снова сделаем активной и синей.
+ */
+
 final class ProfileHeaderView: UITableViewHeaderFooterView {
 
     private var statusText: String?
@@ -127,12 +131,30 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     func setupUser(_ user:User) {
         self.avatarImageView.image = user.avatar
         self.fullNameLabel.text = user.fullName
-        self.statusLabel.text = user.status
+        if self.statusLabel.text == nil {
+            self.statusLabel.text = user.status
+        }
     }
 
     @objc private func buttonPresed () {
+        statusTextField.endEditing(true)
         statusLabel.text = statusText
         statusTextField.text = nil
+        setStatusButton.isUserInteractionEnabled = false
+        setStatusButton.backgroundColor = .systemGray2
+
+        DispatchQueue.global().async { [weak self] in
+            var timer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false) { _ in
+                DispatchQueue.main.async {
+                    self?.setStatusButton.isUserInteractionEnabled = true
+                    self?.setStatusButton.backgroundColor = .systemBlue
+
+                }
+            }
+            RunLoop.current.add(timer, forMode: .common)
+            RunLoop.current.run()
+            timer.invalidate()
+        }
     }
 
     @objc private func statusTextChanged (_ textField: UITextField) {
