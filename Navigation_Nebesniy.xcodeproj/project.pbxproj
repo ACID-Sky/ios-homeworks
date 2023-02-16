@@ -42,6 +42,7 @@
 		76B869C329927D4D00CA29E3 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869C229927D4D00CA29E3 /* FeedModel.swift */; };
 		76B869C72993D01800CA29E3 /* Coordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869C62993D01800CA29E3 /* Coordinatable.swift */; };
 		76B869C92993D09C00CA29E3 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869C82993D09C00CA29E3 /* AppCoordinator.swift */; };
+		76BE6F98299D176600FFCE63 /* ErrorEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BE6F97299D176600FFCE63 /* ErrorEnum.swift */; };
 		76D287CC2993DFAF0068A85E /* loginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287CB2993DFAE0068A85E /* loginCoordinator.swift */; };
 		76D287CE2993DFEC0068A85E /* feedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287CD2993DFEC0068A85E /* feedCoordinator.swift */; };
 		76D287D12993E0960068A85E /* tapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D02993E0960068A85E /* tapBarController.swift */; };
@@ -124,6 +125,7 @@
 		76B869C229927D4D00CA29E3 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		76B869C62993D01800CA29E3 /* Coordinatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinatable.swift; sourceTree = "<group>"; };
 		76B869C82993D09C00CA29E3 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		76BE6F97299D176600FFCE63 /* ErrorEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEnum.swift; sourceTree = "<group>"; };
 		76D287CB2993DFAE0068A85E /* loginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginCoordinator.swift; sourceTree = "<group>"; };
 		76D287CD2993DFEC0068A85E /* feedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = feedCoordinator.swift; sourceTree = "<group>"; };
 		76D287D02993E0960068A85E /* tapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tapBarController.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 			children = (
 				76755629283FA95A00E1F03A /* AppDelegate.swift */,
 				7675562B283FA95A00E1F03A /* SceneDelegate.swift */,
+				76BE6F97299D176600FFCE63 /* ErrorEnum.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 				7675562A283FA95A00E1F03A /* AppDelegate.swift in Sources */,
 				76B869C329927D4D00CA29E3 /* FeedModel.swift in Sources */,
 				76B869C72993D01800CA29E3 /* Coordinatable.swift in Sources */,
+				76BE6F98299D176600FFCE63 /* ErrorEnum.swift in Sources */,
 				7675562C283FA95A00E1F03A /* SceneDelegate.swift in Sources */,
 				7675564C2841256100E1F03A /* ProfileViewController.swift in Sources */,
 				7675564A284100D300E1F03A /* FeedViewController.swift in Sources */,

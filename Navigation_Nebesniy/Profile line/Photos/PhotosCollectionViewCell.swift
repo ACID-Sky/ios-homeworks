@@ -38,8 +38,12 @@ class PhotosCollectionViewCell: UICollectionViewCell {
             self.picture.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
     }
-    func setup(with photo: UIImage) {
-        self.picture.image = photo
+    func setup(with photo: UIImage) throws {
+        if photo != UIImage(named: "images-8") {
+            self.picture.image = photo
+        } else {
+            throw NavigationError.censuredImage
+        }
     }
 }
 

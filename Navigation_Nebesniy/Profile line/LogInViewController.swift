@@ -212,7 +212,7 @@ class LogInViewController: UIViewController {
 
             self.present(alert, animated: true, completion: nil)
         }
-        passwordTextField.text = nil
+//        passwordTextField.text = nil
     }
 
 }

@@ -78,6 +78,7 @@ class ProfileViewController: UIViewController {
 
         ncObserver.addObserver(self, selector: #selector(self.changeFullScreen), name: Notification.Name("FullScreenViewChageAlpha"), object: nil)
         ncObserver.addObserver(self, selector: #selector(self.changeCancelButton), name: Notification.Name("cancelButtonChangeAlpha"), object: nil)
+        ncObserver.addObserver(self, selector: #selector(self.photoAlert), name: Notification.Name("CensuredImage"), object: nil)
 
         NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -143,6 +144,17 @@ class ProfileViewController: UIViewController {
         } completion: { _ in
             completion()
         }
+    }
+
+    @objc private func photoAlert() {
+        self.tableView.reloadData()
+        let alert = UIAlertController(title: "Запрещенное изображение!", message: "Среди Ваших фото есть запрещенные. Показ таких фото не производится", preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+
+        alert.addAction(okAction)
+
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
