@@ -15,12 +15,13 @@ class Checker {
     }()
 
     private let login: String = "ACID"
+    private let login2: String = "ACId"
     private let password: String = "Qwerty"
 
     private init() {}
 
     func check(login log: String, password pass: String) -> Bool {
-        log == login && pass == password ? true : false
+        (log == login || log == login2) && pass == password ? true : false
     }
 }
 

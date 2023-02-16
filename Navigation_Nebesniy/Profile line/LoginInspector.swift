@@ -9,13 +9,13 @@ import Foundation
 import UIKit
 
 protocol LoginViewControllerDelegate {
-    func check(login insertedLogin: String, password insertedPassword: String) -> String
+    func check(login insertedLogin: String, password insertedPassword: String) -> String?
 }
 
 struct LoginInspector: LoginViewControllerDelegate {
 
-    func check(login insertedLogin: String, password insertedPassword: String) -> String {
-        Checker.shared.check(login: insertedLogin, password: insertedPassword) ? insertedLogin : "_"
+    func check(login insertedLogin: String, password insertedPassword: String) -> String? {
+        Checker.shared.check(login: insertedLogin, password: insertedPassword) ? insertedLogin : nil
     }
 
 }

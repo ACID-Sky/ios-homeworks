@@ -144,16 +144,14 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         setStatusButton.backgroundColor = .systemGray2
 
         DispatchQueue.global().async { [weak self] in
-            var timer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false) { _ in
+            let timer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false) { _ in
                 DispatchQueue.main.async {
                     self?.setStatusButton.isUserInteractionEnabled = true
                     self?.setStatusButton.backgroundColor = .systemBlue
-
                 }
             }
             RunLoop.current.add(timer, forMode: .common)
             RunLoop.current.run()
-            timer.invalidate()
         }
     }
 

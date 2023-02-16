@@ -47,15 +47,6 @@ class PhotosViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = false
         self.navigationItem.title = "Photo Gallery"
         self.setupView()
-        imageProcessor.processImagesOnThread(sourceImages: photos, filter: .bloom(intensity: 2.0), qos: .background) {[weak self] photosArray in
-            DispatchQueue.main.async {
-                for (index, photo) in photosArray.enumerated() {
-                    self?.photoCollection[index] =  UIImage(cgImage: photo!)
-                }
-                self?.collectionView.reloadData()
-            }
-        }
-
     }
 // время на выполнение:
 //        .userInteractive = 5.190279960632324 сек
@@ -86,6 +77,17 @@ class PhotosViewController: UIViewController {
             self.collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+
+    private func processPhoto() {
+        imageProcessor.processImagesOnThread(sourceImages: photoCollection, filter: .bloom(intensity: 2.0), qos: .background) {[weak self] photosArray in
+            DispatchQueue.main.async {
+                for (index, photo) in photosArray.enumerated() {
+                    self?.photoCollection[index] =  UIImage(cgImage: photo!)
+                }
+                self?.collectionView.reloadData()
+            }
+        }
+    }
 }
 
 extension PhotosViewController: UICollectionViewDataSource {
@@ -101,13 +103,34 @@ extension PhotosViewController: UICollectionViewDataSource {
                     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.defaultCellID, for: indexPath)
                     return cell
                 }
-                cell.setup(with: photo)
-                cell.clipsToBounds = true
-                return cell
+            do {
+            try cell.setup(with: photo)
+            cell.clipsToBounds = true
+            return cell
+            } catch {
+                switch error as? NavigationError {
+                case .censuredImage:
+                    self.photoCollection.remove(at: index)
+                    let alert = UIAlertController(title: "Запрещенное изображение!", message: "Среди Ваших фото есть запрещенные. Показ таких фото не производится", preferredStyle: .alert)
+
+                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+
+                    alert.addAction(okAction)
+
+                    self.present(alert, animated: true, completion: nil)
+
+                    self.collectionView.reloadData()
+                case .undefined:
+                    print("🎉 undefined")
+                default:
+                    print("🥳 default")
+                }
             }
+        }
+        processPhoto()
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.defaultCellID, for: indexPath)
         return cell
-        }
+    }
 }
 
 extension PhotosViewController: UICollectionViewDelegateFlowLayout {

@@ -9,6 +9,9 @@ import UIKit
 
 class PhotosTableViewCell: UITableViewCell {
 
+    private lazy var photoCollection: [UIImage] = photos
+    let notification = NotificationCenter.default
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -55,6 +58,7 @@ class PhotosTableViewCell: UITableViewCell {
         self.setupView()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -91,15 +95,28 @@ extension PhotosTableViewCell: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        for (index, photo) in photos.enumerated() where indexPath.item == index {
+        for (index, photo) in photoCollection.enumerated() where indexPath.item == index {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileViewController.Constants.PhotoCellID, for: indexPath) as? PhotosCollectionViewCell else {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileViewController.Constants.defaultCellID, for: indexPath)
                     return cell
                 }
-                cell.setup(with: photo)
-                cell.layer.cornerRadius = 6
-                cell.clipsToBounds = true
-                return cell
+            do {
+            try cell.setup(with: photo)
+            cell.layer.cornerRadius = 6
+            cell.clipsToBounds = true
+            return cell
+            } catch {
+                switch error as? NavigationError {
+                case .censuredImage:
+                    self.photoCollection.remove(at: index)
+                    self.notification.post(name: Notification.Name("CensuredImage"), object: nil)
+                    self.collectionView.reloadData()
+                case .undefined:
+                    print("🎉 undefined")
+                default:
+                    print("🎉 default")
+                }
+            }
             }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileViewController.Constants.defaultCellID, for: indexPath)
         return cell
