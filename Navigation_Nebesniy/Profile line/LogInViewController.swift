@@ -199,11 +199,23 @@ class LogInViewController: UIViewController {
     }
 
     @objc private func buttonPresed () {
-        let aprovedUser = loginDelegate?.check(login: loginTextField.text ?? "", password: passwordTextField.text ?? "")
-        if let user = authorizationService.authorization(aprovedUser ?? "") {
-            let profile = ProfileViewController(user: user)
-            self.navigationController?.pushViewController(profile, animated: true)
-        }else {
+        if let aprovedUser = loginDelegate?.check(login: loginTextField.text ?? "", password: passwordTextField.text ?? "") {
+            authorizationService.authorization(aprovedUser) { [weak self] result in
+                switch result {
+                case .success(let user):
+                    let profile = ProfileViewController(user: user)
+                    self?.navigationController?.pushViewController(profile, animated: true)
+                case .failure(_):
+                    let alert = UIAlertController(title: "Скомпрометированный \n Login ACID", message: "Замените Login на ACId", preferredStyle: .alert)
+
+                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+
+                    alert.addAction(okAction)
+
+                    self?.present(alert, animated: true, completion: nil)
+                }
+            }
+        } else {
             let alert = UIAlertController(title: "Вы ввели не верный Login или Password!", message: "Login или Password не соответствует нашим данным. Попробуйте еще раз.", preferredStyle: .alert)
 
             let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
