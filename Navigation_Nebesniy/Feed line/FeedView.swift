@@ -10,6 +10,7 @@ import UIKit
 protocol FeedViewDelegate: AnyObject {
     func checkGuessButtonDidTap(word: String)
     func buttonDidTap()
+    func musicButtonDidTap()
 }
 
 final class FeedView: UIView {
@@ -36,15 +37,26 @@ final class FeedView: UIView {
                                                 self!.didTapButton()
                                             })
 
-    private lazy var button2 = CustomButton(title: "To post too.",
+    private lazy var button2 = CustomButton(title: "To music.",
                                             titleColor: .white,
                                             backgroundColor: .systemBlue,
                                             shadowRadius: 4.0,
                                             shadowOpacity: 0.7,
                                             shadowOffset: CGSize(width: 4, height: 4),
                                             action: { [weak self] in
+                                                self!.didTapMusicButton()
+                                            })
+
+    private lazy var button3 = CustomButton(title: "To video.",
+                                            titleColor: .white,
+                                            backgroundColor: .systemRed,
+                                            shadowRadius: 4.0,
+                                            shadowOpacity: 0.7,
+                                            shadowOffset: CGSize(width: 4, height: 4),
+                                            action: { [weak self] in
                                                 self!.didTapButton()
                                             })
+
 
     private lazy var textField: UITextField = {
         let secretWord = UITextField()
@@ -96,6 +108,7 @@ final class FeedView: UIView {
         addSubview(self.buttonVerticalStack)
         buttonVerticalStack.addArrangedSubview(self.button)
         buttonVerticalStack.addArrangedSubview(self.button2)
+        buttonVerticalStack.addArrangedSubview(self.button3)
         addSubview(textField)
         addSubview(checkGuessButton)
         addSubview(answerLabel)
@@ -137,6 +150,10 @@ final class FeedView: UIView {
 
     @objc private func didTapButton () {
         delegate?.buttonDidTap()
+    }
+
+    @objc private func didTapMusicButton () {
+        delegate?.musicButtonDidTap()
     }
 
     @objc private func forcedHidingKeyboard() {

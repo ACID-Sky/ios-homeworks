@@ -23,6 +23,7 @@ final class FeedViewModel: FeedViewModelProtocol {
     enum ViewInput {
         case checkGuessButtonDidTap(word: String)
         case buttonDidTap
+        case musicButtonDidTap
     }
 
 
@@ -52,6 +53,8 @@ final class FeedViewModel: FeedViewModelProtocol {
             }
         case .buttonDidTap:
             coordinator?.pushPostViewController()
+        case .musicButtonDidTap:
+            coordinator?.pushMusicViewController()
         }
     }
 }

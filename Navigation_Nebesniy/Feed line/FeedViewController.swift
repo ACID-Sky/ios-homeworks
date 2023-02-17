@@ -61,4 +61,8 @@ extension FeedViewController: FeedViewDelegate {
     func buttonDidTap() {
         viewModel.updateState(viewInput: .buttonDidTap)
     }
+
+    func musicButtonDidTap() {
+        viewModel.updateState(viewInput: .musicButtonDidTap)
+    }
 }
