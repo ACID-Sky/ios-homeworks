@@ -48,6 +48,9 @@
 		76D287D32994F9960068A85E /* Modul.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D22994F9960068A85E /* Modul.swift */; };
 		76D287D5299503A90068A85E /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D4299503A90068A85E /* FeedViewModel.swift */; };
 		76D287DB299636C30068A85E /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287DA299636C30068A85E /* FeedView.swift */; };
+		76F12841299FA3B600DCED5C /* Music in Resources */ = {isa = PBXBuildFile; fileRef = 76F1283F299FA3B600DCED5C /* Music */; };
+		76F12842299FA3B600DCED5C /* Video in Resources */ = {isa = PBXBuildFile; fileRef = 76F12840299FA3B600DCED5C /* Video */; };
+		76F12844299FA3C300DCED5C /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 76F12843299FA3C300DCED5C /* Resources */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +133,9 @@
 		76D287D22994F9960068A85E /* Modul.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modul.swift; sourceTree = "<group>"; };
 		76D287D4299503A90068A85E /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		76D287DA299636C30068A85E /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		76F1283F299FA3B600DCED5C /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Music; sourceTree = "<group>"; };
+		76F12840299FA3B600DCED5C /* Video */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Video; sourceTree = "<group>"; };
+		76F12843299FA3C300DCED5C /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +189,7 @@
 		76755628283FA95A00E1F03A /* Navigation_Nebesniy */ = {
 			isa = PBXGroup;
 			children = (
+				76F12843299FA3C300DCED5C /* Resources */,
 				76B869C42993CFBB00CA29E3 /* App */,
 				76D287D22994F9960068A85E /* Modul.swift */,
 				76D287CF2993E0540068A85E /* TapBar */,
@@ -231,6 +238,8 @@
 		76B7C7492842683200524F3F /* Feed line */ = {
 			isa = PBXGroup;
 			children = (
+				76F1283F299FA3B600DCED5C /* Music */,
+				76F12840299FA3B600DCED5C /* Video */,
 				76B869C229927D4D00CA29E3 /* FeedModel.swift */,
 				76D287D4299503A90068A85E /* FeedViewModel.swift */,
 				76755649284100D300E1F03A /* FeedViewController.swift */,
@@ -434,8 +443,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76F12842299FA3B600DCED5C /* Video in Resources */,
+				76F12841299FA3B600DCED5C /* Music in Resources */,
 				76755636283FA95F00E1F03A /* LaunchScreen.storyboard in Resources */,
 				76755633283FA95F00E1F03A /* Assets.xcassets in Resources */,
+				76F12844299FA3C300DCED5C /* Resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
