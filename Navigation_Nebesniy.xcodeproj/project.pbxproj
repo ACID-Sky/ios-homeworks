@@ -27,6 +27,7 @@
 		76A98140299FE901002EB8C8 /* maks_korzh_-_amsterdam.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 76A9813C299FE900002EB8C8 /* maks_korzh_-_amsterdam.mp3 */; };
 		76A98141299FE901002EB8C8 /* Noize_MC_-_Vsjo_kak_u_lyudejj.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 76A9813D299FE900002EB8C8 /* Noize_MC_-_Vsjo_kak_u_lyudejj.mp3 */; };
 		76A98142299FE901002EB8C8 /* Каста - Выходи Гулять.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 76A9813E299FE901002EB8C8 /* Каста - Выходи Гулять.mp3 */; };
+		76ACA65829A1402A00CF3017 /* MusicData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76ACA65729A1402A00CF3017 /* MusicData.swift */; };
 		76AE59E2297E8AD600C8C31B /* StorageService.docc in Sources */ = {isa = PBXBuildFile; fileRef = 76AE59E1297E8AD600C8C31B /* StorageService.docc */; };
 		76AE59E8297E8AD700C8C31B /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76AE59DE297E8AD600C8C31B /* StorageService.framework */; };
 		76AE59EF297E8AD700C8C31B /* StorageServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE59EE297E8AD700C8C31B /* StorageServiceTests.swift */; };
@@ -118,6 +119,7 @@
 		76A9813C299FE900002EB8C8 /* maks_korzh_-_amsterdam.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "maks_korzh_-_amsterdam.mp3"; sourceTree = "<group>"; };
 		76A9813D299FE900002EB8C8 /* Noize_MC_-_Vsjo_kak_u_lyudejj.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Noize_MC_-_Vsjo_kak_u_lyudejj.mp3"; sourceTree = "<group>"; };
 		76A9813E299FE901002EB8C8 /* Каста - Выходи Гулять.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Каста - Выходи Гулять.mp3"; sourceTree = "<group>"; };
+		76ACA65729A1402A00CF3017 /* MusicData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicData.swift; sourceTree = "<group>"; };
 		76AE59DE297E8AD600C8C31B /* StorageService.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StorageService.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76AE59E0297E8AD600C8C31B /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		76AE59E1297E8AD600C8C31B /* StorageService.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = StorageService.docc; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				76A98135299FB186002EB8C8 /* MusicViewController.swift */,
+				76ACA65729A1402A00CF3017 /* MusicData.swift */,
 			);
 			path = MusicView;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				76B869C12992579200CA29E3 /* CustomButton.swift in Sources */,
 				7630D2F7284CB78600331B0E /* ProfileHeaderView.swift in Sources */,
 				76B4B6F029746FBB00500F00 /* PhotoData.swift in Sources */,
+				76ACA65829A1402A00CF3017 /* MusicData.swift in Sources */,
 				762E47FC285B824D00ECAA31 /* PostTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
