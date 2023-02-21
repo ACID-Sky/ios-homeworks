@@ -24,6 +24,7 @@ final class FeedViewModel: FeedViewModelProtocol {
         case checkGuessButtonDidTap(word: String)
         case buttonDidTap
         case musicButtonDidTap
+        case videoButtonDidTap
     }
 
 
@@ -55,6 +56,8 @@ final class FeedViewModel: FeedViewModelProtocol {
             coordinator?.pushPostViewController()
         case .musicButtonDidTap:
             coordinator?.pushMusicViewController()
+        case .videoButtonDidTap:
+            coordinator?.pushVideoViewController()
         }
     }
 }

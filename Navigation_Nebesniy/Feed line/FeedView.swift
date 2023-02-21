@@ -11,6 +11,7 @@ protocol FeedViewDelegate: AnyObject {
     func checkGuessButtonDidTap(word: String)
     func buttonDidTap()
     func musicButtonDidTap()
+    func videoButtonDidTap()
 }
 
 final class FeedView: UIView {
@@ -54,7 +55,7 @@ final class FeedView: UIView {
                                             shadowOpacity: 0.7,
                                             shadowOffset: CGSize(width: 4, height: 4),
                                             action: { [weak self] in
-                                                self!.didTapButton()
+                                                self!.didTapVideoButton()
                                             })
 
 
@@ -154,6 +155,10 @@ final class FeedView: UIView {
 
     @objc private func didTapMusicButton () {
         delegate?.musicButtonDidTap()
+    }
+
+    @objc private func didTapVideoButton () {
+        delegate?.videoButtonDidTap()
     }
 
     @objc private func forcedHidingKeyboard() {

@@ -41,4 +41,10 @@ final class FeedCoordinator: ModuleCoordinatable {
         (module?.view as? UINavigationController)?.pushViewController(viewControllerToPush, animated: true)
 
     }
+
+    func pushVideoViewController() {
+        let viewControllerToPush = VideoViewController()
+        (module?.view as? UINavigationController)?.pushViewController(viewControllerToPush, animated: true)
+
+    }
 }

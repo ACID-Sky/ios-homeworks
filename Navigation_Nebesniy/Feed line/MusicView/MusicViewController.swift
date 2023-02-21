@@ -23,6 +23,7 @@ class MusicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
+        self.navigationItem.title = "Music"
         setupCoverSong()
         setuptrackNameLabel()
         setupStackForButton()
