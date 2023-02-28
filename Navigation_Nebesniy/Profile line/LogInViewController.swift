@@ -241,5 +241,3 @@ extension LogInViewController: UITextFieldDelegate {
     }
 
 }
-
-
