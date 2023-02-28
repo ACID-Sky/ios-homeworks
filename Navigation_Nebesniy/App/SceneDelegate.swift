@@ -29,8 +29,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             ]
         let appConfiguration: AppConfiguration = casesForAppConfiguration[Int.random(in: 0...casesForAppConfiguration.count)]
 
-//        let networkService = NetworkService()
-//        networkService.request(for: appConfiguration)
         NetworkService.request(for: appConfiguration)
     }
 }
