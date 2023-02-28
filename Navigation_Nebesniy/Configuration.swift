@@ -25,3 +25,9 @@ enum ConfigurationScheme {
         #endif
     }
 }
+
+enum AppConfiguration {
+    case planets(String)
+    case vehicles(String)
+    case starships(String)
+}
