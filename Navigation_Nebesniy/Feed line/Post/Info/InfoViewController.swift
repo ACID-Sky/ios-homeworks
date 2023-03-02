@@ -19,11 +19,41 @@ class InfoViewController: UIViewController {
         return button
     }()
 
+    private lazy var task1TitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.text = "Title from task 1."
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     private lazy var jsonTitleLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .systemOrange
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
+        label.clipsToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var task2TitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.numberOfLines = 0
+        label.text = "Период обращения планеты Татуин вокруг своей звезды."
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var jsonOrbitalPeriodLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .systemIndigo
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.numberOfLines = 0
+        label.textAlignment = .center
         label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -34,23 +64,44 @@ class InfoViewController: UIViewController {
 
         self.view.backgroundColor = .systemGray3
         self.view.addSubview(self.button)
+        self.view.addSubview(task1TitleLabel)
         self.view.addSubview(self.jsonTitleLabel)
-        loadJSON()
+        self.view.addSubview(task2TitleLabel)
+        self.view.addSubview(jsonOrbitalPeriodLabel)
+        loadJSON1()
+        loadJSON2()
 
         self.jsonTitleLabel.layer.cornerRadius = 10
         self.jsonTitleLabel.layer.borderWidth = 0.5
+        self.jsonOrbitalPeriodLabel.layer.cornerRadius = 10
+        self.jsonOrbitalPeriodLabel.layer.borderWidth = 0.5
 
         NSLayoutConstraint.activate([
-            self.jsonTitleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            self.task1TitleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            self.task1TitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.task1TitleLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.task1TitleLabel.heightAnchor.constraint(equalToConstant: 40),
+
+            self.jsonTitleLabel.topAnchor.constraint(equalTo: self.task1TitleLabel.bottomAnchor, constant: 16),
             self.jsonTitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             self.jsonTitleLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             self.jsonTitleLabel.heightAnchor.constraint(equalToConstant: 80),
+
+            self.task2TitleLabel.topAnchor.constraint(equalTo: self.jsonTitleLabel.bottomAnchor, constant: 32),
+            self.task2TitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.task2TitleLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.task2TitleLabel.heightAnchor.constraint(equalToConstant: 80),
+
+            self.jsonOrbitalPeriodLabel.topAnchor.constraint(equalTo: self.task2TitleLabel.bottomAnchor, constant: 32),
+            self.jsonOrbitalPeriodLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.jsonOrbitalPeriodLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.jsonOrbitalPeriodLabel.heightAnchor.constraint(equalToConstant: 80),
         ])
 
 
     }
 
-    private func loadJSON () {
+    private func loadJSON1 () {
         if let url = URL(string: "https://jsonplaceholder.typicode.com/todos/5") {
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 
@@ -65,14 +116,37 @@ class InfoViewController: UIViewController {
                                 let id = casted["id"] as? Int ,
                                 let title = casted["title"] as? String ,
                                 let completed = casted["completed"] as? Bool {
-                                let jsonData = FirstJSONData(userId: userId, id: id, title: title, completed: completed)
+                                let user = UserJSONData(userId: userId, id: id, title: title, completed: completed)
 
                                 DispatchQueue.main.async {
-                                    self.jsonTitleLabel.text = jsonData.title
+                                    self.jsonTitleLabel.text = user.title
                                 }
                             }
                         }
 
+                    } catch let error {
+                        print("😱", error)
+                    }
+                }
+            }
+            task.resume()
+        }
+    }
+
+    private func loadJSON2 () {
+        if let url = URL(string: "https://swapi.dev/api/planets/1") {
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+
+                if let unwrappedData = data {
+
+                    do {
+                        let planet = try JSONDecoder().decode(Planet.self, from: unwrappedData)
+                        print("🌎", planet.orbitalPeriod)
+//                        if let period = planet["orbitalPeriod"] {
+                            DispatchQueue.main.async {
+                                self.jsonOrbitalPeriodLabel.text = planet.orbitalPeriod
+                            }
+//                        }
                     } catch let error {
                         print("😱", error)
                     }
