@@ -59,6 +59,7 @@
 		76D287D32994F9960068A85E /* Modul.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D22994F9960068A85E /* Modul.swift */; };
 		76D287D5299503A90068A85E /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D4299503A90068A85E /* FeedViewModel.swift */; };
 		76D287DB299636C30068A85E /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287DA299636C30068A85E /* FeedView.swift */; };
+		76DEAB5729B08C1C00451B10 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DEAB5629B08C1C00451B10 /* JSONData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 		76D287D22994F9960068A85E /* Modul.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modul.swift; sourceTree = "<group>"; };
 		76D287D4299503A90068A85E /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		76D287DA299636C30068A85E /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		76DEAB5629B08C1C00451B10 /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				76B7C7472841FF5800524F3F /* InfoViewController.swift */,
+				76DEAB5629B08C1C00451B10 /* JSONData.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 				76ACA65D29A2522600CF3017 /* VideoTableViewCell.swift in Sources */,
 				76B869C72993D01800CA29E3 /* Coordinatable.swift in Sources */,
 				7675562C283FA95A00E1F03A /* SceneDelegate.swift in Sources */,
+				76DEAB5729B08C1C00451B10 /* JSONData.swift in Sources */,
 				7675564C2841256100E1F03A /* ProfileViewController.swift in Sources */,
 				7675564A284100D300E1F03A /* FeedViewController.swift in Sources */,
 				76B63AD7298D486600BB30CC /* LoginInspector.swift in Sources */,
