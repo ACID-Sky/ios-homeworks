@@ -126,7 +126,7 @@ class InfoViewController: UIViewController {
             self.task3TitleLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             self.task3TitleLabel.heightAnchor.constraint(equalToConstant: 40),
 
-            self.tableView.topAnchor.constraint(equalTo: self.task3TitleLabel.bottomAnchor, constant: 32),
+            self.tableView.topAnchor.constraint(equalTo: self.task3TitleLabel.bottomAnchor, constant: 16),
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             self.tableView.bottomAnchor.constraint(equalTo: self.button.topAnchor, constant: -16),
