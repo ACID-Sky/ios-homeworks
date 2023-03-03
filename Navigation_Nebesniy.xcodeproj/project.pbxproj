@@ -59,6 +59,7 @@
 		76D287D32994F9960068A85E /* Modul.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D22994F9960068A85E /* Modul.swift */; };
 		76D287D5299503A90068A85E /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D4299503A90068A85E /* FeedViewModel.swift */; };
 		76D287DB299636C30068A85E /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287DA299636C30068A85E /* FeedView.swift */; };
+		76D62411299BCB3D00AF4230 /* BruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D62410299BCB3D00AF4230 /* BruteForce.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,7 @@
 		76D287D22994F9960068A85E /* Modul.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modul.swift; sourceTree = "<group>"; };
 		76D287D4299503A90068A85E /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		76D287DA299636C30068A85E /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		76D62410299BCB3D00AF4230 /* BruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForce.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +346,7 @@
 			children = (
 				76755629283FA95A00E1F03A /* AppDelegate.swift */,
 				7675562B283FA95A00E1F03A /* SceneDelegate.swift */,
+				76D62410299BCB3D00AF4230 /* BruteForce.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				76B4B6EB297417B400500F00 /* PhotosViewController.swift in Sources */,
 				76D287DB299636C30068A85E /* FeedView.swift in Sources */,
 				76B869C12992579200CA29E3 /* CustomButton.swift in Sources */,
+				76D62411299BCB3D00AF4230 /* BruteForce.swift in Sources */,
 				7630D2F7284CB78600331B0E /* ProfileHeaderView.swift in Sources */,
 				76B4B6F029746FBB00500F00 /* PhotoData.swift in Sources */,
 				76ACA65829A1402A00CF3017 /* MusicData.swift in Sources */,
