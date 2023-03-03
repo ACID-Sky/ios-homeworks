@@ -9,6 +9,10 @@ import UIKit
 
 class InfoViewController: UIViewController {
 
+    private var residentsOfTatooine: [String] = []
+    private var nameOfResidents: [Resident] = []
+    private let group = DispatchGroup()
+
     private lazy var button: UIButton = {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
@@ -59,6 +63,24 @@ class InfoViewController: UIViewController {
         return label
     }()
 
+    private lazy var task3TitleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.text = "Жители планеты Татуин"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44
+        tableView.dataSource = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -68,6 +90,8 @@ class InfoViewController: UIViewController {
         self.view.addSubview(self.jsonTitleLabel)
         self.view.addSubview(task2TitleLabel)
         self.view.addSubview(jsonOrbitalPeriodLabel)
+        self.view.addSubview(task3TitleLabel)
+        self.view.addSubview(tableView)
         loadJSON1()
         loadJSON2()
 
@@ -96,9 +120,17 @@ class InfoViewController: UIViewController {
             self.jsonOrbitalPeriodLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
             self.jsonOrbitalPeriodLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
             self.jsonOrbitalPeriodLabel.heightAnchor.constraint(equalToConstant: 80),
+
+            self.task3TitleLabel.topAnchor.constraint(equalTo: self.jsonOrbitalPeriodLabel.bottomAnchor, constant: 32),
+            self.task3TitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.task3TitleLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.task3TitleLabel.heightAnchor.constraint(equalToConstant: 40),
+
+            self.tableView.topAnchor.constraint(equalTo: self.task3TitleLabel.bottomAnchor, constant: 32),
+            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+            self.tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
         ])
-
-
     }
 
     private func loadJSON1 () {
@@ -141,18 +173,49 @@ class InfoViewController: UIViewController {
 
                     do {
                         let planet = try JSONDecoder().decode(Planet.self, from: unwrappedData)
-                        print("🌎", planet.orbitalPeriod)
-//                        if let period = planet["orbitalPeriod"] {
                             DispatchQueue.main.async {
                                 self.jsonOrbitalPeriodLabel.text = planet.orbitalPeriod
+                                self.residentsOfTatooine = planet.residents
+                                self.loadResidents()
                             }
-//                        }
                     } catch let error {
                         print("😱", error)
                     }
                 }
             }
             task.resume()
+        }
+    }
+
+    private func loadResidents() {
+        for (_, link) in self.residentsOfTatooine.enumerated() {
+            group.enter()
+            let workItem = DispatchWorkItem {
+                let task = URLSession.shared.dataTask(with: URL(string: link)!) { data, response, error in
+
+                        if let unwrappedData = data {
+
+                            do {
+                                let resident = try JSONDecoder().decode(Resident.self, from: unwrappedData)
+
+                                DispatchQueue.main.sync {
+                                    self.nameOfResidents.append(resident)
+                                    self.group.leave()
+                                }
+                            } catch let error {
+                                print("😱", link, error)
+                                self.group.leave()
+                            }
+                        }
+                    }
+                    task.resume()
+            }
+
+            DispatchQueue.global().async (execute: workItem)
+        }
+
+        group.notify(queue: DispatchQueue.main) {
+            self.tableView.reloadData()
         }
     }
 
@@ -173,4 +236,17 @@ class InfoViewController: UIViewController {
 
     }
 
+}
+
+extension InfoViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        nameOfResidents.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = nameOfResidents[indexPath.row].name
+        return cell
+    }
 }

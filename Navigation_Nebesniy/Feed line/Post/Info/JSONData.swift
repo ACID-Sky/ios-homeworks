@@ -48,18 +48,6 @@ struct Planet: Decodable {
     }
 }
 
-//struct Planet: Decodable {
-//    let name: String
-//    let rotationPeriod: Int
-//    let orbitalPeriod: Int
-//    let diameter: Int
-//    let climate: String
-//    let gravity: String
-//    let terrain: String
-//    let surfaceWater: Int
-//    let population: Int
-//    let residents: [String]
-//    let films: [String]
-//    let created: String
-//    let edited: String
-//    let url: String
+struct Resident: Decodable {
+    let name: String
+}
