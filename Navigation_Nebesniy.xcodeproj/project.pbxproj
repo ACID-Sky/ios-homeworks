@@ -21,6 +21,7 @@
 		7675564A284100D300E1F03A /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76755649284100D300E1F03A /* FeedViewController.swift */; };
 		7675564C2841256100E1F03A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7675564B2841256100E1F03A /* ProfileViewController.swift */; };
 		7675564E284136D300E1F03A /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7675564D284136D300E1F03A /* PostViewController.swift */; };
+		76940C2429ADED350013F10E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76940C2329ADED350013F10E /* NetworkService.swift */; };
 		76A98136299FB186002EB8C8 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A98135299FB186002EB8C8 /* MusicViewController.swift */; };
 		76A9813A299FBD8D002EB8C8 /* Queen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 76A98139299FBD8D002EB8C8 /* Queen.mp3 */; };
 		76A9813F299FE901002EB8C8 /* lone_-_ey_bro.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 76A9813B299FE8FF002EB8C8 /* lone_-_ey_bro.mp3 */; };
@@ -117,6 +118,7 @@
 		76755649284100D300E1F03A /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		7675564B2841256100E1F03A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		7675564D284136D300E1F03A /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		76940C2329ADED350013F10E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		76A98135299FB186002EB8C8 /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		76A98139299FBD8D002EB8C8 /* Queen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Queen.mp3; sourceTree = "<group>"; };
 		76A9813B299FE8FF002EB8C8 /* lone_-_ey_bro.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "lone_-_ey_bro.mp3"; sourceTree = "<group>"; };
@@ -205,14 +207,15 @@
 		76755628283FA95A00E1F03A /* Navigation_Nebesniy */ = {
 			isa = PBXGroup;
 			children = (
+				76940C2229ADED050013F10E /* NetworkService */,
+				76D287D22994F9960068A85E /* Modul.swift */,
+				762E47F328573CEF00ECAA31 /* TextFieldWithPadding.swift */,
+				76AE59FF297EA26200C8C31B /* Configuration.swift */,
 				76A98137299FBD64002EB8C8 /* Resources */,
 				76B869C42993CFBB00CA29E3 /* App */,
-				76D287D22994F9960068A85E /* Modul.swift */,
 				76D287CF2993E0540068A85E /* TapBar */,
 				76B869C52993CFF000CA29E3 /* Coordinators */,
 				76B869BF2992576C00CA29E3 /* CustomButton */,
-				762E47F328573CEF00ECAA31 /* TextFieldWithPadding.swift */,
-				76AE59FF297EA26200C8C31B /* Configuration.swift */,
 				76B7C74C284268B900524F3F /* Profile line */,
 				76B7C7492842683200524F3F /* Feed line */,
 				76755632283FA95F00E1F03A /* Assets.xcassets */,
@@ -220,6 +223,14 @@
 				76755637283FA95F00E1F03A /* Info.plist */,
 			);
 			path = Navigation_Nebesniy;
+			sourceTree = "<group>";
+		};
+		76940C2229ADED050013F10E /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				76940C2329ADED350013F10E /* NetworkService.swift */,
+			);
+			path = NetworkService;
 			sourceTree = "<group>";
 		};
 		76A98134299FB13D002EB8C8 /* MusicView */ = {
@@ -536,6 +547,7 @@
 				76B869C72993D01800CA29E3 /* Coordinatable.swift in Sources */,
 				7675562C283FA95A00E1F03A /* SceneDelegate.swift in Sources */,
 				7675564C2841256100E1F03A /* ProfileViewController.swift in Sources */,
+				76940C2429ADED350013F10E /* NetworkService.swift in Sources */,
 				7675564A284100D300E1F03A /* FeedViewController.swift in Sources */,
 				76B63AD7298D486600BB30CC /* LoginInspector.swift in Sources */,
 				76B869BB298E990A00CA29E3 /* LoginFactory.swift in Sources */,

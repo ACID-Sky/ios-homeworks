@@ -21,6 +21,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         self.window?.rootViewController = appCoordinator.start()
         self.window?.makeKeyAndVisible()
+
+        let casesForAppConfiguration = [
+            AppConfiguration.planets("https://swapi.dev/api/planets/"),
+            AppConfiguration.starships("https://swapi.dev/api/vehicles/"),
+            AppConfiguration.vehicles("https://swapi.dev/api/starships/")
+            ]
+        let appConfiguration: AppConfiguration = casesForAppConfiguration[Int.random(in: 0...casesForAppConfiguration.count)]
+
+        NetworkService.request(for: appConfiguration)
     }
 }
 
