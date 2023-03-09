@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>669399417522-th4f7qkjab3vov028cetu25pifpf1pg2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.669399417522-th4f7qkjab3vov028cetu25pifpf1pg2</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCw-EVnc8zqWj7KYNrHl_eQma1I_695P1E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>669399417522</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>-.Navigation-Nebesniy</string>
+	<key>PROJECT_ID</key>
+	<string>navigation-nebesnyi</string>
+	<key>STORAGE_BUCKET</key>
+	<string>navigation-nebesnyi.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:669399417522:ios:6a9742c7bc65c1a65b3fab</string>
+</dict>
+</plist>
