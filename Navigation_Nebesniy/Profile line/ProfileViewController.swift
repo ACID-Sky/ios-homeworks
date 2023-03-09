@@ -8,6 +8,10 @@
 import UIKit
 import StorageService
 
+protocol ProfileHeaderViewDelegate: AnyObject {
+    func dismissView()
+}
+
 class ProfileViewController: UIViewController {
 
     enum Constants {
@@ -24,7 +28,7 @@ class ProfileViewController: UIViewController {
 
     let ncObserver = NotificationCenter.default
     let notification = NotificationCenter.default
-    let user: User?
+    let user: UserVK?
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -57,7 +61,7 @@ class ProfileViewController: UIViewController {
         return cancelButton
     }()
 
-    init(user: User?) {
+    init(user: UserVK?) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
     }
@@ -145,7 +149,12 @@ class ProfileViewController: UIViewController {
         }
     }
 }
-
+extension ProfileViewController: ProfileHeaderViewDelegate {
+    func dismissView() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+}
+    
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -165,6 +174,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 return nil
             }
             headrView.setupUser(user!)
+            headrView.delegate = self
             return headrView
         }
         return nil

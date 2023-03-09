@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import FirebaseAuth
 
-final class User {
+final class UserVK {
 
     let login: String
     let fullName: String
@@ -19,5 +20,13 @@ final class User {
         self.fullName = fullName
         self.status = status
         self.avatar = avatarImage ?? UIImage(systemName: "person.crop.circle")!
+    }
+}
+
+final class UserModel {
+    let email: String
+
+    init(from firUser: User){
+        self.email = firUser.email ?? ""
     }
 }

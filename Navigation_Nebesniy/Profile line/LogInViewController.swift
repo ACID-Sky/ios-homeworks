@@ -55,11 +55,11 @@ class LogInViewController: UIViewController {
         login.autocapitalizationType = .none
         login.keyboardType = .emailAddress
         login.attributedPlaceholder = NSAttributedString(
-            string: "Email or phone",
+            string: "Email",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
         )
         login.delegate = self
-        login.text = "ACID"
+        login.text = "acid_1@bk.ru"
         login.font = login.font?.withSize(15)
         return login
     }()
@@ -82,9 +82,6 @@ class LogInViewController: UIViewController {
         password.font = password.font?.withSize(15)
         return password
     }()
-
-    private var login: String?
-    private var password: String?
 
     private lazy var loginButton = CustomButton(title: "Login in",
                                                 titleColor: .white,
@@ -161,6 +158,13 @@ class LogInViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if Checker.shared.isAuthorized {
+            if let user = self.authorizationService.authorization("acid_1@bk.ru") {
+                // т.к. в этом задании мы данные пользователя не заносим в БД, то при удачной авторизации буду показывать имеющегося пользователя
+                let profile = ProfileViewController(user: user)
+                self.navigationController?.pushViewController(profile, animated: true)
+            }
+        }
         self.navigationController?.navigationBar.isHidden = true
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.didShowKeyboard(_:)),
@@ -170,6 +174,69 @@ class LogInViewController: UIViewController {
                                                selector: #selector(self.didHideKeyboard(_:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+    }
+
+    private func signUp(login: String, password: String) {
+        loginDelegate?.signUp(withEmail: login,
+                              password: password) { result in
+            switch result {
+            case .success:
+                self.openProfile()
+            case .failure(let error):
+                print("👎🏾", error)
+            }
+        }
+    }
+
+    private func showMailAllert() {
+        let alert = UIAlertController(title: "Вы ввели не верный Login",
+                                      message: "Поле Login должно быть заполнено e-mail (***@**.**).",
+                                      preferredStyle: .alert
+        )
+
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+
+        alert.addAction(okAction)
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    private func showIsNotUserAllert() {
+        let alert = UIAlertController(title: "Пользователь с указанным e-mail не зарегистрирован!",
+                                      message: "Пользователь не зарегистрирован или e-mail введен не корректно. Для регистрации пользователя нажмите 'SignUp'. Для редактирования e-mail нажмите 'Отмена'.",
+                                      preferredStyle: .alert
+        )
+
+        let yesAction = UIAlertAction(title: "SignUp", style: .default) { _ in
+            self.signUp(login: self.loginTextField.text ?? "", password: self.passwordTextField.text ?? "")
+        }
+        let noAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    private func showInvalidPasswordAllert() {
+        let alert = UIAlertController(title: "Вы ввели не верный Password.",
+                                      message: "Вы ввели не верный Password, попробуйте снова.",
+                                      preferredStyle: .alert
+        )
+
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+
+        alert.addAction(okAction)
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    private func openProfile(){
+        if let user = self.authorizationService.authorization("acid_1@bk.ru") {
+            // т.к. в этом задании мы данные пользователя не заносим в БД, то при удачной авторизации буду показывать имеющегося пользователя
+            let profile = ProfileViewController(user: user)
+            self.navigationController?.pushViewController(profile, animated: true)
+        }
     }
 
     @objc private func didShowKeyboard(_ notification: Notification) {
@@ -199,20 +266,24 @@ class LogInViewController: UIViewController {
     }
 
     @objc private func buttonPresed () {
-        let aprovedUser = loginDelegate?.check(login: loginTextField.text ?? "", password: passwordTextField.text ?? "")
-        if let user = authorizationService.authorization(aprovedUser ?? "") {
-            let profile = ProfileViewController(user: user)
-            self.navigationController?.pushViewController(profile, animated: true)
-        }else {
-            let alert = UIAlertController(title: "Вы ввели не верный Login или Password!", message: "Login или Password не соответствует нашим данным. Попробуйте еще раз.", preferredStyle: .alert)
-
-            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-
-            alert.addAction(okAction)
-
-            self.present(alert, animated: true, completion: nil)
+        loginDelegate?.check(login: loginTextField.text ?? "", password: passwordTextField.text ?? "") { result in
+            switch result {
+            case .success:
+                    self.openProfile()
+            case .failure(let error):
+                switch error {
+                case .notEmail:
+                    self.showMailAllert()
+                case .invalidPassword:
+                    self.showInvalidPasswordAllert()
+                case .isNotUser:
+                    self.showIsNotUserAllert()
+                case _:
+                    print("☄️", error)
+                }
+            }
         }
-        passwordTextField.text = nil
+//        passwordTextField.text = nil
     }
 
 }

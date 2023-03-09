@@ -13,6 +13,7 @@ import UIKit
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
 
+    weak var delegate: ProfileHeaderViewDelegate?
     private var statusText: String?
     private var isImageViewIncreased = false
     lazy var centerScreen = CGPoint(x: 0, y: 0)
@@ -76,6 +77,16 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         return textField
     }()
 
+    private lazy var signOutLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.isUserInteractionEnabled = true
+        label.textColor = UIColor(patternImage: UIImage(named: "blue_pixel")!)
+        label.text = "SignOut"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     let notification = NotificationCenter.default
     let ncObserver = NotificationCenter.default
 
@@ -97,6 +108,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.addSubview(self.statusTextField)
         self.addSubview(self.setStatusButton)
         self.addSubview(self.avatarImageView)
+        self.addSubview(self.signOutLabel)
 
         self.avatarImageView.layer.cornerRadius = 55
         self.avatarImageView.layer.borderWidth = 3
@@ -124,11 +136,16 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             self.statusTextField.topAnchor.constraint(equalTo: self.labelStack.bottomAnchor, constant: 10),
             self.statusTextField.leadingAnchor.constraint(equalTo: self.labelStack.leadingAnchor),
             self.statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.statusTextField.heightAnchor.constraint(equalToConstant: 40)
+            self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
+
+            self.signOutLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            self.signOutLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            self.signOutLabel.bottomAnchor.constraint(equalTo: labelStack.topAnchor),
+
         ])
     }
 
-    func setupUser(_ user:User) {
+    func setupUser(_ user:UserVK) {
         self.avatarImageView.image = user.avatar
         self.fullNameLabel.text = user.fullName
         if self.statusLabel.text == nil {
@@ -171,13 +188,15 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         avatarTransform()
     }
     private func setupGestures() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture(_:)))
-        tapGestureRecognizer.numberOfTapsRequired = 1
-        self.avatarImageView.addGestureRecognizer(tapGestureRecognizer)
-
+        let tapGestureRecognizerForAvatar = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGestureAvatar(_:)))
+        tapGestureRecognizerForAvatar.numberOfTapsRequired = 1
+        self.avatarImageView.addGestureRecognizer(tapGestureRecognizerForAvatar)
+        let tapGestureRecognizerForLabel = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGestureLabel(_:)))
+        tapGestureRecognizerForLabel.numberOfTapsRequired = 1
+        self.signOutLabel.addGestureRecognizer(tapGestureRecognizerForLabel)
     }
 
-    @objc private func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
+    @objc private func handleTapGestureAvatar(_ gestureRecognizer: UITapGestureRecognizer) {
         self.avatarImageView.isUserInteractionEnabled = false
 
         let completion: () -> Void = { [weak self] in
@@ -206,6 +225,11 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         } completion: { _ in
             completion()
         }
+    }
+
+    @objc private func handleTapGestureLabel(_ gestureRecognizer: UITapGestureRecognizer) {
+        Checker.shared.signOut()
+        delegate?.dismissView()
     }
 }
 
