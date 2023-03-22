@@ -421,7 +421,6 @@
 				ADA7C375793AE2E8C84ACAE1 /* Pods-StorageService-StorageServiceTests.debug.xcconfig */,
 				859B136BADD5AE38C362A97F /* Pods-StorageService-StorageServiceTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -535,7 +534,7 @@
 			);
 			mainGroup = 7675561D283FA95A00E1F03A;
 			packageReferences = (
-				76B869BC29910B0400CA29E3 /* XCRemoteSwiftPackageReference "iOSIntPackage.git" */,
+				76B869BC29910B0400CA29E3 /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
 				76ACA66229A4963700CF3017 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */,
 			);
 			productRefGroup = 76755627283FA95A00E1F03A /* Products */;
@@ -1094,7 +1093,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		76B869BC29910B0400CA29E3 /* XCRemoteSwiftPackageReference "iOSIntPackage.git" */ = {
+		76B869BC29910B0400CA29E3 /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TrueMax/iOSIntPackage.git";
 			requirement = {
@@ -1112,7 +1111,7 @@
 		};
 		76B869BD29910B0500CA29E3 /* iOSIntPackage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 76B869BC29910B0400CA29E3 /* XCRemoteSwiftPackageReference "iOSIntPackage.git" */;
+			package = 76B869BC29910B0400CA29E3 /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
 			productName = iOSIntPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
