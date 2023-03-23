@@ -22,6 +22,8 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     private var isImageViewIncreased = false
     lazy var centerScreen = CGPoint(x: 0, y: 0)
     weak var delegate: ProfileHeaderViewDelegate?
+    private let realmService: RealmService = RealmServiceImp()
+    private var login: Login?
 
     private lazy var avatarImageView: UIImageView = {
         let avatarImage = UIImageView()
@@ -174,6 +176,12 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }
 
     @objc private func logOutButtonPresed() {
+        self.login = self.realmService.fetchLogin()
+        self.login?.authorized = false
+        guard self.realmService.create(login: self.login!, update: true) else {
+            self.login?.authorized = true
+            return
+        }
         delegate?.logOut()
     }
 
