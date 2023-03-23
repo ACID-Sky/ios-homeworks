@@ -15,7 +15,7 @@ class CustomButton: UIButton {
 
     init(title: String,
          titleColor: UIColor,
-         backgroundColor: UIColor,
+         backgroundColor: UIColor?,
          shadowRadius: CGFloat,
          shadowOpacity: Float,
          shadowOffset: CGSize,
@@ -25,7 +25,7 @@ class CustomButton: UIButton {
         super.init(frame: .zero)
 
         self.setTitle(title, for: .normal)
-        self.tintColor = tintColor
+        self.setTitleColor(titleColor, for: .normal)
         self.backgroundColor = backgroundColor
         self.layer.shadowRadius = shadowRadius
         self.layer.shadowOpacity = shadowOpacity
