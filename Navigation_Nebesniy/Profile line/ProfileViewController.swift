@@ -22,8 +22,6 @@ class ProfileViewController: UIViewController {
         static let spacing: CGFloat = 8
     }
 
-    let ncObserver = NotificationCenter.default
-    let notification = NotificationCenter.default
     let user: User?
 
     private lazy var tableView: UITableView = {
@@ -76,8 +74,6 @@ class ProfileViewController: UIViewController {
         self.fullScreenView.addSubview(cancelButton)
         self.setupGestures()
 
-        ncObserver.addObserver(self, selector: #selector(self.changeFullScreen), name: Notification.Name("FullScreenViewChageAlpha"), object: nil)
-        ncObserver.addObserver(self, selector: #selector(self.changeCancelButton), name: Notification.Name("cancelButtonChangeAlpha"), object: nil)
 
         NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -93,23 +89,6 @@ class ProfileViewController: UIViewController {
             self.cancelButton.topAnchor.constraint(equalTo: self.fullScreenView.safeAreaLayoutGuide.topAnchor),
             self.cancelButton.trailingAnchor.constraint(equalTo: self.fullScreenView.trailingAnchor)
         ])
-    }
-
-    func fullScreenChangeAlpha () {
-        self.fullScreenView.alpha = 0.5
-    }
-
-    @objc func changeFullScreen() {
-        self.fullScreenChangeAlpha()
-    }
-
-    func cancelButtonChangeAlpha () {
-        self.cancelButton.alpha = 1
-        self.cancelButton.isUserInteractionEnabled = true
-    }
-
-    @objc func changeCancelButton() {
-        self.cancelButtonChangeAlpha()
     }
 
     private func setupGestures() {
@@ -138,7 +117,10 @@ class ProfileViewController: UIViewController {
                 self.cancelButton.isUserInteractionEnabled = false
                 self.fullScreenView.alpha = 0
                 self.cancelButton.alpha = 0
-                self.notification.post(name: Notification.Name("AvatarChange"), object: nil)
+                guard let header = self.tableView.headerView(forSection: 0) as? ProfileHeaderView else {
+                    return
+                }
+                header.avatarTransform()
             }
         } completion: { _ in
             completion()
@@ -165,6 +147,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 return nil
             }
             headrView.setupUser(user!)
+            headrView.delegate = self
             return headrView
         }
         return nil
@@ -195,6 +178,33 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         indexPath.section == 0 ? navigationController?.pushViewController(photo, animated: true) : nil
     }
 
+}
+
+extension ProfileViewController: ProfileHeaderViewDelegate {
+    func fullScreenChangeAlpha () {
+        self.fullScreenView.alpha = 0.5
+    }
+
+    func cancelButtonChangeAlpha () {
+        self.cancelButton.alpha = 1
+        self.cancelButton.isUserInteractionEnabled = true
+    }
+
+    func logOut() {
+        let alert = UIAlertController(title: "Выйти?", message: "Вы действительно хотите выйти?", preferredStyle: .alert)
+
+        let yesAction = UIAlertAction(title: "LogOut", style: .destructive) { _ in
+            let loginCoordinator = LoginCoordinator(moduleType: .login)
+            let loginViewController = loginCoordinator.start()
+            self.tabBarController?.viewControllers?[0] = loginViewController
+        }
+        let noAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+
+        self.present(alert, animated: true, completion: nil)
+    }   
 }
 
 

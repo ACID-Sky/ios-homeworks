@@ -55,11 +55,12 @@ class LogInViewController: UIViewController {
         login.autocapitalizationType = .none
         login.keyboardType = .emailAddress
         login.attributedPlaceholder = NSAttributedString(
-            string: "Email or phone",
+            string: "Email",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
         )
         login.delegate = self
         login.text = "ACID"
+//        login.text = "acid_1@bk.ru"
         login.font = login.font?.withSize(15)
         return login
     }()
@@ -82,9 +83,9 @@ class LogInViewController: UIViewController {
         password.font = password.font?.withSize(15)
         return password
     }()
-
-    private var login: String?
-    private var password: String?
+//
+//    private var login: String?
+//    private var password: String?
 
     private lazy var loginButton = CustomButton(title: "Login in",
                                                 titleColor: .white,
@@ -202,7 +203,10 @@ class LogInViewController: UIViewController {
         let aprovedUser = loginDelegate?.check(login: loginTextField.text ?? "", password: passwordTextField.text ?? "")
         if let user = authorizationService.authorization(aprovedUser ?? "") {
             let profile = ProfileViewController(user: user)
-            self.navigationController?.pushViewController(profile, animated: true)
+            let item = self.tabBarController?.viewControllers?[0].tabBarItem
+            let profileController = UINavigationController(rootViewController: profile)
+            profileController.tabBarItem = item
+            self.tabBarController?.viewControllers?[0] = profileController
         }else {
             let alert = UIAlertController(title: "Вы ввели не верный Login или Password!", message: "Login или Password не соответствует нашим данным. Попробуйте еще раз.", preferredStyle: .alert)
 
