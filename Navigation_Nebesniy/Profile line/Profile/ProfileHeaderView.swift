@@ -10,12 +10,20 @@ import UIKit
 /*
  При установке статуса пользователя (нажатие на кнопку Set status) можно запретить его повторно устанавливать определенное временя, чтобы пользователь не частил с его изменением. На это время кнопку сделаем неактивной и изменим её цвет, потом по таймеру снова сделаем активной и синей.
  */
+protocol ProfileHeaderViewDelegate: AnyObject {
+    func logOut()
+    func fullScreenChangeAlpha ()
+    func cancelButtonChangeAlpha ()
+}
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
 
     private var statusText: String?
     private var isImageViewIncreased = false
     lazy var centerScreen = CGPoint(x: 0, y: 0)
+    weak var delegate: ProfileHeaderViewDelegate?
+    private let realmService: RealmService = RealmServiceImp()
+    private var login: Login?
 
     private lazy var avatarImageView: UIImageView = {
         let avatarImage = UIImageView()
@@ -76,16 +84,23 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         return textField
     }()
 
-    let notification = NotificationCenter.default
-    let ncObserver = NotificationCenter.default
+    private lazy var logOutButton = CustomButton(title: "LogOut",
+                                                    titleColor: .systemBlue,
+                                                 backgroundColor: nil,
+                                                    shadowRadius: 0,
+                                                    shadowOpacity: 0,
+                                                    shadowOffset: CGSize(width: 0, height: 0),
+                                                    action: { [weak self] in
+                                                        self!.logOutButtonPresed()
+                                                    })
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         self.setupView()
         self.setupGestures()
-        ncObserver.addObserver(self, selector: #selector(self.changeAvatar), name: Notification.Name("AvatarChange"), object: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -97,6 +112,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.addSubview(self.statusTextField)
         self.addSubview(self.setStatusButton)
         self.addSubview(self.avatarImageView)
+        self.addSubview(self.logOutButton)
 
         self.avatarImageView.layer.cornerRadius = 55
         self.avatarImageView.layer.borderWidth = 3
@@ -124,7 +140,10 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             self.statusTextField.topAnchor.constraint(equalTo: self.labelStack.bottomAnchor, constant: 10),
             self.statusTextField.leadingAnchor.constraint(equalTo: self.labelStack.leadingAnchor),
             self.statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            self.statusTextField.heightAnchor.constraint(equalToConstant: 40)
+            self.statusTextField.heightAnchor.constraint(equalToConstant: 40),
+
+            self.logOutButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            self.logOutButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
         ])
     }
 
@@ -156,6 +175,16 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         }
     }
 
+    @objc private func logOutButtonPresed() {
+        self.login = self.realmService.fetchLogin()
+        self.login?.authorized = false
+        guard self.realmService.create(login: self.login!, update: true) else {
+            self.login?.authorized = true
+            return
+        }
+        delegate?.logOut()
+    }
+
     @objc private func statusTextChanged (_ textField: UITextField) {
         statusText = textField.text
     }
@@ -167,9 +196,6 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         self.avatarImageView.layer.borderWidth = 3
     }
 
-    @objc func changeAvatar() {
-        avatarTransform()
-    }
     private func setupGestures() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture(_:)))
         tapGestureRecognizer.numberOfTapsRequired = 1
@@ -197,11 +223,11 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
                 self.avatarImageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
                 self.avatarImageView.layer.cornerRadius = 0
                 self.avatarImageView.layer.borderWidth = 0
-                self.notification.post(name: Notification.Name("FullScreenViewChageAlpha"), object: nil)
+                self.delegate?.fullScreenChangeAlpha()
             }
             UIView.addKeyframe(withRelativeStartTime: 0.5/0.8, 
                                relativeDuration: 0.3/0.8) {
-                self.notification.post(name: Notification.Name("cancelButtonChangeAlpha"), object: nil)
+                self.delegate?.cancelButtonChangeAlpha()
             }
         } completion: { _ in
             completion()

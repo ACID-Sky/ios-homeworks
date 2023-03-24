@@ -8,7 +8,7 @@
 import UIKit
 
 enum ConfigurationScheme {
-    static var backgroundColor: UIColor? {
+    static var backgroundColor: UIColor {
         #if DEBUG
         return .purple
         #else
@@ -24,4 +24,10 @@ enum ConfigurationScheme {
         return CurrentUserService()
         #endif
     }
+}
+
+enum AppConfiguration {
+    case planets(String)
+    case vehicles(String)
+    case starships(String)
 }
