@@ -59,6 +59,8 @@
 		76C6D03129CC70DF004185D7 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6D03029CC70DF004185D7 /* RealmService.swift */; };
 		76C6D03329CC70FB004185D7 /* LoginRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6D03229CC70FB004185D7 /* LoginRealmModel.swift */; };
 		76C6D03529CC727F004185D7 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6D03429CC727F004185D7 /* LoginModel.swift */; };
+		76CA1A8129CD9110008A2CD0 /* LikeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8029CD9110008A2CD0 /* LikeCoordinator.swift */; };
+		76CA1A8329CD91B6008A2CD0 /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8229CD91B6008A2CD0 /* LikeViewController.swift */; };
 		76D287CC2993DFAF0068A85E /* loginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287CB2993DFAE0068A85E /* loginCoordinator.swift */; };
 		76D287CE2993DFEC0068A85E /* feedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287CD2993DFEC0068A85E /* feedCoordinator.swift */; };
 		76D287D12993E0960068A85E /* tapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D02993E0960068A85E /* tapBarController.swift */; };
@@ -156,6 +158,8 @@
 		76C6D03029CC70DF004185D7 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		76C6D03229CC70FB004185D7 /* LoginRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRealmModel.swift; sourceTree = "<group>"; };
 		76C6D03429CC727F004185D7 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		76CA1A8029CD9110008A2CD0 /* LikeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeCoordinator.swift; sourceTree = "<group>"; };
+		76CA1A8229CD91B6008A2CD0 /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
 		76D287CB2993DFAE0068A85E /* loginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginCoordinator.swift; sourceTree = "<group>"; };
 		76D287CD2993DFEC0068A85E /* feedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = feedCoordinator.swift; sourceTree = "<group>"; };
 		76D287D02993E0960068A85E /* tapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tapBarController.swift; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 				76B869BF2992576C00CA29E3 /* CustomButton */,
 				76B7C74C284268B900524F3F /* Profile line */,
 				76B7C7492842683200524F3F /* Feed line */,
+				76CA1A7F29CD90C2008A2CD0 /* Like line */,
 				76755632283FA95F00E1F03A /* Assets.xcassets */,
 				76755634283FA95F00E1F03A /* LaunchScreen.storyboard */,
 				76755637283FA95F00E1F03A /* Info.plist */,
@@ -380,6 +385,7 @@
 				76B869C82993D09C00CA29E3 /* AppCoordinator.swift */,
 				76D287CB2993DFAE0068A85E /* loginCoordinator.swift */,
 				76D287CD2993DFEC0068A85E /* feedCoordinator.swift */,
+				76CA1A8029CD9110008A2CD0 /* LikeCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -392,6 +398,14 @@
 				762E47FB285B824D00ECAA31 /* PostTableViewCell.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		76CA1A7F29CD90C2008A2CD0 /* Like line */ = {
+			isa = PBXGroup;
+			children = (
+				76CA1A8229CD91B6008A2CD0 /* LikeViewController.swift */,
+			);
+			path = "Like line";
 			sourceTree = "<group>";
 		};
 		76D287CF2993E0540068A85E /* TapBar */ = {
@@ -572,6 +586,7 @@
 				76B869C329927D4D00CA29E3 /* FeedModel.swift in Sources */,
 				76ACA65B29A2518800CF3017 /* VideoViewController.swift in Sources */,
 				76ACA65D29A2522600CF3017 /* VideoTableViewCell.swift in Sources */,
+				76CA1A8129CD9110008A2CD0 /* LikeCoordinator.swift in Sources */,
 				76B869C72993D01800CA29E3 /* Coordinatable.swift in Sources */,
 				7675562C283FA95A00E1F03A /* SceneDelegate.swift in Sources */,
 				76DEAB5729B08C1C00451B10 /* JSONData.swift in Sources */,
@@ -588,6 +603,7 @@
 				76C6D03129CC70DF004185D7 /* RealmService.swift in Sources */,
 				76D287CC2993DFAF0068A85E /* loginCoordinator.swift in Sources */,
 				76ACA66129A252A800CF3017 /* VideoData.swift in Sources */,
+				76CA1A8329CD91B6008A2CD0 /* LikeViewController.swift in Sources */,
 				763AE9B3298BE97200E18171 /* UserService.swift in Sources */,
 				76A98136299FB186002EB8C8 /* MusicViewController.swift in Sources */,
 				76D287D5299503A90068A85E /* FeedViewModel.swift in Sources */,
