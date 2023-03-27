@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import StorageService
+import CoreData
 
 class LikeViewController: UIViewController {
 
@@ -14,8 +16,10 @@ class LikeViewController: UIViewController {
         static let postCellID = "PostCellID"
     }
 
+    private let coreDataService: CoreDataService = CoreDataServiceImp()
     private let realmService: RealmService = RealmServiceImp()
     private var login: Login?
+    private var posts = [Post]()
 
     private lazy var tableView = UITableView(frame: .zero, style: .grouped)
     private lazy var label = UILabel()
@@ -26,6 +30,7 @@ class LikeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         self.fetchLogin()
+        self.fetchPost()
     }
 
     
@@ -34,7 +39,6 @@ class LikeViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.defaultCellID)
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: Constants.postCellID)
         tableView.dataSource = self
-        tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
         self.view.addSubview(self.tableView)
@@ -51,6 +55,7 @@ class LikeViewController: UIViewController {
         self.view.backgroundColor = .systemBackground
         self.label.translatesAutoresizingMaskIntoConstraints = false
         self.label.numberOfLines = 0
+        self.label.textAlignment = .center
         self.label.font = UIFont.boldSystemFont(ofSize: 22)
         self.label.textColor = UIColor.systemBlue
         self.label.text = text
@@ -75,7 +80,7 @@ class LikeViewController: UIViewController {
             self.login = login
             guard let auth = login?.authorized, auth == true else {
                 self.tableView.removeFromSuperview()
-                self.setupLabel(text: "Вы не авторизованны! Перейдите на строницу 'Profile' и авторизуйтесь.")
+                self.setupLabel(text: "Вы не авторизованны! \nПерейдите на строницу 'Profile' и авторизуйтесь.")
                 return
             }
             self.label.removeFromSuperview()
@@ -83,28 +88,33 @@ class LikeViewController: UIViewController {
 
         } else {
             guard login?.authorized != self.login?.authorized else {
-                self.setupLabel(text: "Вы не зарегистрированны! Перейдите на строницу 'Profile' и авторизуйтесь.")
+                self.setupLabel(text: "Вы не зарегистрированны! \nПерейдите на строницу 'Profile' и зарегистрируйтесь.")
                 return
             }
             self.login = login
             guard let auth = login?.authorized, auth == true else {
-                self.setupLabel(text: "Вы не авторизованны! Перейдите на строницу 'Profile' и авторизуйтесь.")
+                self.setupLabel(text: "Вы не авторизованны! \nПерейдите на строницу 'Profile' и авторизуйтесь.")
                 return
             }
             self.setupTableView()
         }
     }
-}
 
-extension LikeViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("❤️")
+    private func fetchPost() {
+        let posts = self.coreDataService.fetchPost()
+        self.posts = posts.map {Post(author: $0.postAuthor ?? "",
+                                     description: $0.postDescription ?? "",
+                                     image: $0.postImage ?? "",
+                                     likes: Int($0.postLikes),
+                                     views: Int($0.postViews)
+        )}
+        self.tableView.reloadData()
     }
 }
 
 extension LikeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        self.posts.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -112,10 +122,8 @@ extension LikeViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: Constants.defaultCellID, for: indexPath)
             return cell
         }
-        let post = posts[indexPath.row]
-        cell.setup(with: post)
+        let post = self.posts[indexPath.row]
+        cell.setup(with: post, liked: true)
         return cell
     }
-
-
 }

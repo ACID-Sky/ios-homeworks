@@ -61,6 +61,9 @@
 		76C6D03529CC727F004185D7 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6D03429CC727F004185D7 /* LoginModel.swift */; };
 		76CA1A8129CD9110008A2CD0 /* LikeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8029CD9110008A2CD0 /* LikeCoordinator.swift */; };
 		76CA1A8329CD91B6008A2CD0 /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8229CD91B6008A2CD0 /* LikeViewController.swift */; };
+		76CA1A8629D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8429D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld */; };
+		76CA1A8829D16815008A2CD0 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8729D16815008A2CD0 /* CoreDataService.swift */; };
+		76CA1A8A29D1733C008A2CD0 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8929D1733C008A2CD0 /* StringExtention.swift */; };
 		76D287CC2993DFAF0068A85E /* loginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287CB2993DFAE0068A85E /* loginCoordinator.swift */; };
 		76D287CE2993DFEC0068A85E /* feedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287CD2993DFEC0068A85E /* feedCoordinator.swift */; };
 		76D287D12993E0960068A85E /* tapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D02993E0960068A85E /* tapBarController.swift */; };
@@ -160,6 +163,9 @@
 		76C6D03429CC727F004185D7 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		76CA1A8029CD9110008A2CD0 /* LikeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeCoordinator.swift; sourceTree = "<group>"; };
 		76CA1A8229CD91B6008A2CD0 /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
+		76CA1A8529D16370008A2CD0 /* Navigtion_Nebesniy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Navigtion_Nebesniy.xcdatamodel; sourceTree = "<group>"; };
+		76CA1A8729D16815008A2CD0 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		76CA1A8929D1733C008A2CD0 /* StringExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
 		76D287CB2993DFAE0068A85E /* loginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginCoordinator.swift; sourceTree = "<group>"; };
 		76D287CD2993DFEC0068A85E /* feedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = feedCoordinator.swift; sourceTree = "<group>"; };
 		76D287D02993E0960068A85E /* tapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tapBarController.swift; sourceTree = "<group>"; };
@@ -223,6 +229,7 @@
 		76755628283FA95A00E1F03A /* Navigation_Nebesniy */ = {
 			isa = PBXGroup;
 			children = (
+				76CA1A8429D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld */,
 				76D287D22994F9960068A85E /* Modul.swift */,
 				762E47F328573CEF00ECAA31 /* TextFieldWithPadding.swift */,
 				76AE59FF297EA26200C8C31B /* Configuration.swift */,
@@ -238,6 +245,7 @@
 				76755632283FA95F00E1F03A /* Assets.xcassets */,
 				76755634283FA95F00E1F03A /* LaunchScreen.storyboard */,
 				76755637283FA95F00E1F03A /* Info.plist */,
+				76CA1A8929D1733C008A2CD0 /* StringExtention.swift */,
 			);
 			path = Navigation_Nebesniy;
 			sourceTree = "<group>";
@@ -404,6 +412,7 @@
 			isa = PBXGroup;
 			children = (
 				76CA1A8229CD91B6008A2CD0 /* LikeViewController.swift */,
+				76CA1A8729D16815008A2CD0 /* CoreDataService.swift */,
 			);
 			path = "Like line";
 			sourceTree = "<group>";
@@ -577,10 +586,12 @@
 			files = (
 				76D287CE2993DFEC0068A85E /* feedCoordinator.swift in Sources */,
 				76D287D32994F9960068A85E /* Modul.swift in Sources */,
+				76CA1A8629D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld in Sources */,
 				7675564E284136D300E1F03A /* PostViewController.swift in Sources */,
 				76C6D03529CC727F004185D7 /* LoginModel.swift in Sources */,
 				76B63AD5298D2F7000BB30CC /* Checker.swift in Sources */,
 				76B869C92993D09C00CA29E3 /* AppCoordinator.swift in Sources */,
+				76CA1A8829D16815008A2CD0 /* CoreDataService.swift in Sources */,
 				76B7C7482841FF5800524F3F /* InfoViewController.swift in Sources */,
 				7675562A283FA95A00E1F03A /* AppDelegate.swift in Sources */,
 				76B869C329927D4D00CA29E3 /* FeedModel.swift in Sources */,
@@ -600,6 +611,7 @@
 				763AE9B1298BE2C000E18171 /* User.swift in Sources */,
 				762E47F428573CEF00ECAA31 /* TextFieldWithPadding.swift in Sources */,
 				762E47F62858B6BE00ECAA31 /* LogInViewController.swift in Sources */,
+				76CA1A8A29D1733C008A2CD0 /* StringExtention.swift in Sources */,
 				76C6D03129CC70DF004185D7 /* RealmService.swift in Sources */,
 				76D287CC2993DFAF0068A85E /* loginCoordinator.swift in Sources */,
 				76ACA66129A252A800CF3017 /* VideoData.swift in Sources */,
@@ -1037,6 +1049,19 @@
 			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		76CA1A8429D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				76CA1A8529D16370008A2CD0 /* Navigtion_Nebesniy.xcdatamodel */,
+			);
+			currentVersion = 76CA1A8529D16370008A2CD0 /* Navigtion_Nebesniy.xcdatamodel */;
+			path = Navigation_Nebesniy.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7675561E283FA95A00E1F03A /* Project object */;
 }

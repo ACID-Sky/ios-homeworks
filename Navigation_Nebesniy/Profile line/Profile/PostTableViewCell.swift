@@ -8,7 +8,16 @@
 import UIKit
 import StorageService
 
+protocol PostTableViewCellDelegate: AnyObject {
+    func likePost(post: Post) -> Bool
+    func unLikePost(post: Post) -> Bool
+}
+
 class PostTableViewCell: UITableViewCell {
+
+    weak var delegate: PostTableViewCellDelegate?
+    private var post: Post?
+    private lazy var like = false
 
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -67,9 +76,17 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
 
+    private lazy var likeImage: UIImageView = {
+        let picture = UIImageView()
+        picture.contentMode = .scaleAspectFit
+        picture.translatesAutoresizingMaskIntoConstraints = false
+        return picture
+    }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setupView()
+        self.setupGestures()
     }
 
     required init?(coder: NSCoder) {
@@ -94,33 +111,81 @@ class PostTableViewCell: UITableViewCell {
         self.stackView.addArrangedSubview(descriptionLabel)
         self.stackView.addArrangedSubview(likesStackView)
         self.likesStackView.addArrangedSubview(likesLabale)
+        self.likesStackView.addArrangedSubview(likeImage)
         self.likesStackView.addArrangedSubview(viewsLabale)
 
         NSLayoutConstraint.activate([
             self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
-            self.stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-            self.stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
+            self.stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
 
             self.titleLabel.topAnchor.constraint(equalTo: self.stackView.topAnchor),
 
             self.picture.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 12),
-            self.picture.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            self.picture.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.picture.leadingAnchor.constraint(equalTo: self.stackView.leadingAnchor),
+            self.picture.trailingAnchor.constraint(equalTo: self.stackView.trailingAnchor),
             self.picture.heightAnchor.constraint(equalToConstant: self.contentView.frame.size.width),
 
             self.descriptionLabel.topAnchor.constraint(equalTo: self.picture.bottomAnchor, constant: 16),
 
             self.likesStackView.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor, constant: 16),
-            self.likesStackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -16)
+            self.likesStackView.bottomAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: -16),
+            self.likesStackView.leadingAnchor.constraint(equalTo: self.stackView.leadingAnchor),
+            self.likesStackView.trailingAnchor.constraint(equalTo: self.stackView.trailingAnchor),
+
+            self.likesLabale.leadingAnchor.constraint(equalTo: self.likesStackView.leadingAnchor),
+            self.likesLabale.widthAnchor.constraint(equalToConstant: 80),
+            self.likeImage.leadingAnchor.constraint(equalTo: self.likesLabale.trailingAnchor),
+            self.viewsLabale.trailingAnchor.constraint(equalTo: self.likesStackView.trailingAnchor),
+            self.viewsLabale.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
 
-    func setup(with post: Post) {
+    func setup(with post: Post, liked like: Bool) {
+        self.post = post
         self.titleLabel.text = post.author
         self.picture.image = UIImage(named: "\(post.image)")
         self.descriptionLabel.text = post.description
         self.likesLabale.text = "Likes: \(post.likes)"
         self.viewsLabale.text = "Views: \(post.views)"
+
+        self.changeLiked(like: like)
+    }
+
+    private func changeLiked(like: Bool) {
+        self.like = like
+        guard like else {
+            self.likeImage.tintColor = .systemGray
+            self.likeImage.image = UIImage(systemName: "heart")
+            return
+        }
+        self.likeImage.tintColor = .systemRed
+        self.likeImage.image = UIImage(systemName: "heart.fill")
+    }
+
+    private func setupGestures() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.likePost(_:)))
+        tapGestureRecognizer.numberOfTapsRequired = 2
+        self.contentView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    @objc private func likePost(_ gestureRecognizer: UITapGestureRecognizer){
+        guard let post = self.post else {
+            return
+        }
+        self.contentView.isUserInteractionEnabled = false
+        if self.like {
+            let success = self.delegate?.unLikePost(post: post) ?? false
+            if success {
+                self.changeLiked(like: false)
+            }
+        } else {
+            let success = self.delegate?.likePost(post: post) ?? false
+            if success {
+                self.changeLiked(like: true)
+            }
+        }
+        self.contentView.isUserInteractionEnabled = true
     }
 }
