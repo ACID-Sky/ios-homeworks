@@ -26,14 +26,17 @@ final class AppCoordinator: Coordinatable {
         }
 
         let loginCoordinator = LoginCoordinator(moduleType: .login)
+        let likeCoordinator = LikeCoordinator(moduleType: .like)
         let feedCoordinator = FeedCoordinator(moduleType: .feed)
 
         let tabBarController = TabBarController(viewControllers: [
             loginCoordinator.start(),
+            likeCoordinator.start(),
             feedCoordinator.start()
         ])
 
         addChildCoordinator(loginCoordinator)
+        addChildCoordinator(likeCoordinator)
         addChildCoordinator(feedCoordinator)
 
         return tabBarController

@@ -11,6 +11,8 @@ class LogInViewController: UIViewController {
 
     private let authorizationService: UserService
     var loginDelegate: LoginViewControllerDelegate?
+    private let realmService: RealmService = RealmServiceImp()
+    private var login: Login?
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -59,7 +61,7 @@ class LogInViewController: UIViewController {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
         )
         login.delegate = self
-        login.text = "ACID"
+        login.text = self.login?.login//"ACID"
 //        login.text = "acid_1@bk.ru"
         login.font = login.font?.withSize(15)
         return login
@@ -79,17 +81,14 @@ class LogInViewController: UIViewController {
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
         )
         password.delegate = self
-        password.text = "Qwerty"
+        password.text = self.login?.password //"Qwerty"
         password.font = password.font?.withSize(15)
         return password
     }()
-//
-//    private var login: String?
-//    private var password: String?
 
     private lazy var loginButton = CustomButton(title: "Login in",
                                                 titleColor: .white,
-                                                backgroundColor: UIColor(patternImage: UIImage(named: "blue_pixel")!),
+                                                backgroundColor: .systemGray,
                                                 shadowRadius: 0,
                                                 shadowOpacity: 0,
                                                 shadowOffset: CGSize(width: 0, height: 0),
@@ -111,8 +110,18 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.fetchLogin()
         self.setupView()
         self.setupGestures()
+        self.checkCharacters()
+    }
+
+    private func fetchLogin() {
+        self.login = self.realmService.fetchLogin()
+        guard let auth = self.login?.authorized, auth == true else {
+            return
+        }
+        self.openView()
     }
 
     private func setupGestures() {
@@ -160,6 +169,29 @@ class LogInViewController: UIViewController {
 
     }
 
+    private func checkCharacters() {
+        guard let countOfCharacterPass = self.passwordTextField.text?.count,
+              countOfCharacterPass >= 4,
+              let countOfCharacterLog = self.loginTextField.text?.count,
+              countOfCharacterLog >= 4 else {
+            self.loginButton.backgroundColor = .systemGray
+            self.loginButton.isUserInteractionEnabled = false
+            return
+        }
+        self.loginButton.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel")!)
+        self.loginButton.isUserInteractionEnabled = true
+    }
+
+    private func openView() {
+        //            let aprovedUser = loginDelegate?.check(login: loginTextField.text ?? "", password: passwordTextField.text ?? "")
+        let user = authorizationService.authorization("ACID")//aprovedUser ?? "") {
+        let profile = ProfileViewController(user: user)
+        let item = self.tabBarController?.viewControllers?[0].tabBarItem
+        let profileController = UINavigationController(rootViewController: profile)
+        profileController.tabBarItem = item
+        self.tabBarController?.viewControllers?[0] = profileController
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
@@ -200,13 +232,26 @@ class LogInViewController: UIViewController {
     }
 
     @objc private func buttonPresed () {
-        let aprovedUser = loginDelegate?.check(login: loginTextField.text ?? "", password: passwordTextField.text ?? "")
-        if let user = authorizationService.authorization(aprovedUser ?? "") {
-            let profile = ProfileViewController(user: user)
-            let item = self.tabBarController?.viewControllers?[0].tabBarItem
-            let profileController = UINavigationController(rootViewController: profile)
-            profileController.tabBarItem = item
-            self.tabBarController?.viewControllers?[0] = profileController
+        guard let log = self.loginTextField.text, let pass = self.passwordTextField.text else {
+            return
+        }
+        self.fetchLogin()
+        if self.login == nil {
+            self.login = Login(authorized: false, login: log, password: pass)
+            guard self.realmService.create(login: self.login!, update: false) else {
+                self.login = nil
+                return
+            }
+        }
+
+        if self.login?.login == log && self.login?.password == pass {
+            self.login?.authorized = true
+            guard self.realmService.create(login: self.login!, update: true) else {
+                self.login?.authorized = false
+                return
+            }
+
+            self.openView()
         }else {
             let alert = UIAlertController(title: "Вы ввели не верный Login или Password!", message: "Login или Password не соответствует нашим данным. Попробуйте еще раз.", preferredStyle: .alert)
 
@@ -241,7 +286,7 @@ extension LogInViewController: UITextFieldDelegate {
     }
 
     func textFieldDidChangeSelection(_ textField: UITextField) {
-
+        self.checkCharacters()
     }
 
 }

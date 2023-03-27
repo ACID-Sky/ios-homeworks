@@ -23,6 +23,8 @@ class ProfileViewController: UIViewController {
     }
 
     let user: User?
+    private let coreDataService: CoreDataService = CoreDataServiceImp()
+    private var likedPosts = [Post]()
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -68,6 +70,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = ConfigurationScheme.backgroundColor
+        self.fetchPost()
 
         self.view.addSubview(tableView)
         self.view.addSubview(fullScreenView)
@@ -126,6 +129,17 @@ class ProfileViewController: UIViewController {
             completion()
         }
     }
+
+    private func fetchPost() {
+        let posts = self.coreDataService.fetchPost()
+        self.likedPosts = posts.map {Post(author: $0.postAuthor ?? "",
+                                     description: $0.postDescription ?? "",
+                                     image: $0.postImage ?? "",
+                                     likes: Int($0.postLikes),
+                                     views: Int($0.postViews),
+                                          id: $0.id ?? ""
+        )}
+    }
 }
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
@@ -168,7 +182,12 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 return cell
             }
             let post = posts[indexPath.row]
-            cell.setup(with: post)
+            var likePost = false
+            for (_, item) in self.likedPosts.enumerated() where item.id == post.id {
+                likePost = true
+            }
+            cell.setup(with: post, liked: likePost )
+            cell.delegate = self
             return cell
         }
     }
@@ -205,6 +224,17 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
 
         self.present(alert, animated: true, completion: nil)
     }   
+}
+
+extension ProfileViewController: PostTableViewCellDelegate {
+
+    func likePost(post: Post) -> Bool {
+        return self.coreDataService.createPost(post)
+    }
+
+    func unLikePost(post: Post) -> Bool {
+        return self.coreDataService.deletePost(predicate: NSPredicate(format: "id == %@", post.id))
+    }
 }
 
 
