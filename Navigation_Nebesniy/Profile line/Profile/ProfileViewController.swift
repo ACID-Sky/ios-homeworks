@@ -136,7 +136,8 @@ class ProfileViewController: UIViewController {
                                      description: $0.postDescription ?? "",
                                      image: $0.postImage ?? "",
                                      likes: Int($0.postLikes),
-                                     views: Int($0.postViews)
+                                     views: Int($0.postViews),
+                                          id: $0.id ?? ""
         )}
     }
 }
@@ -182,7 +183,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             }
             let post = posts[indexPath.row]
             var likePost = false
-            for (_, item) in self.likedPosts.enumerated() where item.author == post.author && item.description == post.description {
+            for (_, item) in self.likedPosts.enumerated() where item.id == post.id {
                 likePost = true
             }
             cell.setup(with: post, liked: likePost )
@@ -232,7 +233,7 @@ extension ProfileViewController: PostTableViewCellDelegate {
     }
 
     func unLikePost(post: Post) -> Bool {
-        return self.coreDataService.deletePost(predicate: NSPredicate(format: "postDescription == %@", post.description))
+        return self.coreDataService.deletePost(predicate: NSPredicate(format: "id == %@", post.id))
     }
 }
 

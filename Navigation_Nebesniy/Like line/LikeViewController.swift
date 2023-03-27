@@ -106,7 +106,8 @@ class LikeViewController: UIViewController {
                                      description: $0.postDescription ?? "",
                                      image: $0.postImage ?? "",
                                      likes: Int($0.postLikes),
-                                     views: Int($0.postViews)
+                                     views: Int($0.postViews),
+                                     id: $0.id ?? ""
         )}
         self.tableView.reloadData()
     }

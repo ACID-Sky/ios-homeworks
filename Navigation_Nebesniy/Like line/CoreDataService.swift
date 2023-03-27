@@ -85,8 +85,9 @@ extension CoreDataServiceImp: CoreDataService {
         likePostCoreDataModel.postAuthor = post.author
         likePostCoreDataModel.postDescription = post.description
         likePostCoreDataModel.postImage = post.image
-        likePostCoreDataModel.postLikes = Int16(post.likes)
-        likePostCoreDataModel.postViews = Int16(post.views)
+        likePostCoreDataModel.postLikes = Int64(post.likes)
+        likePostCoreDataModel.postViews = Int64(post.views)
+        likePostCoreDataModel.id = post.id
 
         guard self.context.hasChanges else {
             return false

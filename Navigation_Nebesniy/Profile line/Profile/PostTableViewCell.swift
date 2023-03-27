@@ -151,6 +151,7 @@ class PostTableViewCell: UITableViewCell {
         self.viewsLabale.text = "Views: \(post.views)"
 
         self.changeLiked(like: like)
+        print("🚷", post.id)
     }
 
     private func changeLiked(like: Bool) {
