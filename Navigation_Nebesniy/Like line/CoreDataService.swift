@@ -10,20 +10,20 @@ import CoreData
 import StorageService
 
 protocol CoreDataService: AnyObject {
-    func createPost(_ post: Post) -> Bool
-    func fetchPost(predicate: NSPredicate?) -> [LikePostCoreDataModel]
-    func deletePost(predicate: NSPredicate?) -> Bool
+    func createPost(_ post: Post, completion: @escaping (Bool) -> Void)
+    func fetchPost(predicate: NSPredicate?, completion: @escaping ([LikePostCoreDataModel]) -> Void)
+    func deletePost(predicate: NSPredicate?, completion: @escaping (Bool) -> Void)
 }
 
 extension CoreDataService {
 
-    func fetchPost() -> [LikePostCoreDataModel] {
-        self.fetchPost(predicate: nil)
+    func fetchPost(completion: @escaping ([LikePostCoreDataModel]) -> Void) {
+        self.fetchPost(predicate: nil, completion: completion)
     }
 
 
-    func deletePost() -> Bool {
-        self.deletePost(predicate: nil)
+    func deletePost(completion: @escaping (Bool) -> Void) {
+        self.deletePost(predicate: nil, completion: completion)
     }
 }
 
@@ -32,10 +32,17 @@ final class CoreDataServiceImp {
     private let objectModel: NSManagedObjectModel
     private let persistentStoreCoordinator: NSPersistentStoreCoordinator
 
-    private lazy var context: NSManagedObjectContext = {
+    private lazy var mainContext: NSManagedObjectContext = {
         let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.persistentStoreCoordinator = self.persistentStoreCoordinator
         return context
+    }()
+
+    private lazy var backgroundContext: NSManagedObjectContext = {
+        let backgroundContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        backgroundContext.mergePolicy = NSOverwriteMergePolicy
+        backgroundContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        return backgroundContext
     }()
 
     init() {
@@ -79,56 +86,86 @@ final class CoreDataServiceImp {
 
 extension CoreDataServiceImp: CoreDataService {
 
-    func createPost(_ post: Post) -> Bool {
-        let likePostCoreDataModel = LikePostCoreDataModel(context: self.context) 
+    func createPost(_ post: Post, completion: @escaping (Bool) -> Void) {
+        self.backgroundContext.perform {
 
-        likePostCoreDataModel.postAuthor = post.author
-        likePostCoreDataModel.postDescription = post.description
-        likePostCoreDataModel.postImage = post.image
-        likePostCoreDataModel.postLikes = Int64(post.likes)
-        likePostCoreDataModel.postViews = Int64(post.views)
-        likePostCoreDataModel.id = post.id
+            let likePostCoreDataModel = LikePostCoreDataModel(context: self.backgroundContext)
 
-        guard self.context.hasChanges else {
-            return false
+            likePostCoreDataModel.postAuthor = post.author
+            likePostCoreDataModel.postDescription = post.description
+            likePostCoreDataModel.postImage = post.image
+            likePostCoreDataModel.postLikes = Int64(post.likes)
+            likePostCoreDataModel.postViews = Int64(post.views)
+            likePostCoreDataModel.id = post.id
+
+            guard self.backgroundContext.hasChanges else {
+                self.mainContext.perform {
+                    completion(false)
+                }
+                return
+            }
+
+            do {
+                try self.backgroundContext.save()
+
+                self.mainContext.perform {
+                    completion(true)
+                }
+            } catch {
+                self.mainContext.perform {
+                    completion(false)
+                }
+            }
         }
 
-        do {
-            try self.context.save()
-            return true
-        } catch {
-            return false
+    }
+
+    func fetchPost(predicate: NSPredicate?, completion: @escaping ([LikePostCoreDataModel]) -> Void) {
+        self.backgroundContext.perform {
+
+            let fetchRequest = LikePostCoreDataModel.fetchRequest()
+            fetchRequest.predicate = predicate
+
+            do {
+                let storedPosts = try self.backgroundContext.fetch(fetchRequest)
+
+                self.mainContext.perform {
+                    print("🍋 3", Thread.current)
+                    completion(storedPosts)
+                }
+            } catch {
+                self.mainContext.perform {
+                    completion([])
+                }
+            }
         }
     }
 
-    func fetchPost(predicate: NSPredicate?) -> [LikePostCoreDataModel] {
-        let fetchRequest = LikePostCoreDataModel.fetchRequest()
-        fetchRequest.predicate = predicate
+    func deletePost(predicate: NSPredicate?, completion: @escaping (Bool) -> Void) {
+        self.fetchPost(predicate: predicate) { post in
+            self.backgroundContext.perform {
 
-        do {
-            let storedPosts = try self.context.fetch(fetchRequest)
-            return storedPosts
-        } catch {
-            return []
-        }
-    }
+                post.forEach {
+                    self.backgroundContext.delete($0)
+                }
 
-    func deletePost(predicate: NSPredicate?) -> Bool {
-        let post = self.fetchPost(predicate: predicate)
+                guard self.backgroundContext.hasChanges else {
+                    completion(false)
+                    return
+                }
 
-        post.forEach {
-            self.context.delete($0)
-        }
+                do {
+                    try self.backgroundContext.save()
 
-        guard self.context.hasChanges else {
-            return false
-        }
-
-        do {
-            try self.context.save()
-            return true
-        } catch {
-            return false
+                    self.mainContext.perform {
+                        completion(true)
+                    }
+                } catch {
+                    self.mainContext.perform {
+                        completion(false)
+                    }
+                }
+            }
         }
     }
 

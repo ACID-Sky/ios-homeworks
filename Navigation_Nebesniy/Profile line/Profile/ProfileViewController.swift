@@ -70,7 +70,6 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = ConfigurationScheme.backgroundColor
-        self.fetchPost()
 
         self.view.addSubview(tableView)
         self.view.addSubview(fullScreenView)
@@ -92,6 +91,10 @@ class ProfileViewController: UIViewController {
             self.cancelButton.topAnchor.constraint(equalTo: self.fullScreenView.safeAreaLayoutGuide.topAnchor),
             self.cancelButton.trailingAnchor.constraint(equalTo: self.fullScreenView.trailingAnchor)
         ])
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.fetchPost()
     }
 
     private func setupGestures() {
@@ -131,14 +134,16 @@ class ProfileViewController: UIViewController {
     }
 
     private func fetchPost() {
-        let posts = self.coreDataService.fetchPost()
-        self.likedPosts = posts.map {Post(author: $0.postAuthor ?? "",
-                                     description: $0.postDescription ?? "",
-                                     image: $0.postImage ?? "",
-                                     likes: Int($0.postLikes),
-                                     views: Int($0.postViews),
-                                          id: $0.id ?? ""
-        )}
+        self.coreDataService.fetchPost { [weak self] posts in
+            self?.likedPosts = posts.map {Post(author: $0.postAuthor ?? "",
+                                         description: $0.postDescription ?? "",
+                                         image: $0.postImage ?? "",
+                                         likes: Int($0.postLikes),
+                                         views: Int($0.postViews),
+                                              id: $0.id ?? ""
+            )}
+            self?.tableView.reloadData()
+        }
     }
 }
 
@@ -228,12 +233,30 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
 
 extension ProfileViewController: PostTableViewCellDelegate {
 
-    func likePost(post: Post) -> Bool {
-        return self.coreDataService.createPost(post)
+    func likePost(post: Post, completion: @escaping (Bool) -> Void) {
+        self.coreDataService.createPost(post) { [weak self] success in
+            guard self != nil else {
+                completion(false)
+                return
+            }
+            completion(success)
+        }
     }
 
-    func unLikePost(post: Post) -> Bool {
-        return self.coreDataService.deletePost(predicate: NSPredicate(format: "id == %@", post.id))
+    func unLikePost(post: Post, completion: @escaping (Bool) -> Void) {
+        self.coreDataService.deletePost(predicate: NSPredicate(format: "id == %@", post.id)) { [weak self] success in
+            guard self != nil else {
+                completion(false)
+                return
+            }
+            completion(success)
+        }
+    }
+
+    func ShowAlert(alert: AlertsMessage) {
+        let alert = Alerts().showAlert(name: alert)
+        self.present(alert, animated: true, completion: nil)
+
     }
 }
 

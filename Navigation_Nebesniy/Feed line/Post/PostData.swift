@@ -21,7 +21,7 @@ public let posts: [Post] = [
          likes: 12,
          views: 2000,
          id: "32174579-996E-48BB-B042-79DCEF91DCAF"),
-    Post(author: "Wikipedia",
+    Post(author: "ACID",
          description: "A dolphin is an aquatic mammal within the infraorder Cetacea. Dolphin species belong to the families Delphinidae (the oceanic dolphins), Platanistidae (the Indian river dolphins), Iniidae (the New World river dolphins), Pontoporiidae (the brackish dolphins), and the extinct Lipotidae (baiji or Chinese river dolphin). There are 40 extant species named as dolphins.",
          image: "Delph",
          likes: 15,
