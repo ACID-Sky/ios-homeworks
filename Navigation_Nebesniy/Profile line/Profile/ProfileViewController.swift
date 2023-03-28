@@ -70,7 +70,6 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = ConfigurationScheme.backgroundColor
-//        self.fetchPost()
 
         self.view.addSubview(tableView)
         self.view.addSubview(fullScreenView)
@@ -252,6 +251,12 @@ extension ProfileViewController: PostTableViewCellDelegate {
             }
             completion(success)
         }
+    }
+
+    func ShowAlert(alert: AlertsMessage) {
+        let alert = Alerts().showAlert(name: alert)
+        self.present(alert, animated: true, completion: nil)
+
     }
 }
 

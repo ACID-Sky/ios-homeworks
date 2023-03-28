@@ -200,9 +200,15 @@ extension LikeViewController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
             let post = self.posts[indexPath.row]
             self.coreDataService.deletePost(predicate: NSPredicate(format: "id == %@", post.id)) { [weak self] success in
-                self?.posts.remove(at: indexPath.row)
-                self?.tableView.deleteRows(at: [indexPath], with: .right)
+                if success != true {
+                    self?.tableView.reloadData()
+                    let alert = Alerts().showAlert(name: .unLikeError)
+                    self?.present(alert, animated: true, completion: nil)
+                }
             }
+//            Перенес отображения UI из коплишена для более быстрой обработки, в комплишине обработал ошибку, если не удалось success false или ошибка.
+            self.posts.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .right)
         }
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         configuration.performsFirstActionWithFullSwipe = true

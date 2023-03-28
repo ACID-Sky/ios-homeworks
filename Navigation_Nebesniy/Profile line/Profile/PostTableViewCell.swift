@@ -11,6 +11,7 @@ import StorageService
 protocol PostTableViewCellDelegate: AnyObject {
     func likePost(post: Post, completion: @escaping (Bool) -> Void)
     func unLikePost(post: Post, completion: @escaping (Bool) -> Void)
+    func ShowAlert(alert: AlertsMessage)
 }
 
 class PostTableViewCell: UITableViewCell {
@@ -177,16 +178,22 @@ class PostTableViewCell: UITableViewCell {
         self.contentView.isUserInteractionEnabled = false
         if self.like {
             self.delegate?.unLikePost(post: post) {[weak self] success in
-                if success {
+                if success != true {
                     self?.changeLiked(like: false)
+                    self?.delegate?.ShowAlert(alert: .unLikeError)
                 }
             }
+//            Перенес отображения UI из коплишена для более быстрой обработки, в комплишине обработал ошибку, если не удалось success false или ошибка.
+            self.changeLiked(like: false)
         } else {
             self.delegate?.likePost(post: post) {[weak self] success in
-                if success {
+                if success != true {
                     self?.changeLiked(like: true)
+                    self?.delegate?.ShowAlert(alert: .likeError)
                 }
             }
+//            Перенес отображения UI из коплишена для более быстрой обработки, в комплишине обработал ошибку, если не удалось success false или ошибка.
+            self.changeLiked(like: true)
         }
         self.contentView.isUserInteractionEnabled = true
     }

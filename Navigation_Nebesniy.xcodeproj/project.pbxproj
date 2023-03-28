@@ -64,6 +64,7 @@
 		76CA1A8629D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8429D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld */; };
 		76CA1A8829D16815008A2CD0 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8729D16815008A2CD0 /* CoreDataService.swift */; };
 		76CA1A8A29D1733C008A2CD0 /* StringExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8929D1733C008A2CD0 /* StringExtention.swift */; };
+		76CA1A8C29D2FE0B008A2CD0 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8B29D2FE0B008A2CD0 /* Alerts.swift */; };
 		76D287CC2993DFAF0068A85E /* loginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287CB2993DFAE0068A85E /* loginCoordinator.swift */; };
 		76D287CE2993DFEC0068A85E /* feedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287CD2993DFEC0068A85E /* feedCoordinator.swift */; };
 		76D287D12993E0960068A85E /* tapBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D02993E0960068A85E /* tapBarController.swift */; };
@@ -166,6 +167,7 @@
 		76CA1A8529D16370008A2CD0 /* Navigtion_Nebesniy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Navigtion_Nebesniy.xcdatamodel; sourceTree = "<group>"; };
 		76CA1A8729D16815008A2CD0 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		76CA1A8929D1733C008A2CD0 /* StringExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtention.swift; sourceTree = "<group>"; };
+		76CA1A8B29D2FE0B008A2CD0 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		76D287CB2993DFAE0068A85E /* loginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginCoordinator.swift; sourceTree = "<group>"; };
 		76D287CD2993DFEC0068A85E /* feedCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = feedCoordinator.swift; sourceTree = "<group>"; };
 		76D287D02993E0960068A85E /* tapBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tapBarController.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				76CA1A8429D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld */,
+				76CA1A8B29D2FE0B008A2CD0 /* Alerts.swift */,
 				76D287D22994F9960068A85E /* Modul.swift */,
 				762E47F328573CEF00ECAA31 /* TextFieldWithPadding.swift */,
 				76AE59FF297EA26200C8C31B /* Configuration.swift */,
@@ -602,6 +605,7 @@
 				7675562C283FA95A00E1F03A /* SceneDelegate.swift in Sources */,
 				76DEAB5729B08C1C00451B10 /* JSONData.swift in Sources */,
 				7675564C2841256100E1F03A /* ProfileViewController.swift in Sources */,
+				76CA1A8C29D2FE0B008A2CD0 /* Alerts.swift in Sources */,
 				76940C2429ADED350013F10E /* NetworkService.swift in Sources */,
 				7675564A284100D300E1F03A /* FeedViewController.swift in Sources */,
 				76B63AD7298D486600BB30CC /* LoginInspector.swift in Sources */,
