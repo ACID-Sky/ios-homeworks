@@ -9,8 +9,8 @@ import UIKit
 import StorageService
 
 protocol PostTableViewCellDelegate: AnyObject {
-    func likePost(post: Post) -> Bool
-    func unLikePost(post: Post) -> Bool
+    func likePost(post: Post, completion: @escaping (Bool) -> Void)
+    func unLikePost(post: Post, completion: @escaping (Bool) -> Void)
 }
 
 class PostTableViewCell: UITableViewCell {
@@ -176,14 +176,16 @@ class PostTableViewCell: UITableViewCell {
         }
         self.contentView.isUserInteractionEnabled = false
         if self.like {
-            let success = self.delegate?.unLikePost(post: post) ?? false
-            if success {
-                self.changeLiked(like: false)
+            self.delegate?.unLikePost(post: post) {[weak self] success in
+                if success {
+                    self?.changeLiked(like: false)
+                }
             }
         } else {
-            let success = self.delegate?.likePost(post: post) ?? false
-            if success {
-                self.changeLiked(like: true)
+            self.delegate?.likePost(post: post) {[weak self] success in
+                if success {
+                    self?.changeLiked(like: true)
+                }
             }
         }
         self.contentView.isUserInteractionEnabled = true
