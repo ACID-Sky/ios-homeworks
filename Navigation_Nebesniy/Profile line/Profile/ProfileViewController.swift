@@ -7,6 +7,7 @@
 
 import UIKit
 import StorageService
+import CoreData
 
 class ProfileViewController: UIViewController {
 
@@ -23,8 +24,7 @@ class ProfileViewController: UIViewController {
     }
 
     let user: User?
-    private let coreDataService: CoreDataService = CoreDataServiceImp()
-    private var likedPosts = [Post]()
+    private var coreDataService: CoreDataService?
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -69,6 +69,7 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.coreDataService = CoreDataServiceImp(delegate: self)
         self.view.backgroundColor = ConfigurationScheme.backgroundColor
 
         self.view.addSubview(tableView)
@@ -91,10 +92,6 @@ class ProfileViewController: UIViewController {
             self.cancelButton.topAnchor.constraint(equalTo: self.fullScreenView.safeAreaLayoutGuide.topAnchor),
             self.cancelButton.trailingAnchor.constraint(equalTo: self.fullScreenView.trailingAnchor)
         ])
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        self.fetchPost()
     }
 
     private func setupGestures() {
@@ -130,19 +127,6 @@ class ProfileViewController: UIViewController {
             }
         } completion: { _ in
             completion()
-        }
-    }
-
-    private func fetchPost() {
-        self.coreDataService.fetchPost { [weak self] posts in
-            self?.likedPosts = posts.map {Post(author: $0.postAuthor ?? "",
-                                         description: $0.postDescription ?? "",
-                                         image: $0.postImage ?? "",
-                                         likes: Int($0.postLikes),
-                                         views: Int($0.postViews),
-                                              id: $0.id ?? ""
-            )}
-            self?.tableView.reloadData()
         }
     }
 }
@@ -187,9 +171,12 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 return cell
             }
             let post = posts[indexPath.row]
+            let likedPosts = self.coreDataService?.getObjects()
             var likePost = false
-            for (_, item) in self.likedPosts.enumerated() where item.id == post.id {
-                likePost = true
+            if likedPosts?.count != 0 {
+                for (_, item) in likedPosts!.enumerated() where item.id == post.id {
+                    likePost = true
+                }
             }
             cell.setup(with: post, liked: likePost )
             cell.delegate = self
@@ -234,23 +221,18 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
 extension ProfileViewController: PostTableViewCellDelegate {
 
     func likePost(post: Post, completion: @escaping (Bool) -> Void) {
-        self.coreDataService.createPost(post) { [weak self] success in
-            guard self != nil else {
-                completion(false)
-                return
-            }
-            completion(success)
-        }
+        self.coreDataService?.createPost(post)
+            completion(true)
     }
 
     func unLikePost(post: Post, completion: @escaping (Bool) -> Void) {
-        self.coreDataService.deletePost(predicate: NSPredicate(format: "id == %@", post.id)) { [weak self] success in
-            guard self != nil else {
-                completion(false)
-                return
+        let likedPosts = self.coreDataService?.getObjects()
+        if likedPosts?.count != 0 {
+            for (_, item) in likedPosts!.enumerated() where item.id == post.id {
+                self.coreDataService?.deletePost(postModel: item)
             }
-            completion(success)
         }
+            completion(true)
     }
 
     func ShowAlert(alert: AlertsMessage) {
@@ -260,5 +242,42 @@ extension ProfileViewController: PostTableViewCellDelegate {
     }
 }
 
+extension ProfileViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
+    }
+
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?
+    ) {
+        switch type {
+        case .insert:
+//            т.к. добавляю я посты только тут, то тут добавление обрабатывать не буду
+            return
+
+        case .delete:
+            guard let likedPost = anObject as? LikePostCoreDataModel else { return }
+
+            for (index, post) in posts.enumerated() where likedPost.id == post.id {
+                self.tableView.reloadRows(at: [[1,index]], with: .fade)
+            }
+//            передвижения и обновления не предполагаются у меня, поэтому пока их не обрабатываю
+        case .move:
+            return
+        case .update:
+            return
+        @unknown default:
+            fatalError()
+        }
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
+    }
+}
 
 

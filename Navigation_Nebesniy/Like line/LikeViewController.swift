@@ -16,18 +16,25 @@ class LikeViewController: UIViewController {
         static let postCellID = "PostCellID"
     }
 
-    private let coreDataService: CoreDataService = CoreDataServiceImp()
+    private var coreDataService: CoreDataService?
     private let realmService: RealmService = RealmServiceImp()
     private var login: Login?
-    private var posts = [Post]()
     private var authorFilter: NSPredicate? = nil
 
     private lazy var tableView = UITableView(frame: .zero, style: .grouped)
     private lazy var label = UILabel()
 
     override func viewDidLoad() {
+        self.coreDataService = CoreDataServiceImp(delegate: self)
+        self.setupBarButton()
         super.viewDidLoad()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        self.fetchLogin()
+    }
+
+    private func setupBarButton() {
         self.navigationController?.navigationBar.isHidden = false
         let filterButton = UIBarButtonItem(barButtonSystemItem:  .search,
                                            target: self,
@@ -43,12 +50,6 @@ class LikeViewController: UIViewController {
         ]
         self.navigationItem.rightBarButtonItems?[1].isEnabled = false
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        self.fetchLogin()
-        self.fetchPost()
-    }
-
     
     private func setupTableView() {
         self.tableView.rowHeight = UITableView.automaticDimension
@@ -117,19 +118,6 @@ class LikeViewController: UIViewController {
         }
     }
 
-    private func fetchPost() {
-        self.coreDataService.fetchPost(predicate: self.authorFilter) {[weak self] posts in
-            self?.posts = posts.map {Post(author: $0.postAuthor ?? "",
-                                         description: $0.postDescription ?? "",
-                                         image: $0.postImage ?? "",
-                                         likes: Int($0.postLikes),
-                                         views: Int($0.postViews),
-                                         id: $0.id ?? ""
-            )}
-            self?.tableView.reloadData()
-        }
-    }
-
     @objc private func addFilter() {
 
         self.navigationItem.rightBarButtonItems?[0].isEnabled = false
@@ -146,7 +134,9 @@ class LikeViewController: UIViewController {
                                                 #keyPath(LikePostCoreDataModel.postAuthor),
                                                 alertController.textFields?.first?.text ?? ""
                 )
-                self.fetchPost()
+                self.coreDataService?.fetchFilterPost(predicate: self.authorFilter)
+                self.tableView.reloadData()
+
             self.navigationItem.rightBarButtonItems?[0].tintColor = .systemPurple
 
             self.navigationItem.rightBarButtonItems?[1].isEnabled = true
@@ -174,13 +164,16 @@ class LikeViewController: UIViewController {
         self.navigationItem.rightBarButtonItems?[0].tintColor = .systemBlue
         self.navigationItem.rightBarButtonItems?[1].isEnabled = false
         self.authorFilter = nil
-        self.fetchPost()
+        self.coreDataService?.fetchFilterPost(predicate: self.authorFilter)
+        self.tableView.reloadData()
     }
 }
 
 extension LikeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.posts.count
+        guard let sections = self.coreDataService?.getSection() else { return 0 }
+
+        return sections[section].numberOfObjects
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -188,7 +181,15 @@ extension LikeViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: Constants.defaultCellID, for: indexPath)
             return cell
         }
-        let post = self.posts[indexPath.row]
+        guard let postModel = self.coreDataService?.getObject(index: indexPath) else { return cell }
+        
+        let post = Post(author: postModel.postAuthor ?? "",
+                        description: postModel.postDescription ?? "",
+                        image: postModel.postImage ?? "photo.fill",
+                        likes: Int(postModel.postLikes),
+                        views: Int(postModel.postViews),
+                        id: postModel.id ?? "Do not have ID")
+
         cell.setup(with: post, liked: true)
         return cell
     }
@@ -198,20 +199,52 @@ extension LikeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
-            let post = self.posts[indexPath.row]
-            self.coreDataService.deletePost(predicate: NSPredicate(format: "id == %@", post.id)) { [weak self] success in
-                if success != true {
-                    self?.tableView.reloadData()
-                    let alert = Alerts().showAlert(name: .unLikeError)
-                    self?.present(alert, animated: true, completion: nil)
-                }
-            }
-//            Перенес отображения UI из коплишена для более быстрой обработки, в комплишине обработал ошибку, если не удалось success false или ошибка.
-            self.posts.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .right)
+            guard let deletedPost = self.coreDataService?.getObject(index: indexPath) else { return }
+
+            self.coreDataService?.deletePost(postModel: deletedPost)
         }
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         configuration.performsFirstActionWithFullSwipe = true
         return configuration
+    }
+}
+
+extension LikeViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.beginUpdates()
+    }
+
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?
+    ) {
+        switch type {
+        case .insert:
+            guard let newIndexPath = newIndexPath else { return }
+
+            self.tableView.insertRows(at: [newIndexPath], with: .left)
+        case .delete:
+            guard let indexPath = indexPath else { return }
+
+            self.tableView.deleteRows(at: [indexPath], with: .right)
+        case .move:
+            guard let indexPath = indexPath, let newIndexPath = newIndexPath else { return }
+
+            self.tableView.deleteRows(at: [indexPath], with: .right)
+            self.tableView.insertRows(at: [newIndexPath], with: .left)
+        case .update:
+            guard let indexPath = indexPath else { return }
+
+            self.tableView.reloadRows(at: [indexPath], with: .fade)
+        @unknown default:
+            fatalError()
+        }
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.endUpdates()
     }
 }
