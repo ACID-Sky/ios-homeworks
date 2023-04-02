@@ -15,14 +15,22 @@ protocol RealmService: AnyObject {
 
 final class RealmServiceImp {
 
+    private let key: [UInt8] = [0x30, 0x30, 0x45, 0x45, 0x39, 0x30, 0x36, 0x39, 0x2d, 0x35, 0x39, 0x33, 0x31, 0x2d, 0x34, 0x46, 0x38, 0x45, 0x2d, 0x39, 0x31, 0x44, 0x30, 0x2d, 0x35, 0x44, 0x45, 0x43, 0x45, 0x37, 0x39, 0x43, 0x33, 0x42, 0x39, 0x41, 0x30, 0x30, 0x45, 0x45, 0x39, 0x30, 0x36, 0x39, 0x2d, 0x35, 0x39, 0x33, 0x31, 0x2d, 0x34, 0x46, 0x38, 0x45, 0x2d, 0x39, 0x31, 0x44, 0x30, 0x2d, 0x35, 0x44, 0x45, 0x43]
+//    "00EE9069-5931-4F8E-91D0-5DECE79C3B9A00EE9069-5931-4F8E-91D0-5DEC"
 
+    private func configRealm() -> Realm.Configuration{
+        let dataKey = Data(key)
+
+        return Realm.Configuration(encryptionKey: dataKey)
+    }
 }
 
 extension RealmServiceImp: RealmService {
 
     func create(login: Login, update: Bool) -> Bool {
+        var config = self.configRealm()
         do {
-            let realm = try Realm()
+            let realm = try Realm(configuration: config)
 
             let handler: () -> Void = {
                 if update {
@@ -55,8 +63,9 @@ extension RealmServiceImp: RealmService {
     }
 
     func fetchLogin() -> Login? {
+        var config = self.configRealm()
         do {
-            let realm = try Realm()
+            let realm = try Realm(configuration: config)
 
             let objects = realm.objects(LoginRealmModel.self)
 
