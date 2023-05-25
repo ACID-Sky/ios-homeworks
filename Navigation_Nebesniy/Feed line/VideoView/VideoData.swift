@@ -33,10 +33,4 @@ public let VideoList: [Video] = [
           image: UIImage(named: "4694")!)
 ]
 
-//
-//
-//
-//
-//
-//
 

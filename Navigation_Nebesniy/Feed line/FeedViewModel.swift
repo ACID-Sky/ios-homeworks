@@ -28,7 +28,7 @@ final class FeedViewModel: FeedViewModelProtocol {
     }
 
 
-    weak var coordinator: FeedCoordinator?
+    weak var coordinator: FeedCoordinatorProtocol?
     var onStateDidChange: ((State) -> Void)?
 
 

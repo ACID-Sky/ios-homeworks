@@ -54,11 +54,16 @@
 		76B869C329927D4D00CA29E3 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869C229927D4D00CA29E3 /* FeedModel.swift */; };
 		76B869C72993D01800CA29E3 /* Coordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869C62993D01800CA29E3 /* Coordinatable.swift */; };
 		76B869C92993D09C00CA29E3 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B869C82993D09C00CA29E3 /* AppCoordinator.swift */; };
+		76C1C69E2A1CB518000A8EFC /* Navigation_NebesniyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C1C69D2A1CB518000A8EFC /* Navigation_NebesniyTests.swift */; };
+		76C1C6A52A1CB624000A8EFC /* FeedViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C1C6A42A1CB624000A8EFC /* FeedViewModelTest.swift */; };
+		76C1C6B92A1E0D71000A8EFC /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 76C1C6B82A1E0D71000A8EFC /* Realm */; };
+		76C1C6BB2A1E0E49000A8EFC /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 76C1C6BA2A1E0E49000A8EFC /* RealmSwift */; };
+		76C1C6BD2A1E0EA6000A8EFC /* YouTubeiOSPlayerHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 76C1C6BC2A1E0EA6000A8EFC /* YouTubeiOSPlayerHelper */; };
 		76C6D02C29CC6F58004185D7 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 76C6D02B29CC6F58004185D7 /* Realm */; };
 		76C6D02E29CC6F58004185D7 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 76C6D02D29CC6F58004185D7 /* RealmSwift */; };
 		76C6D03129CC70DF004185D7 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6D03029CC70DF004185D7 /* RealmService.swift */; };
 		76C6D03329CC70FB004185D7 /* LoginRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6D03229CC70FB004185D7 /* LoginRealmModel.swift */; };
-		76C6D03529CC727F004185D7 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6D03429CC727F004185D7 /* LoginModel.swift */; };
+		76C6D03529CC727F004185D7 /* LoginDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6D03429CC727F004185D7 /* LoginDataModel.swift */; };
 		76CA1A8129CD9110008A2CD0 /* LikeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8029CD9110008A2CD0 /* LikeCoordinator.swift */; };
 		76CA1A8329CD91B6008A2CD0 /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8229CD91B6008A2CD0 /* LikeViewController.swift */; };
 		76CA1A8629D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 76CA1A8429D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld */; };
@@ -72,6 +77,9 @@
 		76D287D5299503A90068A85E /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287D4299503A90068A85E /* FeedViewModel.swift */; };
 		76D287DB299636C30068A85E /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D287DA299636C30068A85E /* FeedView.swift */; };
 		76DEAB5729B08C1C00451B10 /* JSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DEAB5629B08C1C00451B10 /* JSONData.swift */; };
+		76E15B582A1E37840047DF7F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E15B572A1E37840047DF7F /* LoginViewModel.swift */; };
+		76E15B5A2A1F2CA90047DF7F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E15B592A1F2CA90047DF7F /* LoginView.swift */; };
+		76E15B5E2A1F6B8C0047DF7F /* LoginViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E15B5D2A1F6B8C0047DF7F /* LoginViewModelTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +103,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 76AE59DD297E8AD600C8C31B;
 			remoteInfo = StorageService;
+		};
+		76C1C69F2A1CB518000A8EFC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7675561E283FA95A00E1F03A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76755625283FA95A00E1F03A;
+			remoteInfo = Navigation_Nebesniy;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -159,9 +174,12 @@
 		76B869C229927D4D00CA29E3 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		76B869C62993D01800CA29E3 /* Coordinatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinatable.swift; sourceTree = "<group>"; };
 		76B869C82993D09C00CA29E3 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		76C1C69B2A1CB518000A8EFC /* Navigation_NebesniyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Navigation_NebesniyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		76C1C69D2A1CB518000A8EFC /* Navigation_NebesniyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation_NebesniyTests.swift; sourceTree = "<group>"; };
+		76C1C6A42A1CB624000A8EFC /* FeedViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModelTest.swift; sourceTree = "<group>"; };
 		76C6D03029CC70DF004185D7 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		76C6D03229CC70FB004185D7 /* LoginRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRealmModel.swift; sourceTree = "<group>"; };
-		76C6D03429CC727F004185D7 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		76C6D03429CC727F004185D7 /* LoginDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDataModel.swift; sourceTree = "<group>"; };
 		76CA1A8029CD9110008A2CD0 /* LikeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeCoordinator.swift; sourceTree = "<group>"; };
 		76CA1A8229CD91B6008A2CD0 /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
 		76CA1A8529D16370008A2CD0 /* Navigtion_Nebesniy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Navigtion_Nebesniy.xcdatamodel; sourceTree = "<group>"; };
@@ -175,6 +193,9 @@
 		76D287D4299503A90068A85E /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		76D287DA299636C30068A85E /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		76DEAB5629B08C1C00451B10 /* JSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONData.swift; sourceTree = "<group>"; };
+		76E15B572A1E37840047DF7F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		76E15B592A1F2CA90047DF7F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		76E15B5D2A1F6B8C0047DF7F /* LoginViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +226,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		76C1C6982A1CB518000A8EFC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76C1C6BB2A1E0E49000A8EFC /* RealmSwift in Frameworks */,
+				76C1C6B92A1E0D71000A8EFC /* Realm in Frameworks */,
+				76C1C6BD2A1E0EA6000A8EFC /* YouTubeiOSPlayerHelper in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -214,7 +245,9 @@
 				76755628283FA95A00E1F03A /* Navigation_Nebesniy */,
 				76AE59DF297E8AD600C8C31B /* StorageService */,
 				76AE59ED297E8AD700C8C31B /* StorageServiceTests */,
+				76C1C69C2A1CB518000A8EFC /* Navigation_NebesniyTests */,
 				76755627283FA95A00E1F03A /* Products */,
+				76C1C6B72A1E0D71000A8EFC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -224,6 +257,7 @@
 				76755626283FA95A00E1F03A /* Navigation_Nebesniy.app */,
 				76AE59DE297E8AD600C8C31B /* StorageService.framework */,
 				76AE59E7297E8AD700C8C31B /* StorageServiceTests.xctest */,
+				76C1C69B2A1CB518000A8EFC /* Navigation_NebesniyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -325,8 +359,8 @@
 			isa = PBXGroup;
 			children = (
 				76B869C229927D4D00CA29E3 /* FeedModel.swift */,
-				76D287D4299503A90068A85E /* FeedViewModel.swift */,
 				76755649284100D300E1F03A /* FeedViewController.swift */,
+				76D287D4299503A90068A85E /* FeedViewModel.swift */,
 				76D287DA299636C30068A85E /* FeedView.swift */,
 				76ACA65929A2515F00CF3017 /* VideoView */,
 				76A98134299FB13D002EB8C8 /* MusicView */,
@@ -363,9 +397,11 @@
 				76B63AD6298D486600BB30CC /* LoginInspector.swift */,
 				76B869BA298E990A00CA29E3 /* LoginFactory.swift */,
 				76C6D03029CC70DF004185D7 /* RealmService.swift */,
-				76C6D03429CC727F004185D7 /* LoginModel.swift */,
+				76C6D03429CC727F004185D7 /* LoginDataModel.swift */,
 				76C6D03229CC70FB004185D7 /* LoginRealmModel.swift */,
+				76E15B572A1E37840047DF7F /* LoginViewModel.swift */,
 				762E47F52858B6BE00ECAA31 /* LogInViewController.swift */,
+				76E15B592A1F2CA90047DF7F /* LoginView.swift */,
 				76C6D02F29CC7033004185D7 /* Profile */,
 				76B4B6EC29746B2500500F00 /* Photos */,
 			);
@@ -399,6 +435,23 @@
 				76CA1A8029CD9110008A2CD0 /* LikeCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		76C1C69C2A1CB518000A8EFC /* Navigation_NebesniyTests */ = {
+			isa = PBXGroup;
+			children = (
+				76C1C69D2A1CB518000A8EFC /* Navigation_NebesniyTests.swift */,
+				76C1C6A42A1CB624000A8EFC /* FeedViewModelTest.swift */,
+				76E15B5D2A1F6B8C0047DF7F /* LoginViewModelTest.swift */,
+			);
+			path = Navigation_NebesniyTests;
+			sourceTree = "<group>";
+		};
+		76C1C6B72A1E0D71000A8EFC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		76C6D02F29CC7033004185D7 /* Profile */ = {
@@ -504,6 +557,29 @@
 			productReference = 76AE59E7297E8AD700C8C31B /* StorageServiceTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		76C1C69A2A1CB518000A8EFC /* Navigation_NebesniyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 76C1C6A12A1CB518000A8EFC /* Build configuration list for PBXNativeTarget "Navigation_NebesniyTests" */;
+			buildPhases = (
+				76C1C6972A1CB518000A8EFC /* Sources */,
+				76C1C6982A1CB518000A8EFC /* Frameworks */,
+				76C1C6992A1CB518000A8EFC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				76C1C6A02A1CB518000A8EFC /* PBXTargetDependency */,
+			);
+			name = Navigation_NebesniyTests;
+			packageProductDependencies = (
+				76C1C6B82A1E0D71000A8EFC /* Realm */,
+				76C1C6BA2A1E0E49000A8EFC /* RealmSwift */,
+				76C1C6BC2A1E0EA6000A8EFC /* YouTubeiOSPlayerHelper */,
+			);
+			productName = Navigation_NebesniyTests;
+			productReference = 76C1C69B2A1CB518000A8EFC /* Navigation_NebesniyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -511,8 +587,8 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1340;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					76755625283FA95A00E1F03A = {
 						CreatedOnToolsVersion = 13.4;
@@ -522,6 +598,10 @@
 					};
 					76AE59E6297E8AD700C8C31B = {
 						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 76755625283FA95A00E1F03A;
+					};
+					76C1C69A2A1CB518000A8EFC = {
+						CreatedOnToolsVersion = 14.3;
 						TestTargetID = 76755625283FA95A00E1F03A;
 					};
 				};
@@ -547,6 +627,7 @@
 				76755625283FA95A00E1F03A /* Navigation_Nebesniy */,
 				76AE59DD297E8AD600C8C31B /* StorageService */,
 				76AE59E6297E8AD700C8C31B /* StorageServiceTests */,
+				76C1C69A2A1CB518000A8EFC /* Navigation_NebesniyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -580,6 +661,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		76C1C6992A1CB518000A8EFC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -591,7 +679,7 @@
 				76D287D32994F9960068A85E /* Modul.swift in Sources */,
 				76CA1A8629D16370008A2CD0 /* Navigation_Nebesniy.xcdatamodeld in Sources */,
 				7675564E284136D300E1F03A /* PostViewController.swift in Sources */,
-				76C6D03529CC727F004185D7 /* LoginModel.swift in Sources */,
+				76C6D03529CC727F004185D7 /* LoginDataModel.swift in Sources */,
 				76B63AD5298D2F7000BB30CC /* Checker.swift in Sources */,
 				76B869C92993D09C00CA29E3 /* AppCoordinator.swift in Sources */,
 				76CA1A8829D16815008A2CD0 /* CoreDataService.swift in Sources */,
@@ -602,11 +690,13 @@
 				76ACA65D29A2522600CF3017 /* VideoTableViewCell.swift in Sources */,
 				76CA1A8129CD9110008A2CD0 /* LikeCoordinator.swift in Sources */,
 				76B869C72993D01800CA29E3 /* Coordinatable.swift in Sources */,
+				76E15B5A2A1F2CA90047DF7F /* LoginView.swift in Sources */,
 				7675562C283FA95A00E1F03A /* SceneDelegate.swift in Sources */,
 				76DEAB5729B08C1C00451B10 /* JSONData.swift in Sources */,
 				7675564C2841256100E1F03A /* ProfileViewController.swift in Sources */,
 				76CA1A8C29D2FE0B008A2CD0 /* Alerts.swift in Sources */,
 				76940C2429ADED350013F10E /* NetworkService.swift in Sources */,
+				76E15B582A1E37840047DF7F /* LoginViewModel.swift in Sources */,
 				7675564A284100D300E1F03A /* FeedViewController.swift in Sources */,
 				76B63AD7298D486600BB30CC /* LoginInspector.swift in Sources */,
 				76B869BB298E990A00CA29E3 /* LoginFactory.swift in Sources */,
@@ -654,6 +744,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		76C1C6972A1CB518000A8EFC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76C1C6A52A1CB624000A8EFC /* FeedViewModelTest.swift in Sources */,
+				76E15B5E2A1F6B8C0047DF7F /* LoginViewModelTest.swift in Sources */,
+				76C1C69E2A1CB518000A8EFC /* Navigation_NebesniyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -671,6 +771,11 @@
 			isa = PBXTargetDependency;
 			target = 76AE59DD297E8AD600C8C31B /* StorageService */;
 			targetProxy = 76AE59F1297E8AD700C8C31B /* PBXContainerItemProxy */;
+		};
+		76C1C6A02A1CB518000A8EFC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76755625283FA95A00E1F03A /* Navigation_Nebesniy */;
+			targetProxy = 76C1C69F2A1CB518000A8EFC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -862,6 +967,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -869,6 +975,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -879,6 +986,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = "-.StorageService";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -894,6 +1003,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -901,6 +1011,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -911,6 +1022,8 @@
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = "-.StorageService";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -962,6 +1075,46 @@
 			};
 			name = Release;
 		};
+		76C1C6A22A1CB518000A8EFC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8CV32V4H64;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "-.Navigation-NebesniyTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Navigation_Nebesniy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Navigation_Nebesniy";
+			};
+			name = Debug;
+		};
+		76C1C6A32A1CB518000A8EFC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8CV32V4H64;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "-.Navigation-NebesniyTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Navigation_Nebesniy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Navigation_Nebesniy";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -997,6 +1150,15 @@
 			buildConfigurations = (
 				76AE59FA297E8AD700C8C31B /* Debug */,
 				76AE59FB297E8AD700C8C31B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		76C1C6A12A1CB518000A8EFC /* Build configuration list for PBXNativeTarget "Navigation_NebesniyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76C1C6A22A1CB518000A8EFC /* Debug */,
+				76C1C6A32A1CB518000A8EFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1041,6 +1203,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 76B869BC29910B0400CA29E3 /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
 			productName = iOSIntPackage;
+		};
+		76C1C6B82A1E0D71000A8EFC /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76C6D02A29CC6F58004185D7 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		76C1C6BA2A1E0E49000A8EFC /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76C6D02A29CC6F58004185D7 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		76C1C6BC2A1E0EA6000A8EFC /* YouTubeiOSPlayerHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 76ACA66229A4963700CF3017 /* XCRemoteSwiftPackageReference "youtube-ios-player-helper" */;
+			productName = YouTubeiOSPlayerHelper;
 		};
 		76C6D02B29CC6F58004185D7 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;

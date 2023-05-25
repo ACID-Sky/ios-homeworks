@@ -1,5 +1,5 @@
 //
-//  LoginModel.swift
+//  LoginDataModel.swift
 //  Navigation_Nebesniy
 //
 //  Created by Лёха Небесный on 23.03.2023.
