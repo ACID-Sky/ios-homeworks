@@ -185,7 +185,13 @@ extension LikeViewController: UITableViewDataSource {
         
         let post = Post(author: postModel.postAuthor ?? "",
                         description: postModel.postDescription ?? "",
-                        image: postModel.postImage ?? "photo.fill",
+                        image: {
+            if let postImage = postModel.postImage {
+                return UIImage(data: postImage) ?? UIImage(systemName: "display.trianglebadge.exclamationmark")!
+            } else {
+                return UIImage(systemName: "display.trianglebadge.exclamationmark")!
+            }
+        }(),
                         likes: Int(postModel.postLikes),
                         views: Int(postModel.postViews),
                         id: postModel.id ?? "Do not have ID")

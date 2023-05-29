@@ -146,7 +146,7 @@ class PostTableViewCell: UITableViewCell {
     func setup(with post: Post, liked like: Bool) {
         self.post = post
         self.titleLabel.text = post.author
-        self.picture.image = UIImage(named: "\(post.image)")
+        self.picture.image = post.image
         self.descriptionLabel.text = post.description
         self.likesLabale.text = "Likes: \(post.likes)"
         self.viewsLabale.text = "Views: \(post.views)"
@@ -196,5 +196,11 @@ class PostTableViewCell: UITableViewCell {
             self.changeLiked(like: true)
         }
         self.contentView.isUserInteractionEnabled = true
+    }
+}
+
+extension PostTableViewCell {
+    func picupItems() -> Post? {
+        return self.post
     }
 }

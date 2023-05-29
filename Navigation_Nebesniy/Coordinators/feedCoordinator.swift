@@ -37,7 +37,7 @@ final class FeedCoordinator: ModuleCoordinatable, FeedCoordinatorProtocol {
 
     func pushPostViewController() {
         let viewControllerToPush = PostViewController()
-        viewControllerToPush.post = Post(author: "Hello World", description: "", image: "", likes: 2, views: 3, id: UUID().uuidString)
+        viewControllerToPush.post = Post(author: "Hello World", description: "", image: UIImage(systemName: "display.2")!, likes: 2, views: 3, id: UUID().uuidString)
         (module?.view as? UINavigationController)?.pushViewController(viewControllerToPush, animated: true)
 
     }

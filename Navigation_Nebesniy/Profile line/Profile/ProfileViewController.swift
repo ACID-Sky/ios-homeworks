@@ -37,6 +37,9 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dragInteractionEnabled = true
+        tableView.dragDelegate = self
+        tableView.dropDelegate = self
         return tableView
     }()
 
@@ -99,6 +102,10 @@ class ProfileViewController: UIViewController {
         tapGestureRecognizer.numberOfTapsRequired = 1
         self.cancelButton.addGestureRecognizer(tapGestureRecognizer)
 
+        //        let tapGestureRecognizerForCell = UITapGestureRecognizer(target: self, action: #selector(self.dragTapGesture(_:)))
+        //        tapGestureRecognizerForCell.numberOfTapsRequired = 1
+        //        self.tableView.addGestureRecognizer(tapGestureRecognizerForCell)
+
     }
 
     @objc private func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -129,6 +136,10 @@ class ProfileViewController: UIViewController {
             completion()
         }
     }
+    //
+    //    @objc private func dragTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
+    //
+    //    }
 }
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
@@ -215,14 +226,14 @@ extension ProfileViewController: ProfileHeaderViewDelegate {
         alert.addAction(noAction)
 
         self.present(alert, animated: true, completion: nil)
-    }   
+    }
 }
 
 extension ProfileViewController: PostTableViewCellDelegate {
 
     func likePost(post: Post, completion: @escaping (Bool) -> Void) {
         self.coreDataService?.createPost(post)
-            completion(true)
+        completion(true)
     }
 
     func unLikePost(post: Post, completion: @escaping (Bool) -> Void) {
@@ -232,7 +243,7 @@ extension ProfileViewController: PostTableViewCellDelegate {
                 self.coreDataService?.deletePost(postModel: item)
             }
         }
-            completion(true)
+        completion(true)
     }
 
     func ShowAlert(alert: AlertsMessage) {
@@ -256,7 +267,7 @@ extension ProfileViewController: NSFetchedResultsControllerDelegate {
     ) {
         switch type {
         case .insert:
-//            т.к. добавляю я посты только тут, то тут добавление обрабатывать не буду
+            //            т.к. добавляю я посты только тут, то тут добавление обрабатывать не буду
             return
 
         case .delete:
@@ -265,7 +276,7 @@ extension ProfileViewController: NSFetchedResultsControllerDelegate {
             for (index, post) in posts.enumerated() where likedPost.id == post.id {
                 self.tableView.reloadRows(at: [[1,index]], with: .fade)
             }
-//            передвижения и обновления не предполагаются у меня, поэтому пока их не обрабатываю
+            //            передвижения и обновления не предполагаются у меня, поэтому пока их не обрабатываю
         case .move:
             return
         case .update:
@@ -278,6 +289,84 @@ extension ProfileViewController: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.endUpdates()
     }
+}
+
+extension ProfileViewController: UITableViewDragDelegate {
+    private func dragItems(at indexPath: IndexPath) -> [UIDragItem]{
+        guard let cell = self.tableView.cellForRow(at: indexPath) as? PostTableViewCell, let post = cell.picupItems() else {return []}
+
+        let image = post.image
+        let dragImageItem = UIDragItem(itemProvider: NSItemProvider(object: image))
+        let description = post.description
+        let dragDescriptionItem = UIDragItem(itemProvider: NSItemProvider(object: NSString(string: description)))
+        return [dragImageItem,dragDescriptionItem]
+    }
+
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return self.dragItems(at: indexPath)
+    }
+
+
+}
+
+extension ProfileViewController: UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, canHandle session: UIDropSession) -> Bool {
+        print("🍏", session.canLoadObjects(ofClass: UIImage.self), session.canLoadObjects(ofClass: String.self))
+        return session.canLoadObjects(ofClass: UIImage.self) && session.canLoadObjects(ofClass: String.self)
+    }
+
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        return UITableViewDropProposal(operation: .copy, intent: .insertAtDestinationIndexPath)
+    }
+
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        
+        let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(row: 0, section: 1)
+        var postImage: UIImage?
+        var postDescripyion: String?
+
+        let placeholderContext = coordinator.drop(
+            coordinator.items[0].dragItem,
+            to: UITableViewDropPlaceholder(
+                insertionIndexPath: destinationIndexPath,
+                reuseIdentifier: Constants.defaultCellID,
+                rowHeight: 44
+            )
+        )
+
+        coordinator.session.loadObjects(ofClass: String.self) { provider in
+            DispatchQueue.main.async {
+                postDescripyion = provider[0]
+            }
+        }
+
+        coordinator.session.loadObjects(ofClass: UIImage.self) { provider in
+            DispatchQueue.main.async {
+                if let image = provider[0] as? UIImage {
+                    postImage = image
+
+                    if postImage != nil , postDescripyion != nil {
+                        let post = Post(
+                            author: "Drag&Drop",
+                            description: postDescripyion ?? "",
+                            image: postImage ?? UIImage(systemName: "display.2")!,
+                            likes: 0,
+                            views: 0,
+                            id:  UUID().uuidString
+                        )
+                        placeholderContext.commitInsertion { insertionIndexPath in
+                            posts.insert(post, at: insertionIndexPath.row)
+                        }
+                    } else {
+                        placeholderContext.deletePlaceholder()
+                    }
+                }
+            }
+        }
+
+    }
+    
+
 }
 
 

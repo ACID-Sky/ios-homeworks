@@ -27,10 +27,9 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = loginView
+        self.bindViewModel()
         self.viewModel.updateState(viewInput: .checkAuthtorization)
         self.loginView.setupLogopas(for: self.viewModel.login) // поставил для удобства проверки
-        self.bindViewModel()
-
     }
 
     func bindViewModel() {
@@ -78,7 +77,9 @@ class LogInViewController: UIViewController {
 
                 self.present(alert, animated: true, completion: nil)
             case .faceUnrecognized:
-                self.loginView.disableFaceIDBotton()
+                DispatchQueue.main.async {
+                    self.loginView.disableFaceIDBotton()
+                }
                 let alert = Alerts().showAlert(name: .faceUnrecognized)
 
                 self.present(alert, animated: true, completion: nil)
