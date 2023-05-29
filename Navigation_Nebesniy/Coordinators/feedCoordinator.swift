@@ -8,7 +8,13 @@
 import UIKit
 import StorageService
 
-final class FeedCoordinator: ModuleCoordinatable {
+protocol FeedCoordinatorProtocol: AnyObject {
+    func pushPostViewController()
+    func pushMusicViewController()
+    func pushVideoViewController()
+}
+
+final class FeedCoordinator: ModuleCoordinatable, FeedCoordinatorProtocol {
     var moduleType: Module.ModuleType
 
     private(set) var childCoordinators: [Coordinatable] = []

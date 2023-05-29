@@ -24,7 +24,6 @@ final class NetworkService {
             let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
                 if let data {
                     let dataString = String(data: data, encoding: .utf8)
-                    print("🤷 ", dataString as Any)
                 }
                 if let httpResponse = response as? HTTPURLResponse {
                     print("🥳 .allHeaderFields", httpResponse.allHeaderFields, "\n 🎉 .statusCode", httpResponse.statusCode)

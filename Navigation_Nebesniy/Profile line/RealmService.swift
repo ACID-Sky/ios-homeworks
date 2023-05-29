@@ -28,7 +28,7 @@ final class RealmServiceImp {
 extension RealmServiceImp: RealmService {
 
     func create(login: Login, update: Bool) -> Bool {
-        var config = self.configRealm()
+        let config = self.configRealm()
         do {
             let realm = try Realm(configuration: config)
 
@@ -63,7 +63,7 @@ extension RealmServiceImp: RealmService {
     }
 
     func fetchLogin() -> Login? {
-        var config = self.configRealm()
+        let config = self.configRealm()
         do {
             let realm = try Realm(configuration: config)
 

@@ -7,7 +7,8 @@
 
 import UIKit
 
-final class LoginCoordinator: ModuleCoordinatable {
+
+final class LoginCoordinator: ModuleCoordinatable{
     var moduleType: Module.ModuleType
 
     private(set) var childCoordinators: [Coordinatable] = []
@@ -18,10 +19,13 @@ final class LoginCoordinator: ModuleCoordinatable {
     }
 
     func start() -> UIViewController {
-        let loginController = LogInViewController(authorizationService: ConfigurationScheme.userService)
-        loginController.loginDelegate = MyLoginFactory().makeLoginInspector()
+        let realm = RealmServiceImp()
+        let viewModel = LoginViewModel(realmServise: realm)
+        let loginController = LogInViewController(authorizationService: ConfigurationScheme.userService, viewModel: viewModel)
         let loginViewController = UINavigationController(rootViewController: loginController)
-        loginViewController.tabBarItem = moduleType.tabBarItem 
+        loginViewController.tabBarItem = moduleType.tabBarItem
+        let module = Module(moduleType: .feed, viewModel: viewModel, view: loginViewController)
+        self.module = module
         return loginViewController
     }
 }
