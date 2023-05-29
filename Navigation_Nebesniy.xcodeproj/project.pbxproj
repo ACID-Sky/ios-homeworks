@@ -80,6 +80,8 @@
 		76E15B582A1E37840047DF7F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E15B572A1E37840047DF7F /* LoginViewModel.swift */; };
 		76E15B5A2A1F2CA90047DF7F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E15B592A1F2CA90047DF7F /* LoginView.swift */; };
 		76E15B5E2A1F6B8C0047DF7F /* LoginViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E15B5D2A1F6B8C0047DF7F /* LoginViewModelTest.swift */; };
+		76E15B622A246A8E0047DF7F /* LocalAuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E15B612A246A8D0047DF7F /* LocalAuthorizationService.swift */; };
+		76E15B642A2487120047DF7F /* FaceIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E15B632A2487120047DF7F /* FaceIDError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,6 +198,8 @@
 		76E15B572A1E37840047DF7F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		76E15B592A1F2CA90047DF7F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		76E15B5D2A1F6B8C0047DF7F /* LoginViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTest.swift; sourceTree = "<group>"; };
+		76E15B612A246A8D0047DF7F /* LocalAuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAuthorizationService.swift; sourceTree = "<group>"; };
+		76E15B632A2487120047DF7F /* FaceIDError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceIDError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -391,6 +395,8 @@
 		76B7C74C284268B900524F3F /* Profile line */ = {
 			isa = PBXGroup;
 			children = (
+				76E15B632A2487120047DF7F /* FaceIDError.swift */,
+				76E15B612A246A8D0047DF7F /* LocalAuthorizationService.swift */,
 				763AE9B0298BE2C000E18171 /* User.swift */,
 				763AE9B2298BE97200E18171 /* UserService.swift */,
 				76B63AD4298D2F7000BB30CC /* Checker.swift */,
@@ -702,6 +708,7 @@
 				76B869BB298E990A00CA29E3 /* LoginFactory.swift in Sources */,
 				76C6D03329CC70FB004185D7 /* LoginRealmModel.swift in Sources */,
 				76AE5A00297EA26200C8C31B /* Configuration.swift in Sources */,
+				76E15B622A246A8E0047DF7F /* LocalAuthorizationService.swift in Sources */,
 				763AE9B1298BE2C000E18171 /* User.swift in Sources */,
 				762E47F428573CEF00ECAA31 /* TextFieldWithPadding.swift in Sources */,
 				762E47F62858B6BE00ECAA31 /* LogInViewController.swift in Sources */,
@@ -722,6 +729,7 @@
 				76B869C12992579200CA29E3 /* CustomButton.swift in Sources */,
 				7630D2F7284CB78600331B0E /* ProfileHeaderView.swift in Sources */,
 				76B4B6F029746FBB00500F00 /* PhotoData.swift in Sources */,
+				76E15B642A2487120047DF7F /* FaceIDError.swift in Sources */,
 				76ACA65829A1402A00CF3017 /* MusicData.swift in Sources */,
 				762E47FC285B824D00ECAA31 /* PostTableViewCell.swift in Sources */,
 			);
@@ -916,6 +924,7 @@
 				DEVELOPMENT_TEAM = 8CV32V4H64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation_Nebesniy/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Please provide FaceID for easy authentication.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -945,6 +954,7 @@
 				DEVELOPMENT_TEAM = 8CV32V4H64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Navigation_Nebesniy/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Please provide FaceID for easy authentication.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -968,6 +978,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -989,6 +1000,8 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = "-.StorageService";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "-IOS";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "-MACOS";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1004,6 +1017,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1025,6 +1039,8 @@
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = "-.StorageService";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "-IOS";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "-MACOS";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

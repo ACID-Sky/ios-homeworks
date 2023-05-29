@@ -43,23 +43,46 @@ class LogInViewController: UIViewController {
                 self.loginView.setupLogopas(for: self.viewModel.login)
 
             case .userIsAuthorized:
-                let user = authorizationService.authorization("ACID")
-                let profile = ProfileViewController(user: user)
-                let item = self.tabBarController?.viewControllers?[0].tabBarItem
-                let profileController = UINavigationController(rootViewController: profile)
-                profileController.tabBarItem = item
-                self.tabBarController?.viewControllers?[0] = profileController
-
-            case .wrongPas:
-                let alert = UIAlertController(title: "Вы ввели не верный Login или Password!", message: "Login или Password не соответствует нашим данным. Попробуйте еще раз.", preferredStyle: .alert)
-
-                let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
-                    self.viewModel.updateState(viewInput: .clearTextfield)
+                DispatchQueue.main.async {
+                    self.loginView.enableFaceIDButton()
+                    let user = self.authorizationService.authorization("ACID")
+                    let profile = ProfileViewController(user: user)
+                    let item = self.tabBarController?.viewControllers?[0].tabBarItem
+                    let profileController = UINavigationController(rootViewController: profile)
+                    profileController.tabBarItem = item
+                    self.tabBarController?.viewControllers?[0] = profileController
                 }
 
-                alert.addAction(okAction)
+            case .wrongPas:
+                let alert = Alerts().showAlert(name: .wrongPas, handler: { _ in
+                    self.viewModel.updateState(viewInput: .clearTextfield)
+                })
 
                 self.present(alert, animated: true, completion: nil)
+            case .userNotCreated:
+                let alert = Alerts().showAlert(name: .userNotCreated, handler: { _ in
+                    self.viewModel.updateState(viewInput: .clearTextfield)
+                })
+
+                self.present(alert, animated: true, completion: nil)
+            case .faceIDIsNotAvailable:
+                let alert = Alerts().showAlert(name: .faceIDIsNotAvailable, handler: { _ in
+                    self.viewModel.updateState(viewInput: .clearTextfield)
+                })
+
+                self.present(alert, animated: true, completion: nil)
+            case .userForbidToUseFaceID:
+                let alert = Alerts().showAlert(name: .userForbidToUseFaceID, handler: { _ in
+                    self.viewModel.updateState(viewInput: .clearTextfield)
+                })
+
+                self.present(alert, animated: true, completion: nil)
+            case .faceUnrecognized:
+                self.loginView.disableFaceIDBotton()
+                let alert = Alerts().showAlert(name: .faceUnrecognized)
+
+                self.present(alert, animated: true, completion: nil)
+
             }
         }
     }
@@ -74,5 +97,9 @@ class LogInViewController: UIViewController {
 extension LogInViewController: LoginViewDelegate {
     func buttonPresed(with login: String, and password: String) {
         self.viewModel.updateState(viewInput: .checkLoginAndPassword(login: login, password: password))
+    }
+
+    func faceIDButtonPresed(){
+        self.viewModel.updateState(viewInput: .checkFaceID)
     }
 }
