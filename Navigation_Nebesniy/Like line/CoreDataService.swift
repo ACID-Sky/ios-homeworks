@@ -91,7 +91,15 @@ extension CoreDataServiceImp: CoreDataService {
         let postModel = LikePostCoreDataModel(context: context)
         postModel.postAuthor = post.author
         postModel.id = post.id
-        postModel.postImage = post.image
+        postModel.postImage = {
+            if let imageDataJPEG = post.image.jpegData(compressionQuality: 0.9) {
+                return imageDataJPEG
+            } else if let imageDataPNG = post.image.pngData() {
+                return imageDataPNG
+            } else {
+                return nil
+            }
+        }()
         postModel.postDescription = post.description
         postModel.postViews = Int64(post.views)
         postModel.postLikes = Int64(post.likes)
