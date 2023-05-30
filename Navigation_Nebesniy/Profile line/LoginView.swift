@@ -9,6 +9,7 @@ import UIKit
 
 protocol LoginViewDelegate: AnyObject {
     func buttonPresed(with login: String, and password: String)
+    func faceIDButtonPresed()
 }
 
 class LoginView: UIView {
@@ -94,6 +95,16 @@ class LoginView: UIView {
                                                     self!.buttonPresed()
                                                 })
 
+    private lazy var faceIDButton = CustomButton(title: "Login by FaceID",
+                                                titleColor: .white,
+                                                backgroundColor: UIColor(patternImage: UIImage(named: "blue_pixel")!),
+                                                shadowRadius: 0,
+                                                shadowOpacity: 0,
+                                                shadowOffset: CGSize(width: 0, height: 0),
+                                                action: { [weak self] in
+                                                    self!.faceIDButtonPresed()
+                                                })
+
     private func setupGestures() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.forcedHidingKeyboard))
         self.addGestureRecognizer(tapGesture)
@@ -131,6 +142,7 @@ class LoginView: UIView {
         self.scrollView.addSubview(bigStackView)
         self.bigStackView.addArrangedSubview(stackView)
         self.bigStackView.addArrangedSubview(loginButton)
+        self.bigStackView.addArrangedSubview(faceIDButton)
         self.stackView.addArrangedSubview(loginTextField)
         self.stackView.addArrangedSubview(passwordTextField)
 
@@ -141,6 +153,7 @@ class LoginView: UIView {
         self.loginTextField.layer.borderWidth = 0.5
         self.loginTextField.layer.borderColor = borderColor.cgColor
         self.loginButton.layer.cornerRadius = 10
+        self.faceIDButton.layer.cornerRadius = 10
 
 
         NSLayoutConstraint.activate([
@@ -213,6 +226,11 @@ class LoginView: UIView {
         passwordTextField.text = nil
     }
 
+    /// Проверяем возможность войти по биметрии
+    @objc private func faceIDButtonPresed() {
+        self.delegate?.faceIDButtonPresed()
+    }
+
     /// Функция для удобства проверки (что бы не запоминать логин и пароль)
     /// - Parameter login: экземляр Login (логин, пароль, авторизован или нет)
     func setupLogopas(for login: Login?) {
@@ -223,6 +241,18 @@ class LoginView: UIView {
         }
         self.loginTextField.text = user.login
         self.passwordTextField.text = user.password
+    }
+}
+
+extension LoginView {
+    func disableFaceIDBotton(){
+        self.faceIDButton.isUserInteractionEnabled = false
+        self.faceIDButton.backgroundColor = .systemGray
+    }
+
+    func enableFaceIDButton(){
+        self.faceIDButton.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel")!)
+        self.faceIDButton.isUserInteractionEnabled = true
     }
 }
 
