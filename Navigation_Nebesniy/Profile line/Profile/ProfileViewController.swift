@@ -101,11 +101,6 @@ class ProfileViewController: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTapGesture(_:)))
         tapGestureRecognizer.numberOfTapsRequired = 1
         self.cancelButton.addGestureRecognizer(tapGestureRecognizer)
-
-        //        let tapGestureRecognizerForCell = UITapGestureRecognizer(target: self, action: #selector(self.dragTapGesture(_:)))
-        //        tapGestureRecognizerForCell.numberOfTapsRequired = 1
-        //        self.tableView.addGestureRecognizer(tapGestureRecognizerForCell)
-
     }
 
     @objc private func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -136,10 +131,6 @@ class ProfileViewController: UIViewController {
             completion()
         }
     }
-    //
-    //    @objc private func dragTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
-    //
-    //    }
 }
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
